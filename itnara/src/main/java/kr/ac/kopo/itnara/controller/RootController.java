@@ -6,6 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +31,13 @@ public class RootController {
 
 	@GetMapping("/auth/login")
 	String login(HttpSession session) {
-		return "/auth/login";
+		if (isAuthenticated()) {
+			return "redirect:/";
+		}
+		else
+		{
+			return "/auth/login";
+		}
 	}
 
 	@GetMapping("/auth/signup")
@@ -49,4 +58,11 @@ public class RootController {
 		return "redirect:" + request.getHeader("Referer");
 	}
 
+	private boolean isAuthenticated() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+			return false;
+		}
+		return authentication.isAuthenticated();
+	}
 }
