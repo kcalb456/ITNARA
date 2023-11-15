@@ -31,9 +31,9 @@ public class RootController {
 		return "/auth/login";
 	}
 
-	@GetMapping("/signup")
+	@GetMapping("/auth/signup")
 	String register() {
-		return "signup";
+		return "/auth/signup";
 	}
 
 	@PostMapping("/signup")

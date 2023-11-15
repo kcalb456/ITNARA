@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.kopo.itnara.dao.ProductDao;
 import kr.ac.kopo.itnara.model.Category1;
@@ -24,7 +25,7 @@ public class ProductServiceImple implements ProductService {
 	}
 
 
-
+	@Transactional
 	@Override
 	public void add(Product item) {
 		// TODO Auto-generated method stub
