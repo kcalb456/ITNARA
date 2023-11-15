@@ -1,0 +1,160 @@
+@charset "UTF-8";
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+* {
+  font-family: "Spoqa Han Sans Neo", "sans-serif";
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  background: white;
+}
+
+.row {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.c-blue {
+  background: #0080ff;
+  color: white;
+}
+
+.c-white {
+  background: white;
+  color: black;
+}
+
+.nav-arti-right .long-button {
+  margin-left: 36px !important;
+}
+
+.nav-arti-left .row {
+  margin-top: 36px !important;
+}
+article {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-arti-left a {
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+  margin-right: 10px;
+  text-align: center;
+}
+
+.long-button {
+  user-select: none;
+  border-radius: 10px;
+  line-height: 58px;
+  width: 100%;
+  text-align: center;
+  height: 58px;
+}
+
+input,
+select {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.nav {
+  height: 72px;
+  width: 1200px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.logo {
+  height: 72px;
+  width: auto;
+  display: block;
+}
+
+.header-menu {
+  margin-right: auto;
+}
+
+.header-menu a {
+  margin: 50px;
+}
+
+.container {
+  width: 1200px;
+  height: 100vh;
+}
+
+section {
+  margin-top: 82px;
+}
+
+.searchbar {
+  outline: none;
+  border: solid 2px #0080ff;
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 16px;
+  width: 596px;
+  height: 58px;
+}
+
+.section-nav {
+  display: flex;
+  flex-direction: row;
+  height: 256px;
+  padding: 36px;
+  background: #f2f7f8;
+}
+
+.section-nav article {
+  width: 100%;
+}
+
+.section-board {
+  display: flex;
+  flex-direction: row;
+}
+
+.product-bard {
+  width: 100%;
+  float: right;
+  margin-left: 36px;
+}
+
+.product-list {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  height: 100px;
+  background: #f2f7f8;
+  border-radius: 10px;
+}
+
+.filter {
+  width: 25%;
+}
+
+#signup_form {
+  padding: 50px;
+  border: black solid 1px;
+  border-radius: 20px;
+  background: white;
+}
+#signin_form {
+  padding: 50px;
+  border: black solid 1px;
+  border-radius: 20px;
+  background: white;
+}
