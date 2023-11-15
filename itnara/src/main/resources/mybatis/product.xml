@@ -10,8 +10,8 @@
 	<insert id="add">
 		INSERT INTO
 		product(user_id,category1_code,category2_code,product_name,product_price,product_stock,product_status,product_detail)
-		VALUES #{userId},#{category1Code}, #{category2Code}, #{productName},
-		#{productPrice}, #{productStock},#{productStatus},#{productDetail}
+		VALUES (#{userId},#{category1Code}, #{category2Code}, #{productName},
+		#{productPrice}, #{productStock},#{productStatus},#{productDetail})
 	</insert>
 
 	<insert id="add_image">
