@@ -1,6 +1,6 @@
 package kr.ac.kopo.itnara.model;
 
-public class category1 {
+public class Category1 {
 private int category1Code;
 private String name;
 public int getCategory1Code() {

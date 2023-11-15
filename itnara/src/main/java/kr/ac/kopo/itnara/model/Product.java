@@ -8,7 +8,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Product {
 private Long productId;
 private Long userId;
-private String userEmail;
 private int category1Code;
 private int category2Code;
 private int productPrice;
@@ -77,7 +76,7 @@ public String getProductDetail() {
 }
 @Override
 public String toString() {
-	return "Product [productId=" + productId + ", userId=" + userId + ", userEmail=" + userEmail + ", category1Code="
+	return "Product [productId=" + productId + ", userId=" + userId + ", category1Code="
 			+ category1Code + ", category2Code=" + category2Code + ", productPrice=" + productPrice + ", productName="
 			+ productName + ", productStock=" + productStock + ", views=" + views + ", productStatus=" + productStatus
 			+ ", productDate=" + productDate + ", productDetail=" + productDetail + "]";
@@ -96,12 +95,6 @@ public int getProductPrice() {
 }
 public void setProductPrice(int productPrice) {
 	this.productPrice = productPrice;
-}
-public String getUserEmail() {
-	return userEmail;
-}
-public void setUserEmail(String userEmail) {
-	this.userEmail = userEmail;
 }
 public List<ProductImage> getImages() {
 	return images;

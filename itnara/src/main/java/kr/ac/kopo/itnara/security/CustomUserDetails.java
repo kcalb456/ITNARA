@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @SuppressWarnings("serial")
 public class CustomUserDetails implements UserDetails{
 	
-	private int userId;
+	private Long userId;
 	private String passwd;
 	private String email;
 	private String AUTHORITY;
@@ -54,13 +54,12 @@ public class CustomUserDetails implements UserDetails{
 		return true;
 	}
 
-	public int getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-	
 }
 
