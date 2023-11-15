@@ -11,6 +11,6 @@ public interface StoreDao {
 
 	List<Product> list(Long userId);
 
-	Store myStore(String name);
+	Product product(Long productId);
 
 }

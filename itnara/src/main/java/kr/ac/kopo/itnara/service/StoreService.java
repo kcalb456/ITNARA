@@ -11,6 +11,7 @@ public interface StoreService {
 
 	List<Product> list(Long userId);
 
-	Store getUserInfo(String name);
+	Product product(Long productId);
+
 
 }

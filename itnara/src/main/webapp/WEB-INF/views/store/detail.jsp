@@ -9,6 +9,6 @@ prefix="c"%>
   </head>
   <body>
     <jsp:include page="../header.jsp"></jsp:include>
-    아아
+    ${product.productName}
   </body>
 </html>

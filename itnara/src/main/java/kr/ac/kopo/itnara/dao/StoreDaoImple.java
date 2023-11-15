@@ -24,13 +24,14 @@ public class StoreDaoImple implements StoreDao {
 	@Override
 	public List<Product> list(Long userId) {
 		// TODO Auto-generated method stub
-		return sql.selectList("store.product", userId);
+		return sql.selectList("store.list", userId);
 	}
 
+
 	@Override
-	public Store myStore(String name) {
+	public Product product(Long productId) {
 		// TODO Auto-generated method stub
-		return sql.selectOne("store.my",name);
+		return sql.selectOne("store.product",productId);
 	}
 
 }

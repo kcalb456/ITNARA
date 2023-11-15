@@ -8,13 +8,15 @@
 		user_id=#{userId}
 	</select>
 
-	<select id="product" resultType="Product">
+	<select id="list" resultType="Product">
 		SELECT * FROM product
 		WHERE
 		user_id=#{userId}
 	</select>
 	
-	<select id="my" resultType="Store">
-	SELECT user_id FROM user WHERE email=#{name}
+		<select id="product" resultType="Product">
+		SELECT * FROM product
+		WHERE
+		product_id=#{productId}
 	</select>
 </mapper>

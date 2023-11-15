@@ -30,9 +30,11 @@ public class StoreServiceImple implements StoreService {
 
 
 	@Override
-	public Store getUserInfo(String name) {
+	public Product product(Long productId) {
 		// TODO Auto-generated method stub
-		return dao.myStore(name);
+		return dao.product(productId);
 	}
+
+
 
 }
