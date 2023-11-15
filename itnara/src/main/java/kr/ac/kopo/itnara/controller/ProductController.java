@@ -1,7 +1,6 @@
 package kr.ac.kopo.itnara.controller;
 
 import java.io.File;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.kopo.itnara.model.Product;
 import kr.ac.kopo.itnara.model.ProductImage;
+import kr.ac.kopo.itnara.model.Category1;
+import kr.ac.kopo.itnara.model.Category2;
+import kr.ac.kopo.itnara.security.CustomUserDetails;
 import kr.ac.kopo.itnara.service.ProductService;
 import kr.ac.kopo.itnara.service.StoreService;
 
@@ -36,8 +39,11 @@ public class ProductController {
 	private String uploadPath = "d:/upload/";
 
 	@GetMapping("/new")
-	String newProduct() {
-
+	String newProduct(Model model) {
+		List<Category1> category1List = service.category1List();
+		List<Category2> category2List = service.category2List();
+		model.addAttribute("category1List",category1List);
+		model.addAttribute("category2List",category2List);
 		return path + "/new";
 	}
 
@@ -49,8 +55,10 @@ public class ProductController {
 	}
 
 	@PostMapping("/new")
-	String add(Product item, List<MultipartFile> uploadFile, Principal principal) {
-
+	String add(Product item, List<MultipartFile> uploadFile, @AuthenticationPrincipal CustomUserDetails user) {
+		
+		
+		//로그인이 된 사용자만 상품 게시를 할 수 있도록, 비회원은 로그인 화면으로 이동
 		if (isAuthenticated()) {
 			List<ProductImage> images = new ArrayList<ProductImage>();
 			for (MultipartFile file : uploadFile) {
@@ -73,7 +81,7 @@ public class ProductController {
 				}
 			}
 
-			item.setUserEmail(principal.getName());
+			item.setUserId(user.getUserId());
 			item.setImages(images);
 			service.add(item);
 

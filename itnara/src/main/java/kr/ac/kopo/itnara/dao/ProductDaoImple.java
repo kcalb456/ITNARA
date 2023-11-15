@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.ac.kopo.itnara.model.Category1;
+import kr.ac.kopo.itnara.model.Category2;
 import kr.ac.kopo.itnara.model.Product;
 import kr.ac.kopo.itnara.model.ProductImage;
 
@@ -33,6 +35,18 @@ public class ProductDaoImple implements ProductDao {
 	public void add(ProductImage image) {
 		// TODO Auto-generated method stub
 		sql.insert("product.add_image", image);
+	}
+
+	@Override
+	public List<Category1> category1List() {
+		// TODO Auto-generated method stub
+		return sql.selectList("product.category1List");
+	}
+
+	@Override
+	public List<Category2> category2List() {
+		// TODO Auto-generated method stub
+		return sql.selectList("product.category2List");
 	}
 
 }
