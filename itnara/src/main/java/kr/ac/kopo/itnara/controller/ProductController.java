@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,7 +56,7 @@ public class ProductController {
 	}
 
 	@PostMapping("/new")
-	String add(Product item, List<MultipartFile> uploadFile, @AuthenticationPrincipal CustomUserDetails user) {
+	String add(Product item, List<MultipartFile> uploadFile, Authentication authentication) {
 		
 		
 		//로그인이 된 사용자만 상품 게시를 할 수 있도록, 비회원은 로그인 화면으로 이동
@@ -80,8 +81,8 @@ public class ProductController {
 					e.printStackTrace();
 				}
 			}
-
-			item.setUserId(user.getUserId());
+			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+			item.setUserId(userDetails.getUserId());
 			item.setImages(images);
 			service.add(item);
 
