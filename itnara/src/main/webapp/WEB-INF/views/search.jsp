@@ -6,7 +6,7 @@ prefix="sec"%>
 <section class="section-nav">
   <article class="nav-arti-left">
     <input
-      class="searchbar"
+      class="inputbar"
       type="text"
       placeholder="검색어를 입력하세요 (예:Asrock B660 RS PRO D4)"
     />
