@@ -43,11 +43,11 @@ public class StoreController {
 
 
 	@GetMapping("/{userId}/{productId}")
-	String Detail(@PathVariable Long productId, Model model, HttpSession session) {
+	String Detail(@PathVariable Long productId, Model model) {
 		
 		Product item = service.product(productId);
 		
-		session.setAttribute("product", item);
+		model.addAttribute("product",item);
 		
 		return path + "detail";
 	}
