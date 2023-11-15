@@ -22,14 +22,18 @@
 				</div>
 
 				<div>
-					<label>카테고리1:</label> <input type="number" name="category1Code" />
+					<label>카테고리1:</label><select name="category1Code">
+						<c:forEach var="category1" items="${category1List}">
+							<option value="${category1.category1Code}">${category1.name}</option>
+						</c:forEach>
+					</select>
 				</div>
 				<div>
-					<label>카테고리2:</label> <select>
+					<label>카테고리2:</label> <select name="category2Code">
 						<c:forEach var="category2" items="${category2List}">
-						<option>${category2.name}</option>
+							<option value="${category2.category2Code}">${category2.name}</option>
 						</c:forEach>
-					</select> <input type="number" name="category2Code" />
+					</select>
 				</div>
 
 				<div>
