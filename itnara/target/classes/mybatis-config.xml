@@ -11,8 +11,18 @@
 		<typeAlias type="kr.ac.kopo.itnara.model.User" alias="User" />
 		<typeAlias type="kr.ac.kopo.itnara.model.Store"
 			alias="Store" />
-					<typeAlias type="kr.ac.kopo.itnara.security.CustomUserDetails"
+		<typeAlias
+			type="kr.ac.kopo.itnara.security.CustomUserDetails"
 			alias="CustomUserDetails" />
+
+
+
+		<typeAlias type="kr.ac.kopo.itnara.model.Category1"
+			alias="Category1" />
+
+		<typeAlias type="kr.ac.kopo.itnara.model.Category2"
+			alias="Category2" />
+
 	</typeAliases>
 
 	<mappers>
