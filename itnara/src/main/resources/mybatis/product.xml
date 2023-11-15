@@ -10,15 +10,23 @@
 	<insert id="add">
 		INSERT INTO
 		product(user_id,category1_code,category2_code,product_name,product_price,product_stock,product_status,product_detail)
-		SELECT user_id,#{category1Code}, #{category2Code}, #{productName},
+		VALUES #{userId},#{category1Code}, #{category2Code}, #{productName},
 		#{productPrice}, #{productStock},#{productStatus},#{productDetail}
-		FROM USER WHERE email=#{userEmail}
 	</insert>
 
 	<insert id="add_image">
 		INSERT INTO product_image
-		(product_id, image_name, uuid)
+		(product_id, image_name,
+		uuid)
 		VALUES
 		(#{productId}, #{imageName}, #{uuid})
 	</insert>
+	<select id="category1List" resultType="Category1">
+		SELECT * FROM category1
+	</select>
+	<select id="category2List" resultType="Category2">
+		SELECT * FROM category2
+	</select>
+
+
 </mapper>
