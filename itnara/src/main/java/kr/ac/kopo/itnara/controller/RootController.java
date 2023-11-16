@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.ac.kopo.itnara.model.Product;
+import kr.ac.kopo.itnara.model.Search;
 import kr.ac.kopo.itnara.model.User;
 import kr.ac.kopo.itnara.service.ProductService;
 import kr.ac.kopo.itnara.service.UserService;
@@ -30,9 +31,16 @@ public class RootController {
 	ProductService productService;
 
 	@GetMapping("/")
-	String index(Model model, Principal principal) {
-		List<Product> list = productService.list();
-		model.addAttribute("list", list);
+	String index(Model model, Principal principal, Search search) {
+		long[] categoryCodes = {1, 2, 3};
+		
+		
+		for (int i = 1; i <= categoryCodes.length; i++) {
+	        search.setCategory1Code((long) i);
+	        search.setRow(5);
+	        List<Product> productList = productService.list(search);
+	        model.addAttribute("list" + i, productList);
+	    }
 		return "index";
 	}
 

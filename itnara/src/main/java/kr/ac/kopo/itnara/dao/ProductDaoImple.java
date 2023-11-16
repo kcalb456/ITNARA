@@ -11,6 +11,7 @@ import kr.ac.kopo.itnara.model.Category1;
 import kr.ac.kopo.itnara.model.Category2;
 import kr.ac.kopo.itnara.model.Product;
 import kr.ac.kopo.itnara.model.ProductImage;
+import kr.ac.kopo.itnara.model.Search;
 
 @Repository
 public class ProductDaoImple implements ProductDao {
@@ -19,9 +20,9 @@ public class ProductDaoImple implements ProductDao {
 	SqlSession sql;
 
 	@Override
-	public List<Product> list() {
-		// TODO Auto-generated method stub
-		return sql.selectList("product.list");
+	public List<Product> list(Search search) {
+		System.out.println(search.getCategory1Code());
+		return sql.selectList("product.list", search);
 	}
 
 	@Override

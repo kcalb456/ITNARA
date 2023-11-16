@@ -17,30 +17,24 @@
 
 			<h1>데스크탑</h1>
 			<div>
-				<c:forEach var="item" items="${list}">
-					<c:if test="${item.category1Code == '1'}">
+				<c:forEach var="item" items="${list1}">
 					${item.productName }
-					</c:if>
 				</c:forEach>
 			</div>
 		</section>
 		<section class="section-board">
 			<h1>노트북</h1>
 			<div>
-				<c:forEach var="item" items="${list}">
-					<c:if test="${item.category1Code == '2'}">
+				<c:forEach var="item" items="${list2}">
 					${item.productName }
-					</c:if>
 				</c:forEach>
 			</div>
 		</section>
 		<section class="section-board">
 			<h1>모바일</h1>
 			<div>
-				<c:forEach var="item" items="${list}">
-					<c:if test="${item.category1Code == '3'}">
+				<c:forEach var="item" items="${list3}">
 					${item.productName }
-					</c:if>
 				</c:forEach>
 			</div>
 

@@ -4,10 +4,15 @@
 <mapper namespace="product">
 
 	<select id="list" resultType="Product">
-		SELECT * FROM product
+		SELECT * FROM product 
+		<if test="category1Code != null">
+		 where category1_code = #{category1Code}
+		</if>
+		limit #{row}
 	</select>
 
-	<insert id="add" useGeneratedKeys="true" keyProperty="productId" parameterType="Product">
+	<insert id="add" useGeneratedKeys="true" keyProperty="productId"
+		parameterType="Product">
 		INSERT INTO
 		product(user_id,category1_code,category2_code,product_name,product_price,product_stock,product_status,product_detail)
 		VALUES (#{userId},#{category1Code}, #{category2Code}, #{productName},

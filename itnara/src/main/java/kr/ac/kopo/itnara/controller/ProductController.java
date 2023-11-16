@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.kopo.itnara.model.Product;
 import kr.ac.kopo.itnara.model.ProductImage;
+import kr.ac.kopo.itnara.model.Search;
 import kr.ac.kopo.itnara.model.Category1;
 import kr.ac.kopo.itnara.model.Category2;
 import kr.ac.kopo.itnara.security.CustomUserDetails;
@@ -49,8 +48,8 @@ public class ProductController {
 	}
 
 	@GetMapping("/list")
-	String list(Model model) {
-		List<Product> list = service.list();
+	String list(Model model, Search search) {
+		List<Product> list = service.list(search);
 		model.addAttribute("list", list);
 		return path + "/list";
 	}
@@ -59,7 +58,7 @@ public class ProductController {
 	String add(Product item, List<MultipartFile> uploadFile, Authentication authentication) {
 		
 		
-		//�α����� �� ����ڸ� ��ǰ �Խø� �� �� �ֵ���, ��ȸ���� �α��� ȭ������ �̵�
+
 		if (isAuthenticated()) {
 			List<ProductImage> images = new ArrayList<ProductImage>();
 			for (MultipartFile file : uploadFile) {

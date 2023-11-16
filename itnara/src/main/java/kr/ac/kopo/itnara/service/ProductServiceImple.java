@@ -11,6 +11,7 @@ import kr.ac.kopo.itnara.model.Category1;
 import kr.ac.kopo.itnara.model.Category2;
 import kr.ac.kopo.itnara.model.Product;
 import kr.ac.kopo.itnara.model.ProductImage;
+import kr.ac.kopo.itnara.model.Search;
 
 
 @Service
@@ -20,8 +21,8 @@ public class ProductServiceImple implements ProductService {
 	ProductDao dao;
 
 	@Override
-	public List<Product> list() {
-		return dao.list();
+	public List<Product> list(Search search) {
+		return dao.list(search);
 	}
 
 
