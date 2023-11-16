@@ -2,7 +2,6 @@
 pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
 prefix="c"%><%@ taglib uri="http://www.springframework.org/security/tags"
 prefix="sec"%>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <section class="section-nav">
   <article class="nav-arti-left">
     <input
@@ -11,8 +10,9 @@ prefix="sec"%>
       placeholder="검색어를 입력하세요 (예:Asrock B660 RS PRO D4)"
     />
     <div class="category-button row">
+      <a href="" class="c-white"><i class="bi-pc-display"></i>데스크탑</a>
       <a href="" class="c-white">123</a> <a href="" class="c-white">123</a>
-      <a href="" class="c-white">123</a> <a href="" class="c-white">123</a>
+      <a href="" class="c-white">123</a>
       <a href="" class="c-white">123</a>
     </div>
   </article>

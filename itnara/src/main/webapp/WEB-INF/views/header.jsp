@@ -3,9 +3,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%><%@ taglib
 	uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <link rel="stylesheet" href="/css/style.css" type="text/css" />
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+/>
 <nav class="nav">
-	<a href="/"><img class="logo" alt="로고"
-		src="https://upload.wikimedia.org/wikipedia/commons/9/92/%EC%9A%94%EC%A6%98IT_%EB%A1%9C%EA%B3%A0.png" /></a>
+	<a href="/" class="logo">pArtS</a>
 	<div class="header-menu">
 		<a href="/products/list">장터</a> <a href="/board">게시판</a>
 	</div>

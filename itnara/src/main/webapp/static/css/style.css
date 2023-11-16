@@ -58,6 +58,12 @@ article {
 	text-align: center;
 }
 
+.category-button
+{
+	user-select:none;
+}
+
+
 .long-button {
 	font-size: 16px;
 	border: none;
@@ -88,9 +94,8 @@ a {
 }
 
 .logo {
-	height: 72px;
-	width: auto;
-	display: block;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .header-menu {
@@ -125,15 +130,20 @@ section {
 }
 
 .section-nav {
+	box-sizing: border-box;
 	display: flex;
 	flex-direction: row;
-	height: 256px;
+	min-height: 256px;
 	padding: 36px;
 	background: #fafafa;
 }
 
 .section-nav article {
 	width: 100%;
+}
+
+.category-button i{
+	font-size: 30px;
 }
 
 .section-board {
