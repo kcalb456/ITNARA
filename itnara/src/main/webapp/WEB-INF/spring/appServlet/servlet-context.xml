@@ -22,6 +22,10 @@
 	<resources location="/static/css/" mapping="/css/**"></resources>
 	<resources location="/static/js/" mapping="/js/**"></resources>
 
+	<resources location="/resources/image/" mapping="/image/**"></resources>
+
+	<resources location="file:///d:/upload/" mapping="/upload/**"></resources>
+
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
 	<beans:bean
