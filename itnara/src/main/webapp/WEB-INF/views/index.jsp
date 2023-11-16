@@ -16,12 +16,4 @@ prefix="c" %>
       <section class="section-board">tetetete</section>
     </div>
   </body>
-  <script>
-    window.onload = function () {
-      document.querySelector(".category-button").lastElementChild.style[
-        "margin-left"
-      ] = "0px !important";
-      console.log(document.querySelector(".category-button").lastElementChild);
-    };
-  </script>
 </html>
