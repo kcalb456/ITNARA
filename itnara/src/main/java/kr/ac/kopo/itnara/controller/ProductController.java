@@ -59,7 +59,7 @@ public class ProductController {
 	String add(Product item, List<MultipartFile> uploadFile, Authentication authentication) {
 		
 		
-		//·Î±×ÀÎÀÌ µÈ »ç¿ëÀÚ¸¸ »óÇ° °Ô½Ã¸¦ ÇÒ ¼ö ÀÖµµ·Ï, ºñÈ¸¿øÀº ·Î±×ÀÎ È­¸éÀ¸·Î ÀÌµ¿
+		//ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½Ç° ï¿½Ô½Ã¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½, ï¿½ï¿½È¸ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 		if (isAuthenticated()) {
 			List<ProductImage> images = new ArrayList<ProductImage>();
 			for (MultipartFile file : uploadFile) {
