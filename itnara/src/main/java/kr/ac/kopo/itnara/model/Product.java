@@ -76,10 +76,10 @@ public String getProductDetail() {
 }
 @Override
 public String toString() {
-	return "Product [productId=" + productId + ", userId=" + userId + ", category1Code="
-			+ category1Code + ", category2Code=" + category2Code + ", productPrice=" + productPrice + ", productName="
-			+ productName + ", productStock=" + productStock + ", views=" + views + ", productStatus=" + productStatus
-			+ ", productDate=" + productDate + ", productDetail=" + productDetail + "]";
+	return "Product [productId=" + productId + ", userId=" + userId + ", category1Code=" + category1Code
+			+ ", category2Code=" + category2Code + ", productPrice=" + productPrice + ", productName=" + productName
+			+ ", productStock=" + productStock + ", views=" + views + ", productStatus=" + productStatus
+			+ ", productDate=" + productDate + ", productDetail=" + productDetail + ", images=" + images + "]";
 }
 public void setProductDetail(String productDetail) {
 	this.productDetail = productDetail;

@@ -8,6 +8,9 @@
 	<typeAliases>
 		<typeAlias type="kr.ac.kopo.itnara.model.Product"
 			alias="Product" />
+		<typeAlias type="kr.ac.kopo.itnara.model.ProductImage"
+			alias="ProductImage" />
+
 		<typeAlias type="kr.ac.kopo.itnara.model.User" alias="User" />
 		<typeAlias type="kr.ac.kopo.itnara.model.Store"
 			alias="Store" />

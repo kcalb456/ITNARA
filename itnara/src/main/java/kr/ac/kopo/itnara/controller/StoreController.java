@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import kr.ac.kopo.itnara.model.Product;
+import kr.ac.kopo.itnara.model.ProductImage;
 import kr.ac.kopo.itnara.model.Store;
 import kr.ac.kopo.itnara.service.StoreService;
 
@@ -46,7 +47,8 @@ public class StoreController {
 	String Detail(@PathVariable Long productId, Model model) {
 		
 		Product item = service.product(productId);
-		
+		List<ProductImage> Image = item.getImages();
+		System.out.println(Image.get(0).getImageName());
 		model.addAttribute("product",item);
 		
 		return path + "detail";

@@ -9,6 +9,15 @@ prefix="c"%>
   </head>
   <body>
     <jsp:include page="../header.jsp"></jsp:include>
-    ${product.productName}
+    ${product.productName}dsds
+
+    <c:forEach var="image" items="${product.images}">
+      <li>
+        <img
+          src="/upload/${image.uuid}_${image.imageName}"
+          alt="${image.imageName}"
+        />
+      </li>
+    </c:forEach>
   </body>
 </html>
