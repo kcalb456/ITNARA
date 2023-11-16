@@ -38,19 +38,21 @@ prefix="sec"%>
   function LoginCheck(clickedId) {
     var userId = null;
     <sec:authorize access="isAuthenticated()">
-	<sec:authentication property="principal" var="prc" />
-		userId = "${prc.userId}" 
-	</sec:authorize>
+      <sec:authentication property="principal" var="prc" />
+      userId = "${prc.userId}"
+    </sec:authorize>;
     if (!userId) {
       swal(
         "로그인이 필요한 항목입니다.",
         "회원 가입 또는 로그인을 해주세요",
         "error"
-      );
+      ).then((result) => {
+        if (result) location.replace("/auth/login");
+      });
     } else {
       switch (clickedId) {
         case "mystore":
-          location.replace("/store/"+ userId);
+          location.replace("/store/" + userId);
           break;
         case "new":
           location.replace("/products/new");
@@ -61,4 +63,11 @@ prefix="sec"%>
       }
     }
   }
+</script>
+<script>
+  window.onload = function () {
+    document.querySelector(".category-button").lastElementChild.style.margin =
+      "0px";
+    console.log(document.querySelector(".category-button").lastElementChild);
+  };
 </script>
