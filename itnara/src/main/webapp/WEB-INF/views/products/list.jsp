@@ -13,7 +13,7 @@ prefix="c"%>
     <jsp:include page="../header.jsp"></jsp:include>
     <div class="container">
       <jsp:include page="../search.jsp"></jsp:include>
-      <section class="section-board">
+      <section class="section-board row">
         <div class="filter">testtest</div>
         <div class="product-bard">
           <c:forEach var="item" items="${list}">
