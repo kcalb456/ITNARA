@@ -130,6 +130,7 @@ section {
 }
 
 .section-nav {
+	border-radius:10px;
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: row;
@@ -142,13 +143,21 @@ section {
 	width: 100%;
 }
 
+.category-button a{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
 .category-button i{
 	font-size: 30px;
 }
 
+
 .section-board {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 }
 
 .product-bard {

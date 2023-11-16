@@ -1,38 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
-prefix="c"%><%@ taglib uri="http://www.springframework.org/security/tags"
-prefix="sec"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%><%@ taglib
+	uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <section class="section-nav">
-  <article class="nav-arti-left">
-    <input
-      class="inputbar"
-      type="text"
-      placeholder="검색어를 입력하세요 (예:Asrock B660 RS PRO D4)"
-    />
-    <div class="category-button row">
-      <a href="" class="c-white"><i class="bi-pc-display"></i>데스크탑</a>
-      <a href="" class="c-white">123</a> <a href="" class="c-white">123</a>
-      <a href="" class="c-white">123</a>
-      <a href="" class="c-white">123</a>
-    </div>
-  </article>
-  <article class="nav-arti-right">
-    <div class="row">
-      <a
-        id="mystore"
-        href="#"
-        onclick="LoginCheck(this.id)"
-        class="long-button c-white"
-        >내 상점</a
-      ><a
-        id="new"
-        href="#"
-        onclick="LoginCheck(this.id)"
-        class="long-button c-blue"
-        >내 물건 팔기</a
-      >
-    </div>
-  </article>
+	<article class="nav-arti-left">
+		<input class="inputbar" type="text"
+			placeholder="검색어를 입력하세요 (예:Asrock B660 RS PRO D4)" />
+		<div class="category-button row">
+			<a href="" class="c-white"><i class="bi-pc-display"></i>데스크탑</a> <a
+				href="" class="c-white"><i class="bi-laptop"></i>노트북</a> <a
+				href="" class="c-white"><i class="bi-phone"></i>모바일</a> <a
+				href="" class="c-white"><i class="bi-house"></i>가전제품</a> <a
+				href="" class="c-white"><i class="bi-motherboard"></i>기타</a>
+		</div>
+	</article>
+	<article class="nav-arti-right">
+		<div class="row">
+			<a id="mystore" href="#" onclick="LoginCheck(this.id)"
+				class="long-button c-white">내 상점</a><a id="new" href="#"
+				onclick="LoginCheck(this.id)" class="long-button c-blue">내 물건 팔기</a>
+		</div>
+	</article>
 </section>
 <script>
   function LoginCheck(clickedId) {
