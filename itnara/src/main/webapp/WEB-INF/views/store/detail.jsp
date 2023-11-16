@@ -9,15 +9,34 @@ prefix="c"%>
   </head>
   <body>
     <jsp:include page="../header.jsp"></jsp:include>
-    ${product.productName}dsds
-
-    <c:forEach var="image" items="${product.images}">
-      <li>
-        <img
-          src="/upload/${image.uuid}_${image.imageName}"
-          alt="${image.imageName}"
-        />
-      </li>
-    </c:forEach>
+    <div class="container">
+      <section>
+        <div class="title">
+          <div class="product-name">${product.productName}</div>
+          <div class="product-date">${product.productDate}</div>
+        </div>
+        <div class="info">
+          <div class="first-image">
+            <img
+              src="/upload/${product.images[0].uuid}_${product.images[0].imageName}"
+              alt="${image.imageName}"
+            />
+          </div>
+          <div class="main">
+            <button class="long-button c-blue">안전결제</button>
+          </div>
+        </div>
+        <!--
+        <c:forEach var="image" items="${product.images}">
+          <li>
+            <img
+              src="/upload/${image.uuid}_${image.imageName}"
+              alt="${image.imageName}"
+            />
+          </li>
+        </c:forEach> -->
+      </section>
+      <section>${product.productDetail}</section>
+    </div>
   </body>
 </html>
