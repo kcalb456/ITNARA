@@ -7,6 +7,7 @@ prefix="c"%>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/style.css" type="text/css" />
+    <script src="/js/image_error.js"></script>
     <title>pArtS</title>
   </head>
   <body>
@@ -24,10 +25,9 @@ prefix="c"%>
                     class="img-full"
                     src="/upload/${item.images[0].uuid}_${item.images[0].imageName}"
                     alt="${item.images[0].imageName}"
-                    onerror="/img/no-image.png"
+                    onerror="handleImageError(this)"
                   />
                 </div>
-                1234 ${item.productName}
                 <div>${item.productName}</div>
               </a>
             </div>
@@ -45,9 +45,10 @@ prefix="c"%>
                     class="img-full"
                     src="/upload/${item.images[0].uuid}_${item.images[0].imageName}"
                     alt="${item.images[0].imageName}"
-                    onerror="/img/no-image.png"
+                    onerror="handleImageError(this)"
                   />
                 </div>
+                <div>${item.productName}</div>
               </a>
             </div>
           </c:forEach>
@@ -64,7 +65,7 @@ prefix="c"%>
                     class="img-full"
                     src="/upload/${item.images[0].uuid}_${item.images[0].imageName}"
                     alt="${item.images[0].imageName}"
-                    onerror="/img/no-image.png"
+                    onerror="handleImageError(this)"
                   />
                 </div>
                 <div>${item.productName}</div>
