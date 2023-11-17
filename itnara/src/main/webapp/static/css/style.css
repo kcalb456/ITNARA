@@ -224,7 +224,7 @@ section {
 	border-radius: 10px;
 }
 
-.first-image img {
+.img-full {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
@@ -237,4 +237,16 @@ section {
 
 .info .main{
 	padding-left: 36px;
+}
+
+.product
+{
+	width: 280px;
+	height: 320px;
+}
+
+.product .privew-image
+{
+	width: 100%;
+	height: 200px;
 }

@@ -21,6 +21,7 @@
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources location="/static/css/" mapping="/css/**"></resources>
 	<resources location="/static/js/" mapping="/js/**"></resources>
+	<resources location="/static/img/" mapping="/img/**"></resources>
 
 	<resources location="/resources/image/" mapping="/image/**"></resources>
 

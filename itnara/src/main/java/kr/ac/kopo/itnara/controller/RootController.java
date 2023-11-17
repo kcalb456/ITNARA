@@ -37,7 +37,7 @@ public class RootController {
 		
 		for (int i = 1; i <= categoryCodes.length; i++) {
 	        search.setCategory1Code((long) i);
-	        search.setRow(5);
+	        search.setRow(4);
 	        List<Product> productList = productService.list(search);
 	        model.addAttribute("list" + i, productList);
 	    }

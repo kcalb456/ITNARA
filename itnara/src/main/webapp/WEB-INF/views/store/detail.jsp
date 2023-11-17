@@ -18,6 +18,7 @@ prefix="c"%>
         <div class="info">
           <div class="first-image">
             <img
+              class="img-full"
               src="/upload/${product.images[0].uuid}_${product.images[0].imageName}"
               alt="${image.imageName}"
             />
