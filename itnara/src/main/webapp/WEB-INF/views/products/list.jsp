@@ -17,7 +17,10 @@ prefix="c"%>
         <div class="filter">testtest</div>
         <div class="product-bard">
           <c:forEach var="item" items="${list}">
-            <a class="product-list" href="/store/${item.userId}/${item.productId}">
+            <a
+              class="product-list"
+              href="/store/${item.userId}/${item.productId}"
+            >
               <div class="product-image">이미지</div>
               <div class="product-info">${item.productName}</div>
             </a>
@@ -25,5 +28,12 @@ prefix="c"%>
         </div>
       </section>
     </div>
+    <script>
+      window.onload = function () {
+        urlSearch = new URLSearchParams(location.search);
+        searchText = urlSearch.get("search");
+        document.getElementById("search").value = searchText;
+      };
+    </script>
   </body>
 </html>
