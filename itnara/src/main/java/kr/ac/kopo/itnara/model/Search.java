@@ -4,6 +4,7 @@ public class Search {
 	private Long category1Code;
 	private int row = 10;
 	private String order = "DESC";
+	private String search;
 
 	public Long getCategory1Code() {
 		return category1Code;
@@ -28,5 +29,23 @@ public class Search {
 	public void setOrder(String order) {
 		this.order = order;
 	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	@Override
+	public String toString() {
+		return "Search [category1Code=" + category1Code + ", row=" + row + ", order=" + order + ", search=" + search
+				+ "]";
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
+    public boolean isSearchNotEmpty() {
+        return search != null && !search.isEmpty();
+    }
 
 }

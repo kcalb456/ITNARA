@@ -11,28 +11,33 @@
 		</collection>
 	</resultMap>
 
-<select id="list" resultMap="ProductMap">
+	<select id="list" resultMap="ProductMap">
     <![CDATA[
     SELECT * FROM product
     LEFT JOIN product_image ON
     product.product_id = product_image.product_id
     ]]>
-    <if test="category1Code != null">
-        WHERE category1_code = #{category1Code}
-    </if>
-    <if test="order != null">
-        <choose>
-            <when test="order == 'ASC'">
+		<where>
+			<if test="category1Code != 0 and category1Code != null">
+				and category1_code = #{category1Code}
+			</if>
+			<if test="searchNotEmpty">
+				and product.product_name like CONCAT('%', #{search}, '%')
+			</if>
+		</where>
+		<if test="order != null">
+			<choose>
+				<when test="order == 'ASC'">
                 <![CDATA[ORDER BY product.product_date ASC]]>
-            </when>
-            <when test="order == 'DESC'">
+				</when>
+				<when test="order == 'DESC'">
                 <![CDATA[ORDER BY product.product_date DESC]]>
-            </when>
-            <!-- Add additional cases if needed -->
-        </choose>
-    </if>
-    LIMIT #{row}
-</select>
+				</when>
+				<!-- Add additional cases if needed -->
+			</choose>
+		</if>
+		LIMIT #{row}
+	</select>
 	<insert id="add" useGeneratedKeys="true" keyProperty="productId"
 		parameterType="Product">
 		INSERT INTO

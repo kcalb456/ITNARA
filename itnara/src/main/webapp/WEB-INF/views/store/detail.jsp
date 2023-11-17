@@ -21,6 +21,7 @@ prefix="c"%>
               class="img-full"
               src="/upload/${product.images[0].uuid}_${product.images[0].imageName}"
               alt="${image.imageName}"
+              onerror="handleImageError(this)"
             />
           </div>
           <div class="main">
