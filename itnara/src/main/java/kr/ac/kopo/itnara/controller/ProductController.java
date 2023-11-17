@@ -85,7 +85,7 @@ public class ProductController {
 			item.setImages(images);
 			service.add(item);
 
-			return path + "/list";
+			return "redirect:/";
 		}
 		return "/auth/login";
 
