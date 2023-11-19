@@ -13,5 +13,7 @@ public interface StoreService {
 
 	Product product(Long productId);
 
+	void delete(Long productId);
+
 
 }

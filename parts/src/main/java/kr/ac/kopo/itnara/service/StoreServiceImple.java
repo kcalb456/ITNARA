@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.ac.kopo.itnara.dao.ProductDao;
 import kr.ac.kopo.itnara.dao.StoreDao;
 import kr.ac.kopo.itnara.model.Product;
 import kr.ac.kopo.itnara.model.Store;
@@ -13,6 +14,9 @@ import kr.ac.kopo.itnara.model.Store;
 public class StoreServiceImple implements StoreService {
 	@Autowired
 	StoreDao dao;
+	
+	@Autowired
+	ProductDao productDao;
 	
 	
 	@Override
@@ -34,6 +38,16 @@ public class StoreServiceImple implements StoreService {
 		// TODO Auto-generated method stub
 		return dao.product(productId);
 	}
+
+
+	@Override
+	public void delete(Long productId) {
+		// TODO Auto-generated method stub
+		productDao.delete(productId);
+		
+	}
+
+
 
 
 

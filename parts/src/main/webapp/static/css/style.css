@@ -15,6 +15,10 @@ body {
 	background: white;
 }
 
+a {
+	display: inline-block;
+}
+
 .center {
 	align-items: center !important;
 	justify-content: center;
@@ -29,6 +33,11 @@ body {
 
 .c-blue {
 	background: #0080ff;
+	color: white;
+}
+
+.c-orange {
+	background: #ffae00;
 	color: white;
 }
 
@@ -58,11 +67,9 @@ article {
 	text-align: center;
 }
 
-.category-button
-{
-	user-select:none;
+.category-button {
+	user-select: none;
 }
-
 
 .long-button {
 	font-size: 16px;
@@ -94,8 +101,8 @@ a {
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: bold;
+	font-size: 24px;
+	font-weight: bold;
 }
 
 .header-menu {
@@ -130,7 +137,7 @@ section {
 }
 
 .section-nav {
-	border-radius:10px;
+	border-radius: 10px;
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: row;
@@ -143,17 +150,15 @@ section {
 	width: 100%;
 }
 
-.category-button a{
+.category-button a {
 	display: flex;
-    flex-direction: column;
-    justify-content: center;
+	flex-direction: column;
+	justify-content: center;
 }
 
-
-.category-button i{
+.category-button i {
 	font-size: 30px;
 }
-
 
 .section-board {
 	display: flex;
@@ -170,7 +175,7 @@ section {
 	margin-bottom: 20px;
 	display: flex;
 	flex-direction: row;
-	height: 100px;
+	height: 120px;
 	background: #fafafa;
 	border-radius: 10px;
 }
@@ -235,18 +240,48 @@ section {
 	grid-template-columns: 600px auto;
 }
 
-.info .main{
+.info .main {
 	padding-left: 36px;
 }
 
-.product
-{
+.product {
+	box-sizing: border-box;
+	border: solid 2px #fafafa;
+	overflow: hidden;
+	border-radius: 10px;
 	width: 280px;
-	height: 320px;
 }
 
-.product .privew-image
-{
+.product .privew-image {
 	width: 100%;
 	height: 200px;
+}
+
+.product .privew-image {
+	width: 100%;
+	height: 200px;
+}
+
+.product-list .privew-image {
+	width: 140px;
+	height: 100%;
+}
+
+.privew-info {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 60px;
+	padding: 10px;
+}
+
+.privew-title {
+	width: 100%;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.privew-price {
+	display: flex;
 }

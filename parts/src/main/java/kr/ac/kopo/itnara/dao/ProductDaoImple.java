@@ -50,4 +50,11 @@ public class ProductDaoImple implements ProductDao {
 		return sql.selectList("product.category2List");
 	}
 
+	@Override
+	public void delete(Long productId) {
+		// TODO Auto-generated method stub
+		sql.delete("product.delete",productId);
+		
+	}
+
 }

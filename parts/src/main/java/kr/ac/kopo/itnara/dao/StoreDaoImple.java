@@ -33,5 +33,4 @@ public class StoreDaoImple implements StoreDao {
 		// TODO Auto-generated method stub
 		return sql.selectOne("store.product",productId);
 	}
-
 }

@@ -38,6 +38,16 @@ public class ProductController {
 	private String path = "/products";
 	private String uploadPath = "d:/upload/";
 
+
+	@GetMapping("/list")
+	String list(Model model, Search search) {
+		List<Product> list = service.list(search);
+		model.addAttribute("list", list);
+		return path + "/list";
+	}
+	
+	
+	
 	@GetMapping("/new")
 	String newProduct(Model model) {
 		List<Category1> category1List = service.category1List();
@@ -45,13 +55,6 @@ public class ProductController {
 		model.addAttribute("category1List",category1List);
 		model.addAttribute("category2List",category2List);
 		return path + "/new";
-	}
-
-	@GetMapping("/list")
-	String list(Model model, Search search) {
-		List<Product> list = service.list(search);
-		model.addAttribute("list", list);
-		return path + "/list";
 	}
 
 	@PostMapping("/new")

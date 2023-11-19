@@ -20,4 +20,6 @@ public interface ProductDao {
 
 	List<Category2> category2List();
 
+	void delete(Long productId);
+
 }

@@ -60,5 +60,9 @@
 		SELECT * FROM category2
 	</select>
 
+	<delete id="delete">
+		DELETE FROM product WHERE product_id = #{productId}
+	</delete>
+
 
 </mapper>
