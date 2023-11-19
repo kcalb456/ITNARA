@@ -33,12 +33,5 @@
 			</div>
 		</section>
 	</div>
-	<script>
-		window.onload = function() {
-			urlSearch = new URLSearchParams(location.search);
-			searchText = urlSearch.get("search");
-			document.getElementById("search").value = searchText;
-		};
-	</script>
 </body>
 </html>

@@ -127,6 +127,15 @@ section {
 }
 
 .inputbar {
+	position: relative;
+	box-sizing: border-box;
+	border-radius: 10px;
+	font-size: 16px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+#search {
 	outline: none;
 	border: solid 2px #0080ff;
 	border-radius: 10px;
@@ -134,6 +143,26 @@ section {
 	font-size: 16px;
 	width: 100%;
 	height: 58px;
+}
+
+.input_inner {
+	padding: 0px 20px;
+	border: none;
+	border-radius: 10px;
+	font-size: 16px;
+	width: 100%;
+	height: 58px;
+}
+
+input:focus {
+	outline: 2px solid #0080ff;
+}
+
+.inputbar label {
+	position: absolute;
+	pointer-events: none;
+	left: 19px;
+	top: 18px;
 }
 
 .section-nav {
@@ -151,9 +180,20 @@ section {
 }
 
 .category-button a {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	transition: all 0.2s;
+	display: flex;
+	top: 0px;
+}
+
+.category-button a:hover {
+	top: 10px;
+	color: white;
+	background: #0080ff;
+	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
 }
 
 .category-button i {
@@ -242,6 +282,9 @@ section {
 
 .info .main {
 	padding-left: 36px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 .product {
@@ -282,6 +325,22 @@ section {
 	overflow: hidden;
 }
 
+.price {
+	margin-right: 10px;
+}
+
 .privew-price {
 	display: flex;
+	
+}
+
+.detail-price {
+	display: flex;
+	font-size: 40px;
+	justify-content: right;
+}
+
+.buttons {
+	display: grid;
+	grid-template-columns: auto 36px auto;
 }

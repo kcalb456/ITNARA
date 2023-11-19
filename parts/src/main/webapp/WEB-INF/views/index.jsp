@@ -16,7 +16,7 @@
 		<section class="section-board">
 			<h1>데스크탑</h1>
 			<div class="row">
-				<c:forEach var="item" items="${list1}">
+				<c:forEach var="item" items="${list0}">
 					<div class="product">
 						<a href="/store/${item.userId}/${item.productId}">
 							<div class="privew-image">
@@ -40,7 +40,7 @@
 		<section class="section-board">
 			<h1>노트북</h1>
 			<div class="row">
-				<c:forEach var="item" items="${list2}">
+				<c:forEach var="item" items="${list1}">
 					<div class="product">
 						<a href="/store/${item.userId}/${item.productId}">
 							<div class="privew-image">
@@ -64,7 +64,7 @@
 		<section class="section-board">
 			<h1>모바일</h1>
 			<div class="row">
-				<c:forEach var="item" items="${list3}">
+				<c:forEach var="item" items="${list2}">
 					<div class="product">
 						<a href="/store/${item.userId}/${item.productId}">
 							<div class="privew-image">

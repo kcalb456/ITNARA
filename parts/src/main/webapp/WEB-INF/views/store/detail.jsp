@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8" />
 <title>Insert title here</title>
+<script src="/js/price_format.js"></script>
 </head>
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
@@ -24,12 +25,21 @@
 						alt="${image.imageName}" onerror="handleImageError(this)" />
 				</div>
 				<div class="main">
+				<div class="detail-condition"><label>상품상태</label></div>
+				<div class="detail-delivery-price"><label>배송비</label></div>
+				<div class="detail-address"><label>거래지역</label></div>
+					<div class="detail-price">
+						<div class="price">${product.productPrice}</div><div>원</div>
+					</div>
 					<sec:authentication property="principal" var="prc" />
 					<sec:authorize access="isAuthenticated()">
 						<c:choose>
 							<c:when test="${product.userId == prc.userId}">
-								<a class="long-button c-orange" href="${productId}/update">변경</a>
-								<a class="long-button c-blue" href="${productId}/delete">삭제</a>
+								<div class="buttons">
+									<a class="long-button c-orange" href="${productId}/update">변경</a>
+									<div></div>
+									<a class="long-button c-blue" href="${productId}/delete">삭제</a>
+								</div>
 							</c:when>
 							<c:otherwise>
 								<button class="long-button c-blue">안전결제</button>

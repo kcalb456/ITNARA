@@ -59,17 +59,20 @@
 		<div>
 			<form method="post" name="signup_form" id="signup_form">
 				<div>
-					<div>
-						닉네임 <input class="inputbar" type="text" name="nickName" />
+					<div class="inputbar">
+						<input class="input_inner" type="text" name="nickName" /><label class="input_label">닉네임</label>
 					</div>
-					<div>
-						이메일 <input class="inputbar" type="email" name="email" />
+					<div class="inputbar">
+						<input class="input_inner" type="email" name="email" />
+						<label class="input_label">이메일</label>
 					</div>
-					<div>
-						비밀번호 <input class="inputbar" type="text" name="passwd" />
+					<div class="inputbar">
+						<input class="input_inner" type="password" name="passwd" />
+						<label class="input_label">비밀번호</label>
 					</div>
-					<div>
-						비밀번호 확인 <input class="inputbar" type="text" name="passwd_confirm" />
+					<div class="inputbar">
+						<input class="input_inner" type="password" name="passwd_confirm" /> <label
+							class="input_label">비밀번호 확인</label>
 					</div>
 					<input type="hidden" name="${_csrf.parameterName}"
 						value="${_csrf.token}" />
@@ -78,5 +81,53 @@
 			</form>
 		</div>
 	</div>
+	<script>
+		var myInput;
+		var inputLabels;
+		var inputs;
+	
+		document.addEventListener('input', function() {
+			inputLabels = document.querySelectorAll('form .input_label');
+			inputs = document.querySelectorAll('form .input_inner');
+	
+			inputs.forEach(function(input, index) {
+				var inputLabel = inputLabels[index];
+	
+				if (input.value !== '') {
+					inputAnime(inputLabel);
+				} else {
+					inputLabel.style.top = '18px';
+					inputLabel.style.fontSize = '16px';
+					inputLabel.style.color = 'black';
+				}
+			});
+		});
+	
+		document.addEventListener('focus', function(event) {
+			myInput = document.activeElement;
+			if (myInput.tagName === 'INPUT') {
+				var inputLabel = myInput.parentElement.querySelector('.input_label');
+				inputAnime(inputLabel);
+				myInput.addEventListener('blur', function() {
+					// 포커스가 해제되었을 때 애니메이션을 되돌림
+					if (myInput.value === '') {
+						inputLabel.style.top = '18px';
+						inputLabel.style.fontSize = '16px';
+						inputLabel.style.color = 'black';
+					}
+				});
+			}
+		}, true);
+	
+		function inputAnime(label) {
+			label.style.transitionProperty = 'top, font-size, color';
+			label.style.transitionDuration = '0.2s';
+			label.style.transitionTimingFunction = 'ease-in-out';
+	
+			label.style.top = '2px';
+			label.style.fontSize = '12px';
+			label.style.color = '#0080ff';
+		}
+	</script>
 </body>
 </html>

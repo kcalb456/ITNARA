@@ -8,15 +8,15 @@
 			placeholder="검색어를 입력하세요 (예:Asrock B660 RS PRO D4)"
 			onKeypress="if(window.event.keyCode==13){search_onclick_submit()}" />
 		<div class="category-button row">
-			<a href="javascript:void(0);" onclick="search_onclick_submit(1)"
+			<a href="javascript:void(0);" onclick="search_onclick_submit(0)"
 				class="c-white"><i class="bi-pc-display"></i>데스크탑</a> <a
-				href="javascript:void(0);" onclick="search_onclick_submit(2)"
+				href="javascript:void(0);" onclick="search_onclick_submit(1)"
 				class="c-white"><i class="bi-laptop"></i>노트북</a> <a
-				href="javascript:void(0);" onclick="search_onclick_submit(3)"
+				href="javascript:void(0);" onclick="search_onclick_submit(2)"
 				class="c-white"><i class="bi-phone"></i>모바일</a> <a
-				href="javascript:void(0);" onclick="search_onclick_submit(4)"
+				href="javascript:void(0);" onclick="search_onclick_submit(3)"
 				class="c-white"><i class="bi-house"></i>가전제품</a> <a
-				href="javascript:void(0);" onclick="search_onclick_submit(5)"
+				href="javascript:void(0);" onclick="search_onclick_submit(4)"
 				class="c-white"><i class="bi-motherboard"></i>기타</a>
 		</div>
 	</article>
@@ -24,8 +24,7 @@
 		<div class="row">
 			<a id="mystore" href="#" onclick="LoginCheck(this.id)"
 				class="long-button c-white">내 상점</a><a id="new" href="#"
-				onclick="LoginCheck(this.id)" class="long-button c-blue">내
-				물건 팔기</a>
+				onclick="LoginCheck(this.id)" class="long-button c-blue">내 물건 팔기</a>
 		</div>
 	</article>
 </section>
@@ -69,8 +68,30 @@
   }
 </script>
 <script>
+		window.addEventListener('DOMContentLoaded', function() {
+			urlSearch = new URLSearchParams(location.search);
+			searchText = urlSearch.get("search");
+			document.getElementById("search").value = searchText;
+		});
+	</script>
+<script>
 window.addEventListener('DOMContentLoaded', function() {
+  urlSearch = new URLSearchParams(location.search);
+  searchText = urlSearch.get("category1Code");
     document.querySelector(".category-button").lastElementChild.style.margin =
       "0px";
+
+      const sels = document.querySelectorAll(".category-button a");
+      sels.forEach(function(sel, index)
+      {
+        if(index == searchText)
+        {
+          sel.style.color = 'white';
+          sel.style.backgroundColor = '#0080ff';
+          sel.style.top = '10px';
+          sel.style.boxShadow = '0px 5px 10px rgba(0, 0, 0, 0.1)';
+        }
+      });
+      
   });
 </script>

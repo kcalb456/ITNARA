@@ -32,10 +32,10 @@ public class RootController {
 
 	@GetMapping("/")
 	String index(Model model, Principal principal, Search search) {
-		long[] categoryCodes = {1, 2, 3};
+		long[] categoryCodes = {0, 1, 2};
 		
 		
-		for (int i = 1; i <= categoryCodes.length; i++) {
+		for (int i = 0; i <= categoryCodes.length; i++) {
 	        search.setCategory1Code((long) i);
 	        search.setRow(4);
 	        List<Product> productList = productService.list(search);
