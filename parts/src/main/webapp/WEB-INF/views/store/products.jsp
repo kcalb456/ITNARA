@@ -26,7 +26,7 @@
 					<div class="privew-info">
 						<div class="privew-title">${item.productName}</div>
 						<div class="privew-price">
-							<div>${item.productPrice }</div>
+							<div class="price">${item.productPrice }</div>
 							<div>원</div>
 						</div>
 					</div>
@@ -34,6 +34,5 @@
 			</div>
 		</c:forEach>
 	</div>
-
 </body>
 </html>

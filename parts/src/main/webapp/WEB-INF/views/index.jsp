@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="/css/style.css" type="text/css" />
+<script src="/js/price_format.js"></script>
 <title>pArtS</title>
 </head>
 <body>
@@ -28,7 +28,7 @@
 							<div class="privew-info">
 								<div class="privew-title">${item.productName}</div>
 								<div class="privew-price">
-									<div>${item.productPrice }</div>
+									<div class="price">${item.productPrice }</div>
 									<div>원</div>
 								</div>
 							</div>
@@ -52,7 +52,7 @@
 							<div class="privew-info">
 								<div class="privew-title">${item.productName}</div>
 								<div class="privew-price">
-									<div>${item.productPrice }</div>
+									<div class="price">${item.productPrice }</div>
 									<div>원</div>
 								</div>
 							</div>
@@ -76,7 +76,7 @@
 							<div class="privew-info">
 								<div class="privew-title">${item.productName}</div>
 								<div class="privew-price">
-									<div>${item.productPrice }</div>
+									<div class="price">${item.productPrice }</div>
 									<div>원</div>
 								</div>
 							</div>
