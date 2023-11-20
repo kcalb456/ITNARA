@@ -9,6 +9,8 @@
 <meta charset="UTF-8" />
 <title>Insert title here</title>
 <script src="/js/price_format.js"></script>
+<script>
+</script>
 </head>
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
@@ -42,12 +44,12 @@
 								</div>
 							</c:when>
 							<c:otherwise>
-								<a href="order" class="long-button c-blue">안전결제</a>
+								<a href="${product.productId}/order" class="long-button c-blue">안전결제</a>
 							</c:otherwise>
 						</c:choose>
 					</sec:authorize>
 					<sec:authorize access="isAnonymous()">
-						<a href="order" class="long-button c-blue">안전결제</a>
+						<a href="${product.productId}/order" class="long-button c-blue">안전결제</a>
 					</sec:authorize>
 				</div>
 			</div>

@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.kopo.itnara.dao.ProductDao;
 import kr.ac.kopo.itnara.dao.StoreDao;
+import kr.ac.kopo.itnara.model.Order;
 import kr.ac.kopo.itnara.model.Product;
 import kr.ac.kopo.itnara.model.ProductImage;
 import kr.ac.kopo.itnara.model.Store;
@@ -55,6 +57,17 @@ public class StoreServiceImple implements StoreService {
 	public void update(Product item) {
 		// TODO Auto-generated method stub
 		productDao.update(item);
+	}
+
+	@Transactional
+	@Override
+	public void order(Order order) {
+		// TODO Auto-generated method stub
+		Product product = new Product();
+		product.setProductId(order.getProductId());
+		product.setSoldCheck(1);
+		productDao.soldCheckUpdate(product);
+		dao.order(order);
 	}
 
 

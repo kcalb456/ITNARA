@@ -19,6 +19,7 @@ private int productStatus;
 private Date productDate;
 private String productDetail;
 private List<ProductImage> images;
+private int soldCheck;
 
 
 public Long getProductId() {
@@ -96,5 +97,18 @@ public String getName() {
 }
 public void setName(String name) {
 	this.name = name;
+}
+public int getSoldCheck() {
+	return soldCheck;
+}
+public void setSoldCheck(int soldCheck) {
+	this.soldCheck = soldCheck;
+}
+@Override
+public String toString() {
+	return "Product [productId=" + productId + ", userId=" + userId + ", name=" + name + ", name2=" + name2
+			+ ", productPrice=" + productPrice + ", productName=" + productName + ", productStock=" + productStock
+			+ ", views=" + views + ", productStatus=" + productStatus + ", productDate=" + productDate
+			+ ", productDetail=" + productDetail + ", images=" + images + ", soldCheck=" + soldCheck + "]";
 }
 }

@@ -63,6 +63,12 @@ public class ProductDaoImple implements ProductDao {
 		sql.update("product.update", item);
 	}
 
+	@Override
+	public void soldCheckUpdate(Product product) {
+		// TODO Auto-generated method stub
+		sql.update("product.soldCheck", product);
+	}
+
 
 
 }

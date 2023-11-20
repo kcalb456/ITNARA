@@ -14,11 +14,14 @@
 			login-processing-url="/auth/login" username-parameter="email"
 			password-parameter="passwd" default-target-url="/" />
 
+
 		<security:intercept-url pattern="/products/new"
 			access="hasRole('ROLE_USER')" />
 		<security:intercept-url pattern="/**"
 			access="permitAll" />
 	</security:http>
+	
+	<security:global-method-security pre-post-annotations="enabled" />
 
 	<security:authentication-manager>
 		<security:authentication-provider

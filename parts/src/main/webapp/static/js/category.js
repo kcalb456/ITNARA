@@ -9,12 +9,9 @@ function getCategory() {
   const header = document.querySelector('meta[name="_csrf_header"]').content;
   const token = document.querySelector('meta[name="_csrf"]').content;
   fetch("/api/category", {
-    method: "POST",
+    method: "GET",
     headers: {
-      header: header,
-      "X-Requested-With": "XMLHttpRequest",
       "Content-Type": "application/json",
-      "X-CSRF-Token": token,
     },
   })
     .then((resp) => {

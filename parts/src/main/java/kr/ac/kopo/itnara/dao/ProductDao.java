@@ -23,6 +23,8 @@ public interface ProductDao {
 
 	void update(Product item);
 
+	void soldCheckUpdate(Product product);
+
 
 
 }

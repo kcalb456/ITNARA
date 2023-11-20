@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.ac.kopo.itnara.model.Order;
 import kr.ac.kopo.itnara.model.Product;
 import kr.ac.kopo.itnara.model.Store;
 
@@ -33,4 +34,11 @@ public class StoreDaoImple implements StoreDao {
 		// TODO Auto-generated method stub
 		return sql.selectOne("store.product",productId);
 	}
+
+	@Override
+	public void order(Order order) {
+		// TODO Auto-generated method stub
+		sql.insert("store.order",order);
+	}
+
 }

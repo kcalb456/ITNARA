@@ -64,6 +64,13 @@
 		WHERE
 		product_id=#{productId}
 	</update>
+	
+		<update id="soldCheck">
+		UPDATE product
+		SET sold_check = #{soldCheck}
+		WHERE
+		product_id=#{productId}
+	</update>
 
 	<select id="category" resultType="Category">
 		SELECT * FROM category1

@@ -38,5 +38,40 @@ prefix="c"%>
         </c:forEach>
       </div>
     </div>
+    <script>
+    window.addEventListener('DOMContentLoaded', function () {
+    	  // 현재 URL의 경로를 가져오기
+    	  var path = window.location.pathname;
+    	  
+    	  // 경로에서 userId 추출하기
+    	  var userIdMatch = path.match(/\/store\/(\d+)/);
+    	  
+    	  // userId가 존재하면 값을 추출
+    	  var userId = userIdMatch ? userIdMatch[1] : null;
+
+    	  if (userId) {
+    	    fetch("/api/store/" + userId, {
+    	      method: "GET",
+    	      headers: {
+    	        "Content-Type": "application/json",
+    	      },
+    	    })
+    	      .then((resp) => {
+    	        if (!resp.ok) {
+    	          throw new Error(`HTTP error! Status: ${resp.status}`);
+    	        }
+    	        return resp.json();
+    	      })
+    	      .then((result) => {
+    	        
+              result.list.forEach(() => {});
+    	      })
+    	      .catch((error) => {
+    	        console.error("Error:", error);
+    	        // 오류 처리
+    	      });
+    	  }
+    	});
+    </script>
   </body>
 </html>

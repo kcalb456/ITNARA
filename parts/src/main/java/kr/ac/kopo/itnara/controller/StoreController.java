@@ -3,12 +3,14 @@ package kr.ac.kopo.itnara.controller;
 import java.io.File;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.ac.kopo.itnara.model.Category;
+import kr.ac.kopo.itnara.model.Order;
 import kr.ac.kopo.itnara.model.Product;
 import kr.ac.kopo.itnara.model.ProductImage;
 import kr.ac.kopo.itnara.model.Store;
@@ -96,6 +99,30 @@ public class StoreController {
 		}
 		return "redirect:/"+path +  userId + "/" + productId;
 		
+	}
+	
+	
+	@GetMapping("/{userId}/{productId}/order")
+	String order(@PathVariable Long productId, Model model, Product item)
+	{
+		if (isAuthenticated()) {
+			System.out.println(productId);
+			item = service.product(productId);
+			model.addAttribute("item", item);
+			return path+"product/order";
+		}
+		return "redirect:/auth/login";
+	}
+	
+	@PostMapping("/{userId}/{productId}/order")
+	String order(Order order, Authentication authentication, @PathVariable Long userId, @PathVariable Long productId)
+	{
+		CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
+		order.setUserId2(user.getUserId());
+		order.setUserId(userId);
+		order.setProductId(productId);
+		service.order(order);
+		return "redirect:/";
 	}
 	
 
