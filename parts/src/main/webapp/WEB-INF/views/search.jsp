@@ -6,7 +6,6 @@ prefix="sec"%>
   <article class="nav-arti-left">
     <input
       id="search"
-      class="inputbar"
       type="text"
       placeholder="검색어를 입력하세요 (예:Asrock B660 RS PRO D4)"
       onKeypress="if(window.event.keyCode==13){search_onclick_submit()}"
