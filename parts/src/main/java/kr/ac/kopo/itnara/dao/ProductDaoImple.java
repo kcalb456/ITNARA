@@ -51,6 +51,18 @@ public class ProductDaoImple implements ProductDao {
 		
 	}
 
+	@Override
+	public List<Category> category2() {
+		// TODO Auto-generated method stub
+		return sql.selectList("product.category2");
+	}
+
+	@Override
+	public void update(Product item) {
+		// TODO Auto-generated method stub
+		sql.update("product.update", item);
+	}
+
 
 
 }

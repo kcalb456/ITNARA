@@ -48,6 +48,13 @@ public class ProductServiceImple implements ProductService {
 	}
 
 
+	@Override
+	public List<Category> category2() {
+		// TODO Auto-generated method stub
+		return dao.category2();
+	}
+
+
 
 
 }

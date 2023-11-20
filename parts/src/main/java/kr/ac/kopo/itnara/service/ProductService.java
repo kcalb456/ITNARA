@@ -14,6 +14,8 @@ public interface ProductService {
 
 	List<Category> category();
 
+	List<Category> category2();
+
 
 
 }

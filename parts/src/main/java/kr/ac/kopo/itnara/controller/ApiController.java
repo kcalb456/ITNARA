@@ -21,6 +21,6 @@ public class ApiController {
 	
 	@PostMapping("/category")
 	List<Category> category() {
-		return service.category();
+		return service.category2();
 	}
 }

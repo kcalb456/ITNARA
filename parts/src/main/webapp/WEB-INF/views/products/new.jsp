@@ -8,12 +8,9 @@ prefix="c"%>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <jsp:include page="../header.jsp"></jsp:include>
     <script src="/js/add_files.js"></script>
-    <meta id="_csrf" name="_csrf" content="{{ _csrf.token }}" />
-    <meta
-      id="_csrf_header"
-      name="_csrf_header"
-      content="{{ _csrf.headerName }}"
-    />
+    <script src="/js/category.js"></script>
+    <meta name="_csrf" content="${_csrf.token}" />
+    <meta name="_csrf_header" content="${_csrf.headerName}" />
     <title>Document</title>
   </head>
   <body>
@@ -91,39 +88,5 @@ prefix="c"%>
         </div>
       </form>
     </div>
-    <script>
-      function getCategory() {
-        var selected = document.getElementById("category1");
-        var value = selected.options[selected.selectedIndex].value;
-        const header = document.querySelector(
-          'meta[name="_csrf_header"]'
-        ).content;
-        const token = document.querySelector('meta[name="_csrf"]').content;
-        console.log(value);
-        fetch("/api/category", {
-          method: "POST",
-          headers: {
-            header: header,
-            "X-Requested-With": "XMLHttpRequest",
-            "Content-Type": "application/json",
-            "X-CSRF-Token": token,
-          },
-        })
-          .then((resp) => {
-            if (!resp.ok) {
-              throw new Error(`HTTP error! Status: ${resp.status}`);
-            }
-            return resp.json();
-          })
-          .then((result) => {
-            console.log(result);
-            // Process the result here
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            // Handle errors here
-          });
-      }
-    </script>
   </body>
 </html>

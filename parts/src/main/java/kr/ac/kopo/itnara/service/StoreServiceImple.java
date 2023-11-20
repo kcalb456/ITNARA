@@ -45,10 +45,16 @@ public class StoreServiceImple implements StoreService {
 	public List<ProductImage> delete(Long productId) {
 		// TODO Auto-generated method stub
 		Product item = dao.product(productId);
-		
 		productDao.delete(productId);
 		return item.getImages();
 		
+	}
+
+
+	@Override
+	public void update(Product item) {
+		// TODO Auto-generated method stub
+		productDao.update(item);
 	}
 
 

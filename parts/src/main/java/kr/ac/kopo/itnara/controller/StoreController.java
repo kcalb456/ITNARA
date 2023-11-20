@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.ac.kopo.itnara.model.Category;
 import kr.ac.kopo.itnara.model.Product;
 import kr.ac.kopo.itnara.model.ProductImage;
 import kr.ac.kopo.itnara.model.Store;
 import kr.ac.kopo.itnara.security.CustomUserDetails;
+import kr.ac.kopo.itnara.service.ProductService;
 import kr.ac.kopo.itnara.service.StoreService;
 
 @Controller
@@ -27,6 +30,9 @@ public class StoreController {
 
 	@Autowired
 	StoreService service;
+	
+	@Autowired
+	ProductService productService;
 
 	private String path = "store/";
 	private String uploadPath = "d:/upload/";
@@ -52,7 +58,7 @@ public class StoreController {
 			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 			if(userId == userDetails.getUserId())
 			{
-				service.delete(productId);
+				//service.delete(productId);
 				List<ProductImage> images = service.delete(productId);
 				for(ProductImage image : images) {
 					File file = new File(uploadPath + image.getUuid() + "_" + image.getImageName());
@@ -71,6 +77,8 @@ public class StoreController {
 			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 			if(userId == userDetails.getUserId())
 			{
+				List<Category> categoryList = productService.category();
+				model.addAttribute("category",categoryList);
 				item = service.product(productId);
 				model.addAttribute("item",item);
 				return path + "product/update";
@@ -78,6 +86,18 @@ public class StoreController {
 		}
 		return "redirect:/";
 	}
+	
+	@PostMapping("/{userId}/{productId}/update")
+	String update(@PathVariable Long userId, @PathVariable Long productId, Product item)
+	{
+		if (isAuthenticated()) {
+			item.setProductId(productId);
+			service.update(item);
+		}
+		return "redirect:/"+path +  userId + "/" + productId;
+		
+	}
+	
 
 	@GetMapping("/{userId}/{productId}")
 	String Detail(@PathVariable Long productId, Model model) {

@@ -16,5 +16,7 @@ public interface StoreService {
 
 	List<ProductImage> delete(Long productId);
 
+	void update(Product item);
+
 
 }
