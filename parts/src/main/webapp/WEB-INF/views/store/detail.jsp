@@ -42,12 +42,12 @@
 								</div>
 							</c:when>
 							<c:otherwise>
-								<button class="long-button c-blue">안전결제</button>
+								<a href="order" class="long-button c-blue">안전결제</a>
 							</c:otherwise>
 						</c:choose>
 					</sec:authorize>
 					<sec:authorize access="isAnonymous()">
-						<button class="long-button c-blue">안전결제</button>
+						<a href="order" class="long-button c-blue">안전결제</a>
 					</sec:authorize>
 				</div>
 			</div>
