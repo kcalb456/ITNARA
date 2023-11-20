@@ -18,8 +18,8 @@
     product.product_id = product_image.product_id
     ]]>
 		<where>
-			<if test="category1Code != 0 and category1Code != null">
-				and category1_code = #{category1Code}
+			<if test="name != '' and name != null and name != 'undefined'">
+				and name = #{name}
 			</if>
 			<if test="searchNotEmpty">
 				and product.product_name like CONCAT('%', #{search}, '%')
@@ -41,8 +41,8 @@
 	<insert id="add" useGeneratedKeys="true" keyProperty="productId"
 		parameterType="Product">
 		INSERT INTO
-		product(user_id,category1_code,category2_code,product_name,product_price,product_stock,product_status,product_detail)
-		VALUES (#{userId},#{category1Code}, #{category2Code}, #{productName},
+		product(user_id,name,name2,product_name,product_price,product_stock,product_status,product_detail)
+		VALUES (#{userId},#{name}, #{name2}, #{productName},
 		#{productPrice}, #{productStock},#{productStatus},#{productDetail})
 	</insert>
 
@@ -53,10 +53,7 @@
 		VALUES
 		(#{productId}, #{imageName}, #{uuid})
 	</insert>
-	<select id="category1List" resultType="Category1">
-		SELECT * FROM category1
-	</select>
-	<select id="category2List" resultType="Category2">
+	<select id="category" resultType="Category">
 		SELECT * FROM category2
 	</select>
 

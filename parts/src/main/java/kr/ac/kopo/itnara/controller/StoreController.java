@@ -1,5 +1,6 @@
 package kr.ac.kopo.itnara.controller;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -28,6 +29,7 @@ public class StoreController {
 	StoreService service;
 
 	private String path = "store/";
+	private String uploadPath = "d:/upload/";
 
 	@GetMapping(value = { "/{userId}", "/" })
 	String list(@PathVariable(required = false) Long userId, Model model) {
@@ -45,12 +47,17 @@ public class StoreController {
 	@GetMapping("/{userId}/{productId}/delete")
 	String delete(@PathVariable Long userId, @PathVariable Long productId, Authentication authentication) {
 		
-		//ºñÈ¸¿ø ¹× »óÇ° µî·ÏÀÚ¿Í ·Î±×ÀÎÁ¤º¸°¡ ÀÏÄ¡ÇÑ °æ¿ì¿¡¸¸ Ã³¸®µÇµµ·Ï
+		//ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Çµï¿½ï¿½ï¿½
 		if (isAuthenticated()) {
 			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 			if(userId == userDetails.getUserId())
 			{
 				service.delete(productId);
+				List<ProductImage> images = service.delete(productId);
+				for(ProductImage image : images) {
+					File file = new File(uploadPath + image.getUuid() + "_" + image.getImageName());
+					file.delete();
+				}
 			}
 		}
 		return "redirect:/";
@@ -59,7 +66,7 @@ public class StoreController {
 	@GetMapping("/{userId}/{productId}/update")
 	String update(@PathVariable Long userId, @PathVariable Long productId, Authentication authentication, Model model, Product item) {
 		
-		//ºñÈ¸¿ø ¹× »óÇ° µî·ÏÀÚ¿Í ·Î±×ÀÎÁ¤º¸°¡ ÀÏÄ¡ÇÑ °æ¿ì¿¡¸¸ Ã³¸®µÇµµ·Ï
+		//ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Çµï¿½ï¿½ï¿½
 		if (isAuthenticated()) {
 			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 			if(userId == userDetails.getUserId())

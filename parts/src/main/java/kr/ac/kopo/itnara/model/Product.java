@@ -8,8 +8,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Product {
 private Long productId;
 private Long userId;
-private int category1Code;
-private int category2Code;
+private String name;
+private String name2;
 private int productPrice;
 private String productName;
 private int productStock;
@@ -28,18 +28,7 @@ public void setProductId(Long productId) {
 	this.productId = productId;
 }
 
-public int getCategory1Code() {
-	return category1Code;
-}
-public void setCategory1Code(int category1Code) {
-	this.category1Code = category1Code;
-}
-public int getCategory2Code() {
-	return category2Code;
-}
-public void setCategory2Code(int category2Code) {
-	this.category2Code = category2Code;
-}
+
 
 public String getProductName() {
 	return productName;
@@ -74,13 +63,7 @@ public void setProductDate(Date productDate) {
 public String getProductDetail() {
 	return productDetail;
 }
-@Override
-public String toString() {
-	return "Product [productId=" + productId + ", userId=" + userId + ", category1Code=" + category1Code
-			+ ", category2Code=" + category2Code + ", productPrice=" + productPrice + ", productName=" + productName
-			+ ", productStock=" + productStock + ", views=" + views + ", productStatus=" + productStatus
-			+ ", productDate=" + productDate + ", productDetail=" + productDetail + ", images=" + images + "]";
-}
+
 public void setProductDetail(String productDetail) {
 	this.productDetail = productDetail;
 }
@@ -101,5 +84,17 @@ public List<ProductImage> getImages() {
 }
 public void setImages(List<ProductImage> images) {
 	this.images = images;
+}
+public String getName2() {
+	return name2;
+}
+public void setName2(String name2) {
+	this.name2 = name2;
+}
+public String getName() {
+	return name;
+}
+public void setName(String name) {
+	this.name = name;
 }
 }

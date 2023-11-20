@@ -32,13 +32,15 @@ public class RootController {
 
 	@GetMapping("/")
 	String index(Model model, Principal principal, Search search) {
-		long[] categoryCodes = {0, 1, 2};
+		String[] categoryCodes = {"데스크탑", "노트북", "모니터"};
 		
 		
-		for (int i = 0; i <= categoryCodes.length; i++) {
-	        search.setCategory1Code((long) i);
+		for (int i = 0; i < categoryCodes.length; i++) {
+	        search.setName(categoryCodes[i]);
 	        search.setRow(4);
+	        System.out.println(search);
 	        List<Product> productList = productService.list(search);
+	        System.out.println(productList);
 	        model.addAttribute("list" + i, productList);
 	    }
 		return "index";
@@ -61,7 +63,7 @@ public class RootController {
 		return "/auth/signup";
 	}
 
-	@PostMapping("/signup")
+	@PostMapping("/auth/signup")
 	String signup(User item) {
 		userService.Register(item);
 		return "redirect:/";

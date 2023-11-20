@@ -3,6 +3,7 @@ package kr.ac.kopo.itnara.service;
 import java.util.List;
 
 import kr.ac.kopo.itnara.model.Product;
+import kr.ac.kopo.itnara.model.ProductImage;
 import kr.ac.kopo.itnara.model.Store;
 
 public interface StoreService {
@@ -13,7 +14,7 @@ public interface StoreService {
 
 	Product product(Long productId);
 
-	void delete(Long productId);
+	List<ProductImage> delete(Long productId);
 
 
 }

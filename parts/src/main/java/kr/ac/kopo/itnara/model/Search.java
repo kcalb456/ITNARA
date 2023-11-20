@@ -1,18 +1,11 @@
 package kr.ac.kopo.itnara.model;
 
 public class Search {
-	private Long category1Code;
+	private String name;
 	private int row = 10;
 	private String order = "DESC";
 	private String search;
 
-	public Long getCategory1Code() {
-		return category1Code;
-	}
-
-	public void setCategory1Code(Long category1Code) {
-		this.category1Code = category1Code;
-	}
 
 	public int getRow() {
 		return row;
@@ -34,10 +27,11 @@ public class Search {
 		return search;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "Search [category1Code=" + category1Code + ", row=" + row + ", order=" + order + ", search=" + search
-				+ "]";
+		return "Search [name=" + name + ", row=" + row + ", order=" + order + ", search=" + search + "]";
 	}
 
 	public void setSearch(String search) {
@@ -47,5 +41,13 @@ public class Search {
     public boolean isSearchNotEmpty() {
         return search != null && !search.isEmpty();
     }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 }

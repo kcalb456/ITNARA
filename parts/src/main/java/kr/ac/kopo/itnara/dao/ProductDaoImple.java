@@ -7,8 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import kr.ac.kopo.itnara.model.Category1;
-import kr.ac.kopo.itnara.model.Category2;
+import kr.ac.kopo.itnara.model.Category;
 import kr.ac.kopo.itnara.model.Product;
 import kr.ac.kopo.itnara.model.ProductImage;
 import kr.ac.kopo.itnara.model.Search;
@@ -21,7 +20,6 @@ public class ProductDaoImple implements ProductDao {
 
 	@Override
 	public List<Product> list(Search search) {
-		System.out.println(search.getCategory1Code());
 		return sql.selectList("product.list", search);
 	}
 
@@ -39,16 +37,12 @@ public class ProductDaoImple implements ProductDao {
 	}
 
 	@Override
-	public List<Category1> category1List() {
+	public List<Category> category() {
 		// TODO Auto-generated method stub
-		return sql.selectList("product.category1List");
+		return sql.selectList("product.category");
 	}
 
-	@Override
-	public List<Category2> category2List() {
-		// TODO Auto-generated method stub
-		return sql.selectList("product.category2List");
-	}
+
 
 	@Override
 	public void delete(Long productId) {
@@ -56,5 +50,7 @@ public class ProductDaoImple implements ProductDao {
 		sql.delete("product.delete",productId);
 		
 	}
+
+
 
 }

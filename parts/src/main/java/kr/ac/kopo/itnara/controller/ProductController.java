@@ -19,8 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.ac.kopo.itnara.model.Product;
 import kr.ac.kopo.itnara.model.ProductImage;
 import kr.ac.kopo.itnara.model.Search;
-import kr.ac.kopo.itnara.model.Category1;
-import kr.ac.kopo.itnara.model.Category2;
+import kr.ac.kopo.itnara.model.Category;
 import kr.ac.kopo.itnara.security.CustomUserDetails;
 import kr.ac.kopo.itnara.service.ProductService;
 import kr.ac.kopo.itnara.service.StoreService;
@@ -50,10 +49,8 @@ public class ProductController {
 	
 	@GetMapping("/new")
 	String newProduct(Model model) {
-		List<Category1> category1List = service.category1List();
-		List<Category2> category2List = service.category2List();
-		model.addAttribute("category1List",category1List);
-		model.addAttribute("category2List",category2List);
+		List<Category> categoryList = service.category();
+		model.addAttribute("category",categoryList);
 		return path + "/new";
 	}
 

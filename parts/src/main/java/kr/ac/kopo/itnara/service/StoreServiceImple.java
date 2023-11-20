@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kr.ac.kopo.itnara.dao.ProductDao;
 import kr.ac.kopo.itnara.dao.StoreDao;
 import kr.ac.kopo.itnara.model.Product;
+import kr.ac.kopo.itnara.model.ProductImage;
 import kr.ac.kopo.itnara.model.Store;
 
 @Service
@@ -41,9 +42,12 @@ public class StoreServiceImple implements StoreService {
 
 
 	@Override
-	public void delete(Long productId) {
+	public List<ProductImage> delete(Long productId) {
 		// TODO Auto-generated method stub
+		Product item = dao.product(productId);
+		
 		productDao.delete(productId);
+		return item.getImages();
 		
 	}
 

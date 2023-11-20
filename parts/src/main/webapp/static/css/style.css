@@ -344,3 +344,9 @@ input:focus {
 	display: grid;
 	grid-template-columns: auto 36px auto;
 }
+
+.store-product-list{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}

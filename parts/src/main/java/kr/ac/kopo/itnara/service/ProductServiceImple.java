@@ -7,8 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.kopo.itnara.dao.ProductDao;
-import kr.ac.kopo.itnara.model.Category1;
-import kr.ac.kopo.itnara.model.Category2;
+import kr.ac.kopo.itnara.model.Category;
 import kr.ac.kopo.itnara.model.Product;
 import kr.ac.kopo.itnara.model.ProductImage;
 import kr.ac.kopo.itnara.model.Search;
@@ -40,18 +39,15 @@ public class ProductServiceImple implements ProductService {
 
 
 
+
+
 	@Override
-	public List<Category1> category1List() {
+	public List<Category> category() {
 		// TODO Auto-generated method stub
-		return dao.category1List();
+		return dao.category();
 	}
 
 
 
-	@Override
-	public List<Category2> category2List() {
-		// TODO Auto-generated method stub
-		return dao.category2List();
-	}
 
 }
