@@ -32,7 +32,7 @@ public class RootController {
 
 	@GetMapping("/")
 	String index(Model model, Principal principal, Search search) {
-		String[] categoryCodes = {"µ¥½ΊΕ©ΕΎ", "³λΖ®ΊΟ", "ΈπΉΩΐΟ"};
+		String[] categoryCodes = {"λ°μ¤ν¬νƒ‘", "λ…ΈνΈλ¶", "λª¨λ°”μΌ"};
 		
 		
 		for (int i = 0; i < categoryCodes.length; i++) {
