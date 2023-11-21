@@ -6,6 +6,11 @@
 	font-family: "Spoqa Han Sans Neo", "sans-serif";
 }
 
+h1{
+	margin:0px;
+	padding:0px;
+}
+
 body {
 	display: flex;
 	flex-direction: column;
@@ -296,8 +301,8 @@ input:focus {
 	height: 200px;
 }
 
-.product .privew-image {
-	width: 100%;
+.preview-image {
+	width: 280px;
 	height: 200px;
 }
 
@@ -366,4 +371,20 @@ input:focus {
     border-radius: 10px;
     padding: 0px 20px;
     font-size: 16px;
+}
+
+.detail-bottom
+{
+	    display: grid;
+    grid-template-columns: 1000px auto;
+}
+
+.detail-info{
+	border-radius: 10px;
+    margin-right: 36px;
+    background: #fafafa;
+    padding: 20px;
+}
+.store-more{
+	width:40%
 }

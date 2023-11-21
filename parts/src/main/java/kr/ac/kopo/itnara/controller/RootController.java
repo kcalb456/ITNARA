@@ -32,15 +32,9 @@ public class RootController {
 
 	@GetMapping("/")
 	String index(Model model, Principal principal, Search search) {
-		String[] categoryCodes = {"데스크탑", "노트북", "모바일"};
-		
-		
-		for (int i = 0; i < categoryCodes.length; i++) {
-	        search.setName(categoryCodes[i]);
-	        search.setRow(4);
+	        search.setRow(8);
 	        List<Product> productList = productService.list(search);
-	        model.addAttribute("list" + i, productList);
-	    }
+	        model.addAttribute("list", productList);
 		return "index";
 	}
 
