@@ -1,6 +1,10 @@
 /**
  *
  */
+
+window.addEventListener('DOMContentLoaded', function(){
+  priceFomatter();
+})
 function priceFomatter() {
   const priceList = document.querySelectorAll(".price");
   priceList.forEach(

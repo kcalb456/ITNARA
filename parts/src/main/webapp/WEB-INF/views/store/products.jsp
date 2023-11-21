@@ -13,7 +13,17 @@ prefix="c"%>
   <body>
     <div class="container">
       <section>
-        <div class="store-name"></div>
+        <div class="profile">
+          <div class="profile-img">
+            <img
+              class="img-full"
+              src="/"
+              alt="프로필 사진"
+              onerror="handleImageError(this)"
+            />
+          </div>
+          <div class="profile-name"></div>
+        </div>
       </section>
       <section>
         <div class="row center">
@@ -60,13 +70,13 @@ prefix="c"%>
           })
             .then((resp) => {
               if (!resp.ok) {
-                throw new Error(`HTTP error! Status: ${resp.status}`);
+                throw new Error(`HTTP error! Status: ` + resp.status);
               }
               return resp.json();
             })
             .then((result) => {
               console.log(result);
-              document.querySelector(".store-name").textContent =
+              document.querySelector(".profile-name").textContent =
                 result.item.storeName;
               result = result.list;
               listUI(result); //listUI 함수에 전달

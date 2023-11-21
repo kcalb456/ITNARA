@@ -44,7 +44,7 @@ public class StoreController {
 		return path + "products";
 	}
 
-	@GetMapping("/{userId}/{productId}/delete")
+	/*@GetMapping("/{userId}/{productId}/delete")
 	String delete(@PathVariable Long userId, @PathVariable Long productId, Authentication authentication) {
 
 		// ��ȸ�� �� ��ǰ ����ڿ� �α��������� ��ġ�� ��쿡�� ó���ǵ���
@@ -60,7 +60,7 @@ public class StoreController {
 			}
 		}
 		return "redirect:/";
-	}
+	}*/
 
 	@GetMapping("/{userId}/{productId}/update")
 	String update(@PathVariable Long userId, @PathVariable Long productId, Authentication authentication, Model model,

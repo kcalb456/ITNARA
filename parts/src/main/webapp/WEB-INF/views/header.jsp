@@ -4,6 +4,16 @@ prefix="c"%><%@ taglib uri="http://www.springframework.org/security/tags"
 prefix="sec"%>
 <link rel="stylesheet" href="/css/style.css" type="text/css" />
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js
+"></script>
+<link
+  href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css
+"
+  rel="stylesheet"
+/>
+
 <script src="/js/image_error.js"></script>
 <link
   rel="stylesheet"

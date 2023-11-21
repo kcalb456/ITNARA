@@ -22,6 +22,9 @@ function listUI(result) {
     // "a" 요소를 생성하고 href 속성을 설정
     const a = document.createElement("a");
     const img = document.createElement("img");
+    const label = document.createElement("label");
+    label.classList.add("sold-label");
+    label.textContent = "판매완료";
 
     const div3 = document.createElement("div");
     div3.classList.add("privew-info");
@@ -36,6 +39,8 @@ function listUI(result) {
     const div7 = document.createElement("div");
     div7.textContent = "원";
 
+    
+
     a.href = "/store/" + item.userId + "/" + item.productId;
 
     img.classList = "img-full";
@@ -43,9 +48,6 @@ function listUI(result) {
     img.id = item.productId;
     img.alt = item.images[0].imageName;
     img.onerror = () => handleImageError(img);
-    if (item.soldCheck == true) {
-      img.style.filter = "brightness(0.5)";
-    }
 
     // 여기서 내용(content)이나 다른 속성을 "a" 요소에 추가할 수 있음
     // 예를 들어, 내용을 추가하려면:
@@ -60,6 +62,12 @@ function listUI(result) {
     div5.appendChild(div6);
     div5.appendChild(div7);
     div2.appendChild(img);
+
+    if (item.soldCheck == true) {
+      img.style.filter = "brightness(0.5)";
+      div2.appendChild(label);
+    }
+    
 
     // "div"를 ".store-product-list"에 추가
     productList.appendChild(div);
