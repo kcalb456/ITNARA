@@ -5,6 +5,7 @@ import java.util.Date;
 public class Order {
  private Long orderId;
  private Long productId;
+ 
  public Long getOrderId() {
 	return orderId;
 }
@@ -59,4 +60,5 @@ public Long getProductId() {
 public void setProductId(Long productId) {
 	this.productId = productId;
 }
+
 }

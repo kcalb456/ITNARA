@@ -7,7 +7,7 @@
 }
 
 h1{
-	margin:0px;
+	margin:0px 0px 20px 0px;
 	padding:0px;
 }
 
@@ -33,7 +33,6 @@ a {
 	height: 100%;
 	display: flex;
 	flex-direction: row !important;
-	justify-content: space-between;
 }
 
 .c-blue {
@@ -164,7 +163,7 @@ input:focus {
 	outline: 2px solid #0080ff;
 }
 
-.inputbar label {
+.inputbar .input_label {
 	position: absolute;
 	pointer-events: none;
 	left: 19px;
@@ -294,6 +293,7 @@ input:focus {
 	overflow: hidden;
 	border-radius: 10px;
 	width: 280px;
+	transition: all 0.2s;
 }
 
 .product .privew-image {
@@ -345,10 +345,27 @@ input:focus {
 	grid-template-columns: auto 36px auto;
 }
 
+.center
+{
+	text-align: center;
+}
+
+button{
+	cursor: pointer;
+}
+
+textarea
+{
+	padding: 20px !important;
+	width: 100% !important;
+	height: 500px !important;
+}
+
+
 .store-product-list {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
+    grid-template-columns: 280px 280px 280px 280px;
+    grid-gap: 26px;
+    display: grid;
 }
 
 .add-form{
@@ -387,4 +404,18 @@ input:focus {
 }
 .store-more{
 	width:40%
+}
+
+.store-name
+{
+	background: #fafafa;
+    height: 300px;
+    border-radius: 10px;
+    font-size: 50px;
+}
+
+.product:hover{
+	z-index: 2;
+		box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+	transform: scale(1.1);
 }

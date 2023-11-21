@@ -18,6 +18,12 @@
     product.product_id = product_image.product_id
     ]]>
 		<where>
+			<if test="soldCheck != 99">
+				and sold_check = #{soldCheck}
+			</if>
+			<if test="userId != null">
+				and user_id = #{userId}
+			</if>
 			<if test="name != '' and name != null and name != 'undefined'">
 				and name = #{name}
 			</if>
@@ -64,8 +70,8 @@
 		WHERE
 		product_id=#{productId}
 	</update>
-	
-		<update id="soldCheck">
+
+	<update id="soldCheck">
 		UPDATE product
 		SET sold_check = #{soldCheck}
 		WHERE

@@ -1,7 +1,6 @@
 package kr.ac.kopo.itnara.controller;
 
-import java.security.Principal;
-import java.util.List;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,10 +30,7 @@ public class RootController {
 	ProductService productService;
 
 	@GetMapping("/")
-	String index(Model model, Principal principal, Search search) {
-	        search.setRow(8);
-	        List<Product> productList = productService.list(search);
-	        model.addAttribute("list", productList);
+	String index() {
 		return "index";
 	}
 

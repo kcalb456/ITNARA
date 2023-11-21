@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.ac.kopo.itnara.model.Category;
 import kr.ac.kopo.itnara.model.Product;
+import kr.ac.kopo.itnara.model.Search;
 import kr.ac.kopo.itnara.model.Store;
 import kr.ac.kopo.itnara.service.ProductService;
 import kr.ac.kopo.itnara.service.StoreService;
@@ -40,15 +41,21 @@ public class ApiController {
 	
 	
 	@GetMapping(value = { "/store/{userId}", "/" })
-    public ResponseEntity<Map<String, Object>> storeProductList(@PathVariable(required = false) Long userId) {
+    public ResponseEntity<Map<String, Object>> storeProductList(@PathVariable(required = false) Long userId, Search search) {
         Map<String, Object> response = new HashMap<>();
 
         Store item = storeService.item(userId);
         response.put("item", item);
 
-        List<Product> list = storeService.list(userId);
+        List<Product> list = productService.list(search);
         response.put("list", list);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+	
+	@GetMapping("/newlist")
+	public ResponseEntity<List<Product>> getProduct(Search search){
+		List<Product> products = productService.list(search);
+		return new ResponseEntity<>(products, HttpStatus.OK);
+	}
 }

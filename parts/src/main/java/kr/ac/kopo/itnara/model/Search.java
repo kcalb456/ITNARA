@@ -5,7 +5,8 @@ public class Search {
 	private int row = 10;
 	private String order = "DESC";
 	private String search;
-
+	private  Long userId;
+	private int soldCheck = 99;
 
 	public int getRow() {
 		return row;
@@ -49,5 +50,22 @@ public class Search {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public int getSoldCheck() {
+		return soldCheck;
+	}
+
+	public void setSoldCheck(int soldCheck) {
+		this.soldCheck = soldCheck;
+	}
+
 
 }

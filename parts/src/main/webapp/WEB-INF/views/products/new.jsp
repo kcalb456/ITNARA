@@ -83,16 +83,16 @@ prefix="c"%>
             <label class="input_label">수량:</label>
           </div>
 
-          <div>
+          <div class="inputbar row">
             <label>상태:</label>
             <input type="radio" name="productStatus" value="0" checked />새상품
             <input type="radio" name="productStatus" value="1" />중고
           </div>
 
           <div>
-            <label>상세 설명:</label>
-            <div>
-              <textarea id="summernote" name="productDetail"></textarea>
+            <div class="inputbar">
+              <textarea class="input_inner" name="productDetail"></textarea>
+              <label class="input_label">상세 설명:</label>
             </div>
           </div>
           <div>
