@@ -11,7 +11,8 @@ public class Order {
     private int zip;
     private String address1;
     private String address2;
-    private Date saleDate;
+    private Date orderDate;
+    private Long tracking;
 
     // Getter 및 Setter 메서드...
 
@@ -63,12 +64,12 @@ public class Order {
         this.address2 = address2;
     }
 
-    public Date getSaleDate() {
-        return saleDate;
+    public Date getOrderDate() {
+        return orderDate;
     }
 
-    public void setSaleDate(Date saleDate) {
-        this.saleDate = saleDate;
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
 
     public Long getProductId() {
@@ -78,6 +79,14 @@ public class Order {
     public void setProductId(Long productId) {
         this.productId = productId;
     }
+
+	public Long getTracking() {
+		return tracking;
+	}
+
+	public void setTracking(Long tracking) {
+		this.tracking = tracking;
+	}
 
 
 

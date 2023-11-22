@@ -3,7 +3,7 @@ pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
 prefix="c"%>
 
 <script src="/js/form-interact.js"></script>
-<div class="modal">
+<div class="modal login">
   <form method="post" id="signin_form" class="modal_body">
     <div>
       <div class="inputbar" id="id_field">

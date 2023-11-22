@@ -9,6 +9,10 @@ prefix="c"%>
     <title>상점</title>
     <script src="/js/price_format.js"></script>
     <script src="/js/card_ui.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
   </head>
   <body>
     <div class="container">
@@ -37,9 +41,12 @@ prefix="c"%>
         <div class="store-product-list"></div>
       </section>
     </div>
+
+    <div class="modal"><div class="modal_body"></div></div>
     <script>
       var soldCheck = 99;
       var userId;
+      let orderInfo;
 
       window.addEventListener("DOMContentLoaded", function () {
         var path = window.location.pathname;
@@ -70,6 +77,7 @@ prefix="c"%>
               return resp.json();
             })
             .then((result) => {
+              orderInfo = result;
               console.log(result);
               orderListUI(result);
             })
@@ -114,7 +122,7 @@ prefix="c"%>
           item.remove();
         });
 
-        result.orders.forEach((item) => {
+        result.orders.forEach((item, index) => {
           const div = document.createElement("div");
           div.classList.add("product");
 
@@ -123,17 +131,20 @@ prefix="c"%>
 
           // "a" 요소를 생성하고 href 속성을 설정
           const a = document.createElement("div");
+          a.classList.add("orderBtn");
+          a.id = result.products[index].productId;
+          div.onclick = () => modal(a.id);
 
           const div3 = document.createElement("div");
           div3.classList.add("privew-info");
           const div4 = document.createElement("div");
           div4.classList.add("privew-title");
-          div4.textContent = result.products[0].productName;
+          div4.textContent = result.products[index].productName;
           const div5 = document.createElement("div");
           div5.classList.add("privew-price");
           const div6 = document.createElement("div");
           div6.classList.add("price");
-          div6.textContent = result.products[0].productPrice;
+          div6.textContent = result.products[index].productPrice;
           const div7 = document.createElement("div");
           div7.textContent = "원";
 
@@ -142,10 +153,10 @@ prefix="c"%>
           img.classList = "img-full";
           img.src =
             "/upload/" +
-            result.products[0].uuid +
+            result.products[index].uuid +
             "_" +
-            result.products[0].images[0].imageName;
-          img.alt = result.products[0].images[0].imageName;
+            result.products[index].images[0].imageName;
+          img.alt = result.products[index].images[0].imageName;
           img.onerror = () => handleImageError(img);
           div2.appendChild(img);
 
@@ -163,12 +174,77 @@ prefix="c"%>
           div5.appendChild(div7);
           div2.appendChild(img);
 
+          if (result.products[index].traking == null) {
+            div.classList.add(
+              "product",
+              "animate__animated",
+              "animate__bounce",
+              "animate__infinite"
+            );
+          } else {
+            div.classList.add("product");
+          }
+
           // "div"를 ".store-product-list"에 추가
           productList.appendChild(div);
         });
-
         priceFomatter();
       }
     </script>
+    <script>
+      function modal(id) {
+        const order = document.querySelector(".order");
+        const modalBody = document.querySelector(".modal_body");
+        order.classList.toggle("show");
+        console.log(orderInfo);
+
+        const orderList = orderInfo.orders.find(
+          (order) => order.productId == id
+        );
+
+        const productList = orderInfo.products.find(
+          (product) => product.productId == id
+        );
+
+        document.querySelector(".orderId").textContent = orderList.orderId;
+        document.querySelector(".orderDate").textContent = orderList.orderDate;
+        document.querySelector(".productName").textContent =
+          productList.productName;
+
+        order.addEventListener("click", (e) => {
+          if (e.target.classList.contains("modal_body")) {
+            e.stopPropagation();
+          } else {
+            if (e.target.classList.contains("order")) {
+              order.classList.remove("show");
+            }
+          }
+        });
+      }
+    </script>
+
+    <div class="modal order">
+      <div id="order-form" class="modal_body">
+        <div>
+          <div class="order-title">
+            <h2>거래정보</h2>
+          </div>
+          <div class="order-number">
+            <div>
+              <label>거래번호 : </label>
+              <div class="orderId"></div>
+            </div>
+            <div class="orderDate"></div>
+          </div>
+          <div class="productName"></div>
+          <div class="inputbar">
+            <input class="input_inner" /><label class="input_label"
+              >송장번호 입력</label
+            >
+          </div>
+          <button class="long-button c-blue">확인</button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

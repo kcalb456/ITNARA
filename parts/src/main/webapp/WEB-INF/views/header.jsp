@@ -17,17 +17,17 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css
 <script src="/js/image_error.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const modal = document.querySelector(".modal");
+    const login = document.querySelector(".login");
     const modalBody = document.querySelector(".modal_body");
-    const btnOpenPopup = document.querySelector(".btn-open-popup");
+    const loginBtn = document.querySelector(".loginBtn");
 
-    btnOpenPopup.addEventListener("click", (e) => {
+    loginBtn.addEventListener("click", (e) => {
       e.stopPropagation(); // 모달 내부를 클릭한 경우 이벤트 전파 방지
-      modal.classList.toggle("show");
+      login.classList.toggle("show");
     });
 
-    modal.addEventListener("click", () => {
-      modal.classList.remove("show");
+    login.addEventListener("click", () => {
+      login.classList.remove("show");
     });
 
     modalBody.addEventListener("click", (e) => {
@@ -47,7 +47,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css
 
   <div class="login-box">
     <sec:authorize access="isAnonymous()">
-      <button class="btn-open-popup">로그인</button>
+      <button class="loginBtn">로그인</button>
     </sec:authorize>
     <sec:authorize access="isAuthenticated()">
       <sec:authentication property="principal" var="prc" />

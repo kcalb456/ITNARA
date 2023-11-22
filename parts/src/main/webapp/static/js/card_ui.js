@@ -73,5 +73,5 @@ function listUI(result) {
     productList.appendChild(div);
   });
 
-  priceFomatter();
+  formatPrices();
 }
