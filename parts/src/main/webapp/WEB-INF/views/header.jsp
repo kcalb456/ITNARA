@@ -15,6 +15,26 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css
 />
 
 <script src="/js/image_error.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.querySelector(".modal");
+    const modalBody = document.querySelector(".modal_body");
+    const btnOpenPopup = document.querySelector(".btn-open-popup");
+
+    btnOpenPopup.addEventListener("click", (e) => {
+      e.stopPropagation(); // 모달 내부를 클릭한 경우 이벤트 전파 방지
+      modal.classList.toggle("show");
+    });
+
+    modal.addEventListener("click", () => {
+      modal.classList.remove("show");
+    });
+
+    modalBody.addEventListener("click", (e) => {
+      e.stopPropagation(); // 모달 내부를 클릭한 경우 이벤트 전파 방지
+    });
+  });
+</script>
 <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
@@ -27,7 +47,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css
 
   <div class="login-box">
     <sec:authorize access="isAnonymous()">
-      <a href="/auth/login">로그인</a>
+      <button class="btn-open-popup">로그인</button>
     </sec:authorize>
     <sec:authorize access="isAuthenticated()">
       <sec:authentication property="principal" var="prc" />
@@ -36,3 +56,5 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css
     </sec:authorize>
   </div>
 </nav>
+
+<jsp:include page="auth/login.jsp"></jsp:include>

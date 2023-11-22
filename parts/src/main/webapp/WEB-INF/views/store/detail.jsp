@@ -171,11 +171,6 @@ prefix="sec"%>
               return resp.json();
             })
             .then((result) => {
-              console.log(result.userId);
-              console.log(userId);
-
-              var buttonsContainer = document.querySelector(".buttons");
-
               // fetch("/api/auth")의 결과를 사용하는 코드도 then 블록 내부로 이동
               fetch("/api/auth", {
                 method: "GET",
@@ -189,32 +184,36 @@ prefix="sec"%>
                   }
                   return resp.json();
                 })
-                .then((yourId) => {
-                  // buttons 클래스가 존재하는지 확인
-                  if (
-                    buttonsContainer &&
-                    result.soldCheck &&
-                    yourId != userId
-                  ) {
-                    // buttons 클래스 안에 있는 모든 자식 요소 삭제
-                    while (buttonsContainer.firstChild) {
-                      buttonsContainer.removeChild(buttonsContainer.firstChild);
-                    }
-
-                    var button = document.createElement("button");
-                    button.classList = "long-button c-gray";
-                    button.textContent = "판매완료";
-                    button.disabled;
-                    buttonsContainer.appendChild(button);
+                .then((LoginUser) => {
+                  const loginUserId = LoginUser.userId;
+                  if (LoginUser.userId != userId) {
+                    productEditButton(result);
                   }
                 })
                 .catch((error) => {
                   console.error("Error fetching /api/auth:", error.message);
+                  productEditButton(result);
                 });
             })
             .catch((error) => {
               console.error("Error fetching /api/product:", error.message);
             });
+        }
+      }
+
+      function productEditButton(result) {
+        var buttonsContainer = document.querySelector(".buttons");
+        if (buttonsContainer && result.soldCheck) {
+          // buttons 클래스 안에 있는 모든 자식 요소 삭제
+          while (buttonsContainer.firstChild) {
+            buttonsContainer.removeChild(buttonsContainer.firstChild);
+          }
+
+          var button = document.createElement("button");
+          button.classList = "long-button c-gray";
+          button.textContent = "판매완료";
+          button.disabled;
+          buttonsContainer.appendChild(button);
         }
       }
 

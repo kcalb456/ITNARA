@@ -27,10 +27,10 @@ prefix="c"%>
       </section>
       <section>
         <div class="row center">
-          <button onclick="categories(99)">전체</button>
-          <button onclick="categories(0)">판매중</button>
-          <button onclick="categories(1)">판매완료</button>
-          <button onclick="categories(2)">구매내역</button>
+          <button onclick="getList()">상품</button>
+          <button onclick="">상점후기</button>
+          <button onclick="orderList()">주문확인</button>
+          <button onclick="">구매내역</button>
         </div>
       </section>
       <section>
@@ -53,14 +53,34 @@ prefix="c"%>
         getList();
       });
 
-      function categories(e) {
-        soldCheck = e;
-        getList();
+      function orderList() {
+        const url = "/api/store/order?userId=" + userId;
+        if (userId) {
+          fetch(url, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            // query string을 사용하여 userId를 전달합니다.
+          })
+            .then((resp) => {
+              if (!resp.ok) {
+                throw new Error(`HTTP error! status: ` + resp.status);
+              }
+              return resp.json();
+            })
+            .then((result) => {
+              console.log(result);
+              orderListUI(result);
+            })
+            .catch((error) => {
+              console.error("Error fetching /api/store/order:", error.message);
+            });
+        }
       }
 
       function getList() {
-        console.log(soldCheck);
-        const url = "/api/store/" + userId + "?soldCheck=" + soldCheck;
+        const url = "/api/store/" + userId;
         if (userId) {
           fetch(url, {
             method: "GET",
@@ -83,6 +103,71 @@ prefix="c"%>
               // API 응답에서 가져온 각 항목에 대해 새 "product" 요소를 생성하고 추가
             });
         }
+      }
+
+      function orderListUI(result) {
+        // 어느 태그에 이 UI를 붙일지 선택
+        const productList = document.querySelector(".store-product-list");
+
+        // 모든 "product" 요소를 제거
+        productList.querySelectorAll(".product").forEach((item, index) => {
+          item.remove();
+        });
+
+        result.orders.forEach((item) => {
+          const div = document.createElement("div");
+          div.classList.add("product");
+
+          const div2 = document.createElement("div");
+          div2.classList.add("preview-image");
+
+          // "a" 요소를 생성하고 href 속성을 설정
+          const a = document.createElement("div");
+
+          const div3 = document.createElement("div");
+          div3.classList.add("privew-info");
+          const div4 = document.createElement("div");
+          div4.classList.add("privew-title");
+          div4.textContent = result.products[0].productName;
+          const div5 = document.createElement("div");
+          div5.classList.add("privew-price");
+          const div6 = document.createElement("div");
+          div6.classList.add("price");
+          div6.textContent = result.products[0].productPrice;
+          const div7 = document.createElement("div");
+          div7.textContent = "원";
+
+          // 이미지 처리를 위한 코드
+          const img = document.createElement("img");
+          img.classList = "img-full";
+          img.src =
+            "/upload/" +
+            result.products[0].uuid +
+            "_" +
+            result.products[0].images[0].imageName;
+          img.alt = result.products[0].images[0].imageName;
+          img.onerror = () => handleImageError(img);
+          div2.appendChild(img);
+
+          // 여기서 내용(content)이나 다른 속성을 "a" 요소에 추가할 수 있음
+          // 예를 들어, 내용을 추가하려면:
+          // a.textContent = item.name;
+
+          // "a" 요소를 "div"에 추가
+          div.appendChild(a);
+          a.appendChild(div2);
+          a.appendChild(div3);
+          div3.appendChild(div4);
+          div3.appendChild(div5);
+          div5.appendChild(div6);
+          div5.appendChild(div7);
+          div2.appendChild(img);
+
+          // "div"를 ".store-product-list"에 추가
+          productList.appendChild(div);
+        });
+
+        priceFomatter();
       }
     </script>
   </body>

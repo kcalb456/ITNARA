@@ -95,9 +95,9 @@ prefix="c"%>
               <label class="input_label">상세 설명:</label>
             </div>
           </div>
-          <div>
-            <button>등록</button>
-            <a href="list">취소</a>
+          <div class="buttons">
+            <button class="long-button c-blue">등록</button>
+            <a href="./" class="long-button c-gray">취소</a>
           </div>
         </div>
       </form>
