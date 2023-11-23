@@ -32,9 +32,9 @@ prefix="c"%>
       <section>
         <div class="row center">
           <button onclick="getList()">상품</button>
-          <button onclick="">상점후기</button>
+          <button onclick="ratingList()">상점후기</button>
           <button onclick="orderList()">주문확인</button>
-          <button onclick="">구매내역</button>
+          <button onclick="purchaseList()">구매내역</button>
         </div>
       </section>
       <section>
@@ -87,6 +87,42 @@ prefix="c"%>
         }
       }
 
+      function purchaseList() {
+        const url = "/api/store/order/purchase?userId=" + userId;
+        if (userId) {
+          fetch(url, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            // query string을 사용하여 userId를 전달합니다.
+          })
+            .then((resp) => {
+              if (!resp.ok) {
+                throw new Error(`HTTP error! status: ` + resp.status);
+              }
+              return resp.json();
+            })
+            .then((result) => {
+              orderInfo = result;
+              console.log(result);
+              orderListUI(result);
+            })
+            .catch((error) => {
+              console.error("Error fetching /api/store/order:", error.message);
+            });
+        }
+      }
+
+      function ratingList() {
+        const productList = document.querySelector(".store-product-list");
+
+        // 모든 "product" 요소를 제거
+        productList.querySelectorAll(".product").forEach((item, index) => {
+          item.remove();
+        });
+      }
+
       function getList() {
         const url = "/api/store/" + userId;
         if (userId) {
@@ -122,7 +158,7 @@ prefix="c"%>
           item.remove();
         });
 
-        result.orders.forEach((item, index) => {
+        result.forEach((item) => {
           const div = document.createElement("div");
           div.classList.add("product");
 
@@ -132,31 +168,27 @@ prefix="c"%>
           // "a" 요소를 생성하고 href 속성을 설정
           const a = document.createElement("div");
           a.classList.add("orderBtn");
-          a.id = result.products[index].productId;
+          a.id = item.productId;
           div.onclick = () => modal(a.id);
 
           const div3 = document.createElement("div");
           div3.classList.add("privew-info");
           const div4 = document.createElement("div");
           div4.classList.add("privew-title");
-          div4.textContent = result.products[index].productName;
+          div4.textContent = item.productName;
           const div5 = document.createElement("div");
           div5.classList.add("privew-price");
           const div6 = document.createElement("div");
           div6.classList.add("price");
-          div6.textContent = result.products[index].productPrice;
+          div6.textContent = item.productPrice;
           const div7 = document.createElement("div");
           div7.textContent = "원";
 
           // 이미지 처리를 위한 코드
           const img = document.createElement("img");
           img.classList = "img-full";
-          img.src =
-            "/upload/" +
-            result.products[index].uuid +
-            "_" +
-            result.products[index].images[0].imageName;
-          img.alt = result.products[index].images[0].imageName;
+          img.src = "/upload/" + item.uuid + "_" + item.images[0].imageName;
+          img.alt = item.images[0].imageName;
           img.onerror = () => handleImageError(img);
           div2.appendChild(img);
 
@@ -174,7 +206,9 @@ prefix="c"%>
           div5.appendChild(div7);
           div2.appendChild(img);
 
-          if (result.products[index].traking == null) {
+          console.log(item.userId + "" + userId);
+
+          if (item.tracking == null && item.userId2 != userId) {
             div.classList.add(
               "product",
               "animate__animated",
@@ -191,18 +225,122 @@ prefix="c"%>
         priceFomatter();
       }
     </script>
+
     <script>
+      function trackingUpdate(productId) {
+        const formData = new URLSearchParams();
+
+        formData.append("t_key", "btym3M1V7b4xVDCKRpixdw");
+        formData.append(
+          "t_invoice",
+          document.getElementById("tracking-number").value
+        );
+        formData.append("t_code", document.getElementById("delivery").value);
+
+        const url = new URL(
+          "http://info.sweettracker.co.kr/api/v1/trackingInfo"
+        );
+        url.search = formData.toString();
+
+        // API 호출 및 결과를 Promise로 반환
+        return fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            console.log(result);
+            let statusCode = 0;
+            if (result.code) {
+              statusCode = result.code;
+            }
+            if (statusCode == "104") {
+              Swal.fire({
+                position: "center",
+                icon: "error",
+                title: result.msg,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              document.getElementById(delivery).focus;
+            } else {
+              const csrfHeader = document.querySelector(
+                'meta[name="_csrf_header"]'
+              ).content;
+              const csrfToken =
+                document.querySelector('meta[name="_csrf"]').content;
+
+              var path = window.location.pathname;
+
+              // 경로에서 userId 추출하기
+              var userIdMatch = path.match(/\/store\/(\d+)/);
+
+              // userId가 존재하면 값을 추출
+              userId = userIdMatch ? userIdMatch[1] : null;
+
+              fetch("/api/store/order/tracking", {
+                method: "PATCH",
+                headers: {
+                  [csrfHeader]: csrfToken,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  userId: userId,
+                  productId: productId,
+                  tracking: "1234",
+                }),
+              })
+                .then((response) => {
+                  if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ` + response.status);
+                  }
+                  return response.text();
+                })
+                .then((data) => {
+                  Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "송장번호가 정상적으로 등록되었습니다.",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
+                  orderList();
+                })
+                .catch((error) => {
+                  console.error("Fetch error:", error);
+                });
+
+              OrderModalClose();
+            }
+          })
+          .catch((error) => {
+            console.error("에러:", error);
+            throw error; // 이 부분은 필요에 따라 수정할 수 있습니다.
+          });
+      }
+    </script>
+
+    <script>
+      function OrderModalClose() {
+        const modals = document.querySelectorAll(".modal");
+
+        modals.forEach((modal) => {
+          modal.classList.remove("show");
+        });
+      }
+
       function modal(id) {
         const order = document.querySelector(".order");
         const modalBody = document.querySelector(".modal_body");
         order.classList.toggle("show");
         console.log(orderInfo);
+        document.querySelector(".order-form-confirm").id = id;
 
-        const orderList = orderInfo.orders.find(
-          (order) => order.productId == id
-        );
+        const orderList = orderInfo.find((order) => order.productId == id);
 
-        const productList = orderInfo.products.find(
+        const productList = orderInfo.find(
           (product) => product.productId == id
         );
 
@@ -238,11 +376,21 @@ prefix="c"%>
           </div>
           <div class="productName"></div>
           <div class="inputbar">
-            <input class="input_inner" /><label class="input_label"
+            <input id="tracking-number" class="input_inner" /><label
+              class="input_label"
               >송장번호 입력</label
-            >
+            ><select id="delivery">
+              <option value="04">CJ대한통운</option>
+              <option value="05">한진택배</option>
+              <option value="01">우체국택배</option>
+            </select>
           </div>
-          <button class="long-button c-blue">확인</button>
+          <button
+            class="long-button c-blue order-form-confirm"
+            onclick="trackingUpdate(this.id);"
+          >
+            확인
+          </button>
         </div>
       </div>
     </div>

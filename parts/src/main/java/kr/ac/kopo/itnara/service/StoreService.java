@@ -21,5 +21,8 @@ public interface StoreService {
 
 	void order(Order order);
 
+	List<Product> soldOrderList(Long userId);
+
+
 
 }

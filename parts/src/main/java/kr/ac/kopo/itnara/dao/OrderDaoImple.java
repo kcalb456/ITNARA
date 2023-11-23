@@ -20,4 +20,16 @@ public class OrderDaoImple implements OrderDao {
 		return sql.selectList("order.list", userId);
 	}
 
+	@Override
+	public List<Order> purchaseList(Long userId) {
+		// TODO Auto-generated method stub
+		return sql.selectList("order.purchaseList", userId);
+	}
+
+	@Override
+	public void updateTracking(Order order) {
+		// TODO Auto-generated method stub
+		sql.update("order.updateTracking", order);
+	}
+
 }

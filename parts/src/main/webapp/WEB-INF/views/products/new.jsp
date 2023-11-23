@@ -9,8 +9,6 @@ prefix="c"%>
     <jsp:include page="../header.jsp"></jsp:include>
     <script src="/js/add_files.js"></script>
     <script src="/js/category.js"></script>
-    <meta name="_csrf" content="${_csrf.token}" />
-    <meta name="_csrf_header" content="${_csrf.headerName}" />
     <title>Document</title>
   </head>
   <body>

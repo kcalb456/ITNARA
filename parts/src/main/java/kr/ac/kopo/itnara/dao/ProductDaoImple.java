@@ -71,4 +71,12 @@ public class ProductDaoImple implements ProductDao {
 
 
 
+	@Override
+	public List<Product> soldOrderList(Long userId) {
+		// TODO Auto-generated method stub
+	 return sql.selectList("product.soldOrderList",userId);
+	}
+
+
+
 }

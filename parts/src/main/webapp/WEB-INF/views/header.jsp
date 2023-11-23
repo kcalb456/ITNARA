@@ -13,7 +13,8 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css
 "
   rel="stylesheet"
 />
-
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <script src="/js/image_error.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {

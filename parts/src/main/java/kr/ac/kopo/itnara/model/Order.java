@@ -8,11 +8,14 @@ public class Order {
     private Long productId;
     private Long userId;
     private Long userId2;  // userId2 추가
+    private String productName;
+    private String productPrice;
     private int zip;
     private String address1;
     private String address2;
     private Date orderDate;
     private Long tracking;
+    private List<ProductImage> images;
 
     // Getter 및 Setter 메서드...
 
@@ -86,6 +89,30 @@ public class Order {
 
 	public void setTracking(Long tracking) {
 		this.tracking = tracking;
+	}
+
+	public String getProductPrice() {
+		return productPrice;
+	}
+
+	public void setProductPrice(String productPrice) {
+		this.productPrice = productPrice;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public List<ProductImage> getImages() {
+		return images;
+	}
+
+	public void setImages(List<ProductImage> images) {
+		this.images = images;
 	}
 
 

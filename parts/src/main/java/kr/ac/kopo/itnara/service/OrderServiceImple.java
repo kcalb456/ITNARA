@@ -19,4 +19,16 @@ public class OrderServiceImple implements OrderService {
 		return dao.list(userId);
 	}
 
+	@Override
+	public List<Order> purchaseList(Long userId) {
+		// TODO Auto-generated method stub
+		return dao.purchaseList(userId);
+	}
+
+	@Override
+	public void updateTracking(Order order) {
+		// TODO Auto-generated method stub
+		dao.updateTracking(order);
+	}
+
 }

@@ -145,13 +145,13 @@ section {
 }
 
 .inputbar {
-	position: relative;
-	box-sizing: border-box;
-	border-radius: 10px;
-	font-size: 16px;
-	width: 100%;
-	box-sizing: border-box;
-	margin-bottom: 50px !important;
+position: relative;
+    border-radius: 10px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 }
 
 #search {
@@ -245,17 +245,19 @@ input:focus {
 }
 
 #signin_form, #signup_form,#order-form {
-	position: absolute;
-	display: flex;
-	flex-direction: column;
-	padding: 50px;
-	background: #fafafa;
-	border-radius: 10px;
+position: absolute;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    background: #fafafa;
+    grid-gap: 26px;
+    border-radius: 10px
 }
 
 #signin_form > div, #signup_form > div, #order-form > div{
-	width: 500px;
+    width: 500px;
     display: grid;
+    grid-gap: 26px;
     grid-template-columns: 100%;
     justify-items: center;
 }
@@ -509,4 +511,8 @@ textarea {
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+}
+
+#signup_form{
+	position: relative !important;
 }

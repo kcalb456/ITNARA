@@ -26,5 +26,8 @@ public interface ProductDao {
 	void soldCheckUpdate(Product product);
 
 
+	List<Product> soldOrderList(Long userId);
+
+
 
 }

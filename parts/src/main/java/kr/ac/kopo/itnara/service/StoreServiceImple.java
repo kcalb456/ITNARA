@@ -71,6 +71,12 @@ public class StoreServiceImple implements StoreService {
 	}
 
 
+	@Override
+	public List<Product> soldOrderList(Long userId) {
+		return productDao.soldOrderList(userId);
+	}
+
+
 
 
 

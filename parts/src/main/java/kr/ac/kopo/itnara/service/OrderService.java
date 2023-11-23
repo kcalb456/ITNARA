@@ -8,4 +8,8 @@ public interface OrderService {
 
 	List<Order> list(Long userId);
 
+	List<Order> purchaseList(Long userId);
+
+	void updateTracking(Order order);
+
 }

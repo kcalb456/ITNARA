@@ -92,4 +92,14 @@
 	</delete>
 
 
+	<select id="soldOrderList" resultMap="ProductMap">
+		SELECT o.*, p.product_name,
+		p.product_price, product_image.*
+		FROM product p
+		JOIN orders o ON p.product_id = o.product_id LEFT JOIN product_image ON
+		p.product_id = product_image.product_id WHERE
+		o.user_id =
+		#{userId};
+	</select>
+
 </mapper>
