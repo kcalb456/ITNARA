@@ -64,33 +64,7 @@ prefix="c"%>
         // 로그인이 성공했을 때의 추가 로직을 여기에 추가
         // 예: 리디렉션 등
         console.log("로그인 성공:", data);
-
-        // /api/auth에 대한 GET 요청
-        fetch("/api/auth", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((res) => {
-            if (!res.ok) {
-              throw new Error(`서버 응답 실패, 상태 코드: ${res.status}`);
-            }
-
-            return res.json(); // JSON 형식으로 변환
-          })
-          .then((apiData) => {
-            // /api/auth 응답 처리
-            console.log("/api/auth 응답:", apiData);
-            location.reload();
-            // 이후 작업을 수행하거나 필요한 처리를 추가
-          })
-          .catch((error) => {
-            console.error("/api/auth 요청 중 에러 발생:", error);
-          });
-      })
-      .catch((error) => {
-        console.error("에러 발생:", error);
+        location.reload();
       });
   });
 </script>

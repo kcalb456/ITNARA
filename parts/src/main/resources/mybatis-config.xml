@@ -22,9 +22,12 @@
 
 		<typeAlias type="kr.ac.kopo.itnara.model.Category"
 			alias="Category" />
-			
-			<typeAlias type="kr.ac.kopo.itnara.model.Order"
+
+		<typeAlias type="kr.ac.kopo.itnara.model.Order"
 			alias="Order" />
+
+		<typeAlias type="kr.ac.kopo.itnara.model.UserInfo"
+			alias="UserInfo" />
 
 	</typeAliases>
 

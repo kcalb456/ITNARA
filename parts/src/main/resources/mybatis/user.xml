@@ -21,5 +21,10 @@
 		select user_id, email, passwd,authority, enabled a from user where email =
 		#{name}
 	</select>
-
+<select id="permitAllUserInfo" resultType="UserInfo">
+    SELECT 
+        (SELECT COUNT(*) FROM product WHERE user_id = #{userId} AND sold_check = 1) AS count_sell,
+        (SELECT COUNT(*) FROM orders WHERE user_id2 = #{userId}) AS count_purchase,
+        (SELECT COUNT(*) FROM likes WHERE user_id = #{userId}) AS count_like
+</select>
 </mapper>

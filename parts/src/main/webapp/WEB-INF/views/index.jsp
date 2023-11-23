@@ -16,29 +16,7 @@ prefix="c"%>
       <jsp:include page="search.jsp"></jsp:include>
       <section class="section-board">
         <h1>신규 등록</h1>
-        <div class="store-product-list">
-          <c:forEach var="item" items="${list}">
-            <div class="product">
-              <a href="/store/${item.userId}/${item.productId}">
-                <div class="preview-image">
-                  <img
-                    class="img-full"
-                    src="/upload/${item.images[0].uuid}_${item.images[0].imageName}"
-                    alt="${item.images[0].imageName}"
-                    onerror="handleImageError(this)"
-                  />
-                </div>
-                <div class="privew-info">
-                  <div class="privew-title">${item.productName}</div>
-                  <div class="privew-price">
-                    <div class="price">${item.productPrice }</div>
-                    <div>원</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </c:forEach>
-        </div>
+        <div class="store-product-list"></div>
       </section>
     </div>
     <script>

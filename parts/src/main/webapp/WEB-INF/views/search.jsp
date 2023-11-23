@@ -44,20 +44,36 @@ prefix="sec"%>
     </div>
   </article>
   <article class="nav-arti-right">
-    <div class="row">
-      <a
-        id="mystore"
-        href="#"
-        onclick="LoginCheck(this.id)"
-        class="long-button c-white"
-        >내 상점</a
-      ><a
-        id="new"
-        href="#"
-        onclick="LoginCheck(this.id)"
-        class="long-button c-blue"
-        >내 물건 팔기</a
-      >
+    <div>
+      <div class="buttons">
+        <a
+          id="mystore"
+          href="#"
+          onclick="LoginCheck(this.id)"
+          class="long-button c-white"
+          >내 상점</a
+        ><a
+          id="new"
+          href="#"
+          onclick="LoginCheck(this.id)"
+          class="long-button c-blue"
+          >내 물건 팔기</a
+        >
+      </div>
+    </div>
+    <div class="sell-info row">
+      <div>
+        <label>나의 찜</label>
+        <div class="like">-</div>
+      </div>
+      <div>
+        <label>나의 판매중인 물품</label>
+        <div class="sale-count">-</div>
+      </div>
+      <div>
+        <label>나의 구매한 물품</label>
+        <div class="purchase-count">-</div>
+      </div>
     </div>
   </article>
 </section>
@@ -69,13 +85,7 @@ prefix="sec"%>
       userId = "${prc.userId}"
     </sec:authorize>;
     if (!userId) {
-      swal(
-        "로그인이 필요한 항목입니다.",
-        "회원 가입 또는 로그인을 해주세요",
-        "error"
-      ).then((result) => {
-        if (result) location.href = "/auth/login";
-      });
+      LoginModal();
     } else {
       switch (clickedId) {
         case "mystore":
@@ -108,21 +118,30 @@ prefix="sec"%>
     document.getElementById("search").value = searchText;
   });
 </script>
-<script>
-  window.addEventListener("DOMContentLoaded", function () {
-    urlSearch = new URLSearchParams(location.search);
-    searchText = urlSearch.get("name");
-    document.querySelector(".category-button").lastElementChild.style.margin =
-      "0px";
 
-    const sels = document.querySelectorAll(".category-button a");
-    sels.forEach(function (sel, index) {
-      if (sel.textContent == searchText) {
-        sel.style.color = "white";
-        sel.style.backgroundColor = "#0080ff";
-        sel.style.top = "10px";
-        sel.style.boxShadow = "0px 5px 10px rgba(0, 0, 0, 0.1)";
-      }
-    });
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch("/api/auth", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resp) => {
+        if (!resp.ok) {
+          throw new Error(`HTTP error! Status: ` + resp.status);
+        }
+        return resp.json();
+      })
+      .then((result) => {
+        console.log(result);
+        document.querySelector(".like").textContent = result.countLike;
+        document.querySelector(".sale-count").textContent = result.countSell;
+        document.querySelector(".purchase-count").textContent =
+          result.countPurchase;
+      })
+      .catch((error) => {
+        console.error("Error fetching /api/product:", error.message);
+      });
   });
 </script>

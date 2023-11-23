@@ -1,14 +1,19 @@
 /**
  *
  */
+
 document.addEventListener("input", function () {
-  inputLabels = document.querySelectorAll("form .input_label");
-  inputs = document.querySelectorAll("form .input_inner");
+  inputNullCheck();
+});
+
+function inputNullCheck() {
+  inputLabels = document.querySelectorAll(".input_label");
+  inputs = document.querySelectorAll(".input_inner");
 
   inputs.forEach(function (input, index) {
     var inputLabel = inputLabels[index];
 
-    if (input.value !== "") {
+    if (input.value != "") {
       inputAnime(inputLabel);
     } else {
       inputLabel.style.top = "18px";
@@ -16,7 +21,7 @@ document.addEventListener("input", function () {
       inputLabel.style.color = "black";
     }
   });
-});
+}
 
 document.addEventListener(
   "focus",

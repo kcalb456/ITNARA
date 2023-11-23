@@ -4,6 +4,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import kr.ac.kopo.itnara.dao.UserDao;
 import kr.ac.kopo.itnara.model.User;
+import kr.ac.kopo.itnara.model.UserInfo;
 
 @Service
 public class UserServiceImple implements UserService {
@@ -25,6 +26,12 @@ public class UserServiceImple implements UserService {
 		item.setPasswd(encodedPassword);
 
 		dao.add(item);
+	}
+
+	@Override
+	public UserInfo getInfo(Long userId) {
+		// TODO Auto-generated method stub
+		return dao.getUserInfo(userId);
 	}
 
 

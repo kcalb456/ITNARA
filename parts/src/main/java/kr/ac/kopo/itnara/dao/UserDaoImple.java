@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 
 import kr.ac.kopo.itnara.model.User;
+import kr.ac.kopo.itnara.model.UserInfo;
 import kr.ac.kopo.itnara.security.CustomUserDetails;
 
 @Repository
@@ -24,6 +25,12 @@ public class UserDaoImple implements UserDao {
 	public CustomUserDetails getUserInfo(String name) {
 		// TODO Auto-generated method stub
 		return sql.selectOne("user.info",name);
+	}
+
+	@Override
+	public UserInfo getUserInfo(Long userId) {
+		// TODO Auto-generated method stub
+		return sql.selectOne("user.permitAllUserInfo", userId);
 	}
 
 

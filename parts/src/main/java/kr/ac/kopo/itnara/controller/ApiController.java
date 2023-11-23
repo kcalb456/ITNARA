@@ -27,10 +27,12 @@ import kr.ac.kopo.itnara.model.Product;
 import kr.ac.kopo.itnara.model.ProductImage;
 import kr.ac.kopo.itnara.model.Search;
 import kr.ac.kopo.itnara.model.Store;
+import kr.ac.kopo.itnara.model.UserInfo;
 import kr.ac.kopo.itnara.security.CustomUserDetails;
 import kr.ac.kopo.itnara.service.OrderService;
 import kr.ac.kopo.itnara.service.ProductService;
 import kr.ac.kopo.itnara.service.StoreService;
+import kr.ac.kopo.itnara.service.UserService;
 
 @RestController
 @RequestMapping("/api")
@@ -44,6 +46,9 @@ public class ApiController {
 
 	@Autowired
 	OrderService orderService;
+	
+	@Autowired
+	UserService userService;
 
 	private String uploadPath = "d:/upload/";
 
@@ -98,9 +103,15 @@ public class ApiController {
 	}
 
 	@GetMapping("/auth")
-	public ResponseEntity<CustomUserDetails> getAuthentication(Authentication authentication) {
-		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		return new ResponseEntity<>(userDetails, HttpStatus.OK);
+	public ResponseEntity<UserInfo> getAuthentication(Authentication authentication,UserInfo userInfo) {
+		
+		if (isAuthenticated()){
+			CustomUserDetails userDetails =(CustomUserDetails)authentication.getPrincipal();
+			
+			userInfo = userService.getInfo(userDetails.getUserId());
+			userInfo.setUserId(userDetails.getUserId());
+		}
+		return new ResponseEntity<>(userInfo, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/product/delete/{userId}")

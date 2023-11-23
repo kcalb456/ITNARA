@@ -27,7 +27,7 @@ function listUI(result) {
     label.textContent = "판매완료";
 
     const div3 = document.createElement("div");
-    div3.classList.add("privew-info");
+    div3.classList.add("preview-info");
     const div4 = document.createElement("div");
     div4.classList.add("privew-title");
     div4.textContent = item.productName;
@@ -38,8 +38,6 @@ function listUI(result) {
     div6.textContent = item.productPrice;
     const div7 = document.createElement("div");
     div7.textContent = "원";
-
-    
 
     a.href = "/store/" + item.userId + "/" + item.productId;
 
@@ -67,11 +65,10 @@ function listUI(result) {
       img.style.filter = "brightness(0.5)";
       div2.appendChild(label);
     }
-    
 
     // "div"를 ".store-product-list"에 추가
     productList.appendChild(div);
   });
 
-  formatPrices();
+  priceFomatter();
 }

@@ -17,7 +17,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 <script src="/js/image_error.js"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+  /*document.addEventListener("DOMContentLoaded", function () {
     const login = document.querySelector(".login");
     const modalBody = document.querySelector(".modal_body");
     const loginBtn = document.querySelector(".loginBtn");
@@ -34,7 +34,25 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css
     modalBody.addEventListener("click", (e) => {
       e.stopPropagation(); // 모달 내부를 클릭한 경우 이벤트 전파 방지
     });
-  });
+  });*/
+
+  function LoginModal() {
+    const login = document.querySelector(".login");
+    const modalBody = document.querySelector(".modal_body");
+    login.classList.toggle("show");
+
+    inputNullCheck();
+
+    login.addEventListener("click", (e) => {
+      if (e.target.classList.contains("modal_body")) {
+        e.stopPropagation();
+      } else {
+        if (e.target.classList.contains("login")) {
+          login.classList.remove("show");
+        }
+      }
+    });
+  }
 </script>
 <link
   rel="stylesheet"
@@ -48,12 +66,11 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css
 
   <div class="login-box">
     <sec:authorize access="isAnonymous()">
-      <button class="loginBtn">로그인</button>
+      <button onclick="LoginModal()" class="loginBtn">로그인</button>
     </sec:authorize>
     <sec:authorize access="isAuthenticated()">
       <sec:authentication property="principal" var="prc" />
       <a href="/logout" class="">로그아웃</a>
-      ${prc.authorities}
     </sec:authorize>
   </div>
 </nav>

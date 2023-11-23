@@ -13,7 +13,7 @@ prefix="sec"%>
     <jsp:include page="../header.jsp"></jsp:include>
     <div class="container">
       <section>
-        <div class="title">
+        <div class="detail-title">
           <div class="product-name">${product.productName}</div>
           <div class="product-date">${product.productDate}</div>
         </div>
@@ -101,7 +101,7 @@ prefix="sec"%>
           <div>${product.productDetail}</div>
         </div>
         <div class="store-more">
-          <label class="title">판매자의 다른 상품</label>
+          <label class="detail-title">판매자의 다른 상품</label>
         </div>
       </section>
     </div>
@@ -169,29 +169,7 @@ prefix="sec"%>
               return resp.json();
             })
             .then((result) => {
-              // fetch("/api/auth")의 결과를 사용하는 코드도 then 블록 내부로 이동
-              fetch("/api/auth", {
-                method: "GET",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              })
-                .then((resp) => {
-                  if (!resp.ok) {
-                    throw new Error(`HTTP error! Status: ` + resp.status);
-                  }
-                  return resp.json();
-                })
-                .then((LoginUser) => {
-                  const loginUserId = LoginUser.userId;
-                  if (LoginUser.userId != userId) {
-                    productEditButton(result);
-                  }
-                })
-                .catch((error) => {
-                  console.error("Error fetching /api/auth:", error.message);
-                  productEditButton(result);
-                });
+              productEditButton(result);
             })
             .catch((error) => {
               console.error("Error fetching /api/product:", error.message);

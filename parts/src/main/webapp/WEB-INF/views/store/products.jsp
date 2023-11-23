@@ -13,6 +13,8 @@ prefix="c"%>
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
+    <link rel="stylesheet" href="/css/butterup.min.css" />
+    <script src="/js/butterup.min.js"></script>
   </head>
   <body>
     <div class="container">
@@ -177,7 +179,7 @@ prefix="c"%>
           div4.classList.add("privew-title");
           div4.textContent = item.productName;
           const div5 = document.createElement("div");
-          div5.classList.add("privew-price");
+          div5.classList.add("preview-price");
           const div6 = document.createElement("div");
           div6.classList.add("price");
           div6.textContent = item.productPrice;
@@ -242,8 +244,7 @@ prefix="c"%>
         );
         url.search = formData.toString();
 
-        // API 호출 및 결과를 Promise로 반환
-        return fetch(url, {
+        fetch(url, {
           method: "GET",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -257,14 +258,16 @@ prefix="c"%>
               statusCode = result.code;
             }
             if (statusCode == "104") {
-              Swal.fire({
-                position: "center",
-                icon: "error",
-                title: result.msg,
-                showConfirmButton: false,
-                timer: 1500,
+              document.getElementById("tracking-number").focus;
+              butterup.toast({
+                title: "송장번호 등록에 실패하였습니다",
+                message: result.msg,
+                location: "bottom-center",
+                icon: true,
+                dismissable: false,
+                type: "error",
+                theme: "grass",
               });
-              document.getElementById(delivery).focus;
             } else {
               const csrfHeader = document.querySelector(
                 'meta[name="_csrf_header"]'
@@ -289,7 +292,7 @@ prefix="c"%>
                 body: JSON.stringify({
                   userId: userId,
                   productId: productId,
-                  tracking: "1234",
+                  tracking: document.getElementById("tracking-number").value,
                 }),
               })
                 .then((response) => {
@@ -299,26 +302,27 @@ prefix="c"%>
                   return response.text();
                 })
                 .then((data) => {
-                  Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title: "송장번호가 정상적으로 등록되었습니다.",
-                    showConfirmButton: false,
-                    timer: 1500,
+                  butterup.toast({
+                    title: "송장번호 등록에 성공하였습니다",
+                    message: result.msg,
+                    location: "bottom-center",
+                    icon: true,
+                    dismissable: false,
+                    type: "success",
+                    theme: "grass",
                   });
                   orderList();
                 })
                 .catch((error) => {
                   console.error("Fetch error:", error);
                 });
-
-              OrderModalClose();
             }
           })
           .catch((error) => {
             console.error("에러:", error);
             throw error; // 이 부분은 필요에 따라 수정할 수 있습니다.
           });
+        OrderModalClose();
       }
     </script>
 
@@ -340,14 +344,14 @@ prefix="c"%>
 
         const orderList = orderInfo.find((order) => order.productId == id);
 
-        const productList = orderInfo.find(
-          (product) => product.productId == id
-        );
-
         document.querySelector(".orderId").textContent = orderList.orderId;
         document.querySelector(".orderDate").textContent = orderList.orderDate;
         document.querySelector(".productName").textContent =
-          productList.productName;
+          orderList.productName;
+
+        document.getElementById("tracking-number").value = orderList.tracking;
+
+        inputNullCheck();
 
         order.addEventListener("click", (e) => {
           if (e.target.classList.contains("modal_body")) {
