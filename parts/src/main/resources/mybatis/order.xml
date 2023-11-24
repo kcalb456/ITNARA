@@ -15,7 +15,7 @@
 
 	<select id="list" resultMap="OrderMap">
 		SELECT o.*, p.product_name,
-		p.product_price, product_image.*
+		p.product_price, p.product_detail, product_image.*
 		FROM product p
 		JOIN orders o ON
 		p.product_id = o.product_id LEFT JOIN product_image ON
@@ -28,7 +28,7 @@
 
 	<select id="purchaseList" resultMap="OrderMap">
 		SELECT o.*, p.product_name,
-		p.product_price, product_image.*
+		p.product_price, p.product_detail, product_image.*
 		FROM product p
 		JOIN orders o ON
 		p.product_id = o.product_id LEFT JOIN product_image ON

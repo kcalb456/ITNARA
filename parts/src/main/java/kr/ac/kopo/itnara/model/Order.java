@@ -10,6 +10,7 @@ public class Order {
     private Long userId2;  // userId2 추가
     private String productName;
     private String productPrice;
+    private String productDetail;
     private int zip;
     private String address1;
     private String address2;
@@ -113,6 +114,14 @@ public class Order {
 
 	public void setImages(List<ProductImage> images) {
 		this.images = images;
+	}
+
+	public String getProductDetail() {
+		return productDetail;
+	}
+
+	public void setProductDetail(String productDetail) {
+		this.productDetail = productDetail;
 	}
 
 

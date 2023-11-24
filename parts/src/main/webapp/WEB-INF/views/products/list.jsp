@@ -22,7 +22,7 @@ prefix="c"%>
               class="product-list"
               href="/store/${item.userId}/${item.productId}"
             >
-              <div class="preview-image">
+              <div class="product-image">
                 <img
                   class="img-full"
                   src="/upload/${item.images[0].uuid}_${item.images[0].imageName}"
@@ -30,10 +30,10 @@ prefix="c"%>
                   onerror="handleImageError(this)"
                 />
               </div>
-              <div class="preview-info">
+              <div class="product-info">
                 <div>
-                  <div class="privew-title">${item.productName}</div>
-                  <div class="prview-detail">${item.productDetail}</div>
+                  <div class="product-name">${item.productName}</div>
+                  <div class="product-detail">${item.productDetail}</div>
                 </div>
                 <div class="preview-price">
                   <div class="price">

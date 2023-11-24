@@ -9,10 +9,6 @@ prefix="c"%>
     <title>상점</title>
     <script src="/js/price_format.js"></script>
     <script src="/js/card_ui.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    />
     <link rel="stylesheet" href="/css/butterup.min.css" />
     <script src="/js/butterup.min.js"></script>
   </head>
@@ -214,7 +210,7 @@ prefix="c"%>
             div.classList.add(
               "product",
               "animate__animated",
-              "animate__bounce",
+              "animate__pulse",
               "animate__infinite"
             );
           } else {
@@ -336,9 +332,6 @@ prefix="c"%>
       }
 
       function modal(id) {
-        const order = document.querySelector(".order");
-        const modalBody = document.querySelector(".modal_body");
-        order.classList.toggle("show");
         console.log(orderInfo);
         document.querySelector(".order-form-confirm").id = id;
 
@@ -346,20 +339,26 @@ prefix="c"%>
 
         document.querySelector(".orderId").textContent = orderList.orderId;
         document.querySelector(".orderDate").textContent = orderList.orderDate;
-        document.querySelector(".productName").textContent =
+        document.querySelector(".product-title").textContent =
           orderList.productName;
+        document.querySelector(".product-detail").textContent =
+          orderList.productDetail;
+        document.querySelector(".product-image").src =
+          orderList.images[0].imageName;
 
         document.getElementById("tracking-number").value = orderList.tracking;
-
+        const order = document.querySelector(".order");
+        const modalBody = document.querySelector(".order .modal_body");
+        // 이벤트 전파 방지 함수
+        function stopPropagation(e) {
+          e.stopPropagation();
+        }
+        order.classList.toggle("show");
         inputNullCheck();
 
-        order.addEventListener("click", (e) => {
-          if (e.target.classList.contains("modal_body")) {
-            e.stopPropagation();
-          } else {
-            if (e.target.classList.contains("order")) {
-              order.classList.remove("show");
-            }
+        order.addEventListener("mousedown", () => {
+          if (!modalBody.contains(event.target)) {
+            order.classList.remove("show");
           }
         });
       }
@@ -378,7 +377,15 @@ prefix="c"%>
             </div>
             <div class="orderDate"></div>
           </div>
-          <div class="productName"></div>
+          <div class="product-list">
+            <div class="product-image">
+              <img class="img-full" src="" onerror="handleImageError(this)" />
+            </div>
+            <div class="product-info">
+              <div class="product-title"></div>
+              <div class="product-detail"></div>
+            </div>
+          </div>
           <div class="inputbar">
             <input id="tracking-number" class="input_inner" /><label
               class="input_label"

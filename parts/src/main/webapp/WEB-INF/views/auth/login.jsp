@@ -63,8 +63,22 @@ prefix="c"%>
       .then((data) => {
         // 로그인이 성공했을 때의 추가 로직을 여기에 추가
         // 예: 리디렉션 등
-        console.log("로그인 성공:", data);
-        location.reload();
+        fetch("/api/auth", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => {
+            return res.json();
+          })
+          .then((result) => {
+            Object.keys(result).forEach((key) => {
+              sessionStorage.setItem(key, JSON.stringify(result[key]));
+              console.log("로그인 성공:", data);
+              location.reload();
+            });
+          });
       });
   });
 </script>

@@ -8,10 +8,15 @@ prefix="sec"%>
     <meta charset="UTF-8" />
     <title>Insert title here</title>
     <script src="/js/price_format.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"
+    />
   </head>
   <body>
     <jsp:include page="../header.jsp"></jsp:include>
-    <div class="container">
+    <div class="container animate__fadeIn animate__animated">
       <section>
         <div class="detail-title">
           <div class="product-name">${product.productName}</div>
@@ -19,12 +24,19 @@ prefix="sec"%>
         </div>
         <div class="info">
           <div class="first-image">
-            <img
+            <a
               class="img-full"
-              src="/upload/${product.images[0].uuid}_${product.images[0].imageName}"
-              alt="${image.imageName}"
-              onerror="handleImageError(this)"
-            />
+              href="/upload/${product.images[0].uuid}_${product.images[0].imageName}"
+              data-fancybox="gallery"
+              data-caption="${image.imageName}"
+            >
+              <img
+                class="img-full"
+                src="/upload/${product.images[0].uuid}_${product.images[0].imageName}"
+                alt="${image.imageName}"
+                onerror="handleImageError(this)"
+              />
+            </a>
           </div>
           <div class="main">
             <div class="detail">
@@ -106,6 +118,11 @@ prefix="sec"%>
       </section>
     </div>
     <script>
+      Fancybox.bind("[data-fancybox]", {
+        // Your custom options
+      });
+    </script>
+    <script>
       window.addEventListener("DOMContentLoaded", function () {
         var path = window.location.pathname;
 
@@ -141,12 +158,17 @@ prefix="sec"%>
             );
 
             if (!response.ok) {
-              throw new Error(`HTTP error! Status: ${response.status}`);
+              throw new Error(`HTTP error! Status: ` + response.status);
             }
 
             await response.text(); // 응답 텍스트를 소비
-            Swal.fire("SweetAlert2 is working!");
           } catch (error) {
+            Swal.fire({
+              title: "삭제 불가",
+              text: "판매 된 물품은 삭제가 불가능 합니다.",
+              icon: "error",
+              confirmButtonColor: "#0080ff",
+            });
             console.error("Error:", error.message);
           }
         }
@@ -179,7 +201,11 @@ prefix="sec"%>
 
       function productEditButton(result) {
         var buttonsContainer = document.querySelector(".buttons");
-        if (buttonsContainer && result.soldCheck) {
+        if (
+          buttonsContainer &&
+          result.soldCheck &&
+          result.userId != sessionStorage.getItem("userId")
+        ) {
           // buttons 클래스 안에 있는 모든 자식 요소 삭제
           while (buttonsContainer.firstChild) {
             buttonsContainer.removeChild(buttonsContainer.firstChild);
