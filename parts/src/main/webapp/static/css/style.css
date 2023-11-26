@@ -640,3 +640,41 @@ textarea {
   margin: 0;
   position: relative;
 }
+
+/*여기서 부턴 포럼 css*/
+.post-list {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 120px;
+  justify-content: space-between;
+  background: #fafafa;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.post-list .profile {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.post-list .profile .profile-img {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  border-radius: 100px;
+}
+
+.post-info {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.post-info div i {
+  margin-right: 10px;
+}

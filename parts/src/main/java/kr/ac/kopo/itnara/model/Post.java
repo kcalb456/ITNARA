@@ -6,6 +6,7 @@ public class Post {
 	private Long postId;
 	private Long subId;
 	private Long userId;
+	private String storeName;
 	private String postHeader;
 	private String postDetail;
 	private Date postDate;
@@ -51,5 +52,11 @@ public class Post {
 	}
 	public void setPostView(Long postView) {
 		this.postView = postView;
+	}
+	public String getStoreName() {
+		return storeName;
+	}
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
 	}
 }

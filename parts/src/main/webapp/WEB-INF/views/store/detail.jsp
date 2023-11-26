@@ -57,7 +57,9 @@ prefix="sec"%>
                   <div class="profile-name"></div>
                 </div>
                 <div>
-                  <button class=""><i class="bi-heart font32"></i></button>
+                  <button class="not-likes" onclick="likesButton(this)">
+                    <i class="bi-heart font32"></i>
+                  </button>
                 </div>
               </div>
               <div class="detail-condition">
@@ -174,6 +176,8 @@ prefix="sec"%>
         }
       }
 
+      let LikeStatus;
+
       function getThisItem() {
         const url = "/api/product?productId=" + productId;
 
@@ -191,22 +195,23 @@ prefix="sec"%>
               return resp.json();
             })
             .then((result) => {
+              LikeStatus = result.likes;
               console.log(result);
-              document.querySelector(".views").textContent = result.views;
-              document.querySelector(".likes").textContent = result.likes;
+              document.querySelector(".views").textContent = result.item.views;
+              document.querySelector(".likes").textContent = result.item.likes;
               document.querySelector(".price").textContent =
-                result.productPrice;
+                result.item.productPrice;
               document.querySelector(".detail").textContent =
-                result.productDetail;
+                result.item.productDetail;
 
               document.querySelector(".productName").textContent =
-                result.productName;
+                result.item.productName;
               document.querySelector(".productDate").textContent =
-                result.productDate;
+                result.item.productDate;
 
               const bigImage = document.querySelector(".big-image");
 
-              result.images.forEach((item) => {
+              result.item.images.forEach((item) => {
                 const a = document.createElement("a");
 
                 a.classList.add("img-full");
@@ -217,9 +222,22 @@ prefix="sec"%>
                 const img = document.createElement("img");
                 bigImage.appendChild(a);
                 a.appendChild(img);
+
+                const button = document.querySelector(
+                  ".detail-header div button"
+                );
+                const heartIcon = button.querySelector("i");
+
+                if (result.likes == null) {
+                  button.classList.replace("likes", "not-likes");
+                  heartIcon.classList.replace("bi-heart-fill", "bi-heart");
+                } else {
+                  button.classList.replace("not-likes", "likes");
+                  heartIcon.classList.replace("bi-heart", "bi-heart-fill");
+                }
               });
 
-              switch (result.productStatus) {
+              switch (result.item.productStatus) {
                 case 0:
                   document.querySelector(".productStatus").textContent =
                     "새 상품";
@@ -232,31 +250,31 @@ prefix="sec"%>
               }
 
               document.querySelector(".productStock").textContent =
-                result.productStock;
+                result.item.productStock;
 
-              if (result.deliveryPrice == 0) {
+              if (result.item.deliveryPrice == 0) {
                 document.querySelector(".deliveryPrice").textContent =
                   "무료배송";
               } else {
                 document.querySelector(".deliveryPrice").textContent =
-                  result.deliveryPrice;
+                  result.item.deliveryPrice;
               }
 
               document.querySelector(".big-image a").href =
                 "/upload/" +
-                result.images[0].uuid +
+                result.item.images[0].uuid +
                 "_" +
-                result.images[0].imageName;
+                result.item.images[0].imageName;
 
               document.querySelector(".big-image img").src =
                 "/upload/" +
-                result.images[0].uuid +
+                result.item.images[0].uuid +
                 "_" +
-                result.images[0].imageName;
+                result.item.images[0].imageName;
               document.querySelector(".big-image img").dataset.caption =
-                result.images[0].imageName;
+                result.item.images[0].imageName;
 
-              document.title = result.productName;
+              document.title = result.item.productName;
               productEditButton(result);
               priceFomatter();
             })
@@ -285,7 +303,7 @@ prefix="sec"%>
 
       function productEditButton(result) {
         var buttonsContainer = document.querySelector(".buttons");
-        if (result.userId != sessionStorage.getItem("userId")) {
+        if (result.item.userId != sessionStorage.getItem("userId")) {
           while (buttonsContainer.firstChild) {
             buttonsContainer.removeChild(buttonsContainer.firstChild);
           }
@@ -298,8 +316,8 @@ prefix="sec"%>
 
         if (
           buttonsContainer &&
-          result.soldCheck &&
-          result.userId != sessionStorage.getItem("userId")
+          result.item.soldCheck &&
+          result.item.userId != sessionStorage.getItem("userId")
         ) {
           // buttons 클래스 안에 있는 모든 자식 요소 삭제
           while (buttonsContainer.firstChild) {
@@ -335,6 +353,59 @@ prefix="sec"%>
                 result.item.storeName;
             });
         }
+      }
+    </script>
+
+    <script>
+      function likesButton(button) {
+        // 버튼의 클래스명을 가져옵니다
+        const buttonClass = button.classList.value;
+
+        var path = window.location.pathname;
+
+        // 경로에서 userId 추출하기
+        var userIdMatch = path.match(/\/store\/(\d+)/);
+        var productIdMatch = path.match(/(\d+)$/);
+
+        // userId가 존재하면 값을 추출
+        userId = userIdMatch ? userIdMatch[1] : null;
+        productId = productIdMatch ? productIdMatch[1] : null;
+
+        console.log(LikeStatus);
+        if (!sessionStorage.getItem("userId")) {
+          LoginModal();
+        } else {
+          const csrfHeader = document.querySelector(
+            'meta[name="_csrf_header"]'
+          ).content;
+          const csrfToken =
+            document.querySelector('meta[name="_csrf"]').content;
+
+          fetch("/api/product/like", {
+            method: "POST",
+            headers: {
+              [csrfHeader]: csrfToken,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              productId: productId,
+              LikeStatus: LikeStatus,
+            }),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ` + response.status);
+              }
+              return response.json();
+            })
+            .then((result) => {
+              // 성공적으로 처리된 경우의 로직
+            })
+            .catch((error) => {
+              // 에러 발생 시의 로직
+            });
+        }
+        location.reload();
       }
     </script>
   </body>

@@ -29,6 +29,13 @@
 		<typeAlias type="kr.ac.kopo.itnara.model.UserInfo"
 			alias="UserInfo" />
 
+		<typeAlias type="kr.ac.kopo.itnara.model.Post"
+			alias="Post" />
+			
+			
+		<typeAlias type="kr.ac.kopo.itnara.model.Likes"
+			alias="Likes" />
+
 	</typeAliases>
 
 	<mappers>
@@ -36,5 +43,7 @@
 		<mapper resource="mybatis/user.xml" />
 		<mapper resource="mybatis/store.xml" />
 		<mapper resource="mybatis/order.xml" />
+		<mapper resource="mybatis/forum.xml" />
+		<mapper resource="mybatis/likes.xml" />
 	</mappers>
 </configuration>

@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.kopo.itnara.model.CacheImage;
 import kr.ac.kopo.itnara.model.Category;
+import kr.ac.kopo.itnara.model.Likes;
 import kr.ac.kopo.itnara.model.Order;
 import kr.ac.kopo.itnara.model.Post;
 import kr.ac.kopo.itnara.model.Product;
@@ -37,6 +38,7 @@ import kr.ac.kopo.itnara.model.Store;
 import kr.ac.kopo.itnara.model.UserInfo;
 import kr.ac.kopo.itnara.security.CustomUserDetails;
 import kr.ac.kopo.itnara.service.ForumService;
+import kr.ac.kopo.itnara.service.LikesService;
 import kr.ac.kopo.itnara.service.OrderService;
 import kr.ac.kopo.itnara.service.ProductService;
 import kr.ac.kopo.itnara.service.StoreService;
@@ -60,6 +62,9 @@ public class ApiController {
 
 	@Autowired
 	ForumService forumService;
+	
+	@Autowired
+	LikesService likesService;
 
 	private String uploadPath = "d:/upload/";
 	
@@ -97,10 +102,34 @@ public class ApiController {
 	}
 
 	@GetMapping("/product")
-	public ResponseEntity<Product> getProduct(@RequestParam Long productId) {
+	public ResponseEntity<Map<String, Object>> getProduct(@RequestParam Long productId) {
+		Map<String, Object> responseMap = new HashMap<>();
 		Product item = storeService.product(productId);
-		return new ResponseEntity<>(item, HttpStatus.OK);
+		Likes likes = likesService.thiPckd(productId);
+		
+		responseMap.put("item", item);
+	    responseMap.put("likes", likes);
+	    
+	    return new ResponseEntity<>(responseMap, HttpStatus.OK);
 	}
+	
+	@PostMapping("/product/like")
+	public ResponseEntity<?> likeSet(Authentication authentication, @RequestBody Map<String, Object> requestBody) {
+		// 권한 확인: 사용자가 인증되었으며, 제공된 userId에 대한 권한이 있는지 확인합니다.
+		
+		if (isAuthenticated()) {	
+			
+			likesService.likeSet(requestBody, authentication);
+			
+			
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			// 권한이 없는 경우: UNAUTHORIZED 상태로 응답합니다.
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+	}
+	
+	
 
 	@GetMapping("/store/order")
 	public ResponseEntity<List<Order>> getOrder(@RequestParam Long userId, Authentication authentication) {
