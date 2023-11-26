@@ -164,13 +164,13 @@ prefix="c"%>
           div2.classList.add("preview-image");
 
           // "a" 요소를 생성하고 href 속성을 설정
-          const a = document.createElement("div");
+          const a = document.createElement("a");
           a.classList.add("orderBtn");
           a.id = item.productId;
           div.onclick = () => modal(a.id);
 
           const div3 = document.createElement("div");
-          div3.classList.add("privew-info");
+          div3.classList.add("preview-info");
           const div4 = document.createElement("div");
           div4.classList.add("privew-title");
           div4.textContent = item.productName;
@@ -185,7 +185,8 @@ prefix="c"%>
           // 이미지 처리를 위한 코드
           const img = document.createElement("img");
           img.classList = "img-full";
-          img.src = "/upload/" + item.uuid + "_" + item.images[0].imageName;
+          img.src =
+            "/upload/" + item.images[0].uuid + "_" + item.images[0].imageName;
           img.alt = item.images[0].imageName;
           img.onerror = () => handleImageError(img);
           div2.appendChild(img);
@@ -224,186 +225,6 @@ prefix="c"%>
       }
     </script>
 
-    <script>
-      function trackingUpdate(productId) {
-        const formData = new URLSearchParams();
-
-        formData.append("t_key", "btym3M1V7b4xVDCKRpixdw");
-        formData.append(
-          "t_invoice",
-          document.getElementById("tracking-number").value
-        );
-        formData.append("t_code", document.getElementById("delivery").value);
-
-        const url = new URL(
-          "http://info.sweettracker.co.kr/api/v1/trackingInfo"
-        );
-        url.search = formData.toString();
-
-        fetch(url, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        })
-          .then((response) => response.json())
-          .then((result) => {
-            console.log(result);
-            let statusCode = 0;
-            if (result.code) {
-              statusCode = result.code;
-            }
-            if (statusCode == "104") {
-              document.getElementById("tracking-number").focus;
-              butterup.toast({
-                title: "송장번호 등록에 실패하였습니다",
-                message: result.msg,
-                location: "bottom-center",
-                icon: true,
-                dismissable: false,
-                type: "error",
-                theme: "grass",
-              });
-            } else {
-              const csrfHeader = document.querySelector(
-                'meta[name="_csrf_header"]'
-              ).content;
-              const csrfToken =
-                document.querySelector('meta[name="_csrf"]').content;
-
-              var path = window.location.pathname;
-
-              // 경로에서 userId 추출하기
-              var userIdMatch = path.match(/\/store\/(\d+)/);
-
-              // userId가 존재하면 값을 추출
-              userId = userIdMatch ? userIdMatch[1] : null;
-
-              fetch("/api/store/order/tracking", {
-                method: "PATCH",
-                headers: {
-                  [csrfHeader]: csrfToken,
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  userId: userId,
-                  productId: productId,
-                  tracking: document.getElementById("tracking-number").value,
-                }),
-              })
-                .then((response) => {
-                  if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ` + response.status);
-                  }
-                  return response.text();
-                })
-                .then((data) => {
-                  butterup.toast({
-                    title: "송장번호 등록에 성공하였습니다",
-                    message: result.msg,
-                    location: "bottom-center",
-                    icon: true,
-                    dismissable: false,
-                    type: "success",
-                    theme: "grass",
-                  });
-                  orderList();
-                })
-                .catch((error) => {
-                  console.error("Fetch error:", error);
-                });
-            }
-          })
-          .catch((error) => {
-            console.error("에러:", error);
-            throw error; // 이 부분은 필요에 따라 수정할 수 있습니다.
-          });
-        OrderModalClose();
-      }
-    </script>
-
-    <script>
-      function OrderModalClose() {
-        const modals = document.querySelectorAll(".modal");
-
-        modals.forEach((modal) => {
-          modal.classList.remove("show");
-        });
-      }
-
-      function modal(id) {
-        console.log(orderInfo);
-        document.querySelector(".order-form-confirm").id = id;
-
-        const orderList = orderInfo.find((order) => order.productId == id);
-
-        document.querySelector(".orderId").textContent = orderList.orderId;
-        document.querySelector(".orderDate").textContent = orderList.orderDate;
-        document.querySelector(".product-title").textContent =
-          orderList.productName;
-        document.querySelector(".product-detail").textContent =
-          orderList.productDetail;
-        document.querySelector(".product-image").src =
-          orderList.images[0].imageName;
-
-        document.getElementById("tracking-number").value = orderList.tracking;
-        const order = document.querySelector(".order");
-        const modalBody = document.querySelector(".order .modal_body");
-        // 이벤트 전파 방지 함수
-        function stopPropagation(e) {
-          e.stopPropagation();
-        }
-        order.classList.toggle("show");
-        inputNullCheck();
-
-        order.addEventListener("mousedown", () => {
-          if (!modalBody.contains(event.target)) {
-            order.classList.remove("show");
-          }
-        });
-      }
-    </script>
-
-    <div class="modal order">
-      <div id="order-form" class="modal_body">
-        <div>
-          <div class="order-title">
-            <h2>거래정보</h2>
-          </div>
-          <div class="order-number">
-            <div>
-              <label>거래번호 : </label>
-              <div class="orderId"></div>
-            </div>
-            <div class="orderDate"></div>
-          </div>
-          <div class="product-list">
-            <div class="product-image">
-              <img class="img-full" src="" onerror="handleImageError(this)" />
-            </div>
-            <div class="product-info">
-              <div class="product-title"></div>
-              <div class="product-detail"></div>
-            </div>
-          </div>
-          <div class="inputbar">
-            <input id="tracking-number" class="input_inner" /><label
-              class="input_label"
-              >송장번호 입력</label
-            ><select id="delivery">
-              <option value="04">CJ대한통운</option>
-              <option value="05">한진택배</option>
-              <option value="01">우체국택배</option>
-            </select>
-          </div>
-          <button
-            class="long-button c-blue order-form-confirm"
-            onclick="trackingUpdate(this.id);"
-          >
-            확인
-          </button>
-        </div>
-      </div>
-    </div>
+    <jsp:include page="history/sell.jsp"></jsp:include>
   </body>
 </html>

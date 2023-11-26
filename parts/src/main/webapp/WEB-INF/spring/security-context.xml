@@ -17,6 +17,10 @@
 			login-processing-url="/auth/login" username-parameter="email"
 			password-parameter="passwd" default-target-url="/" />
 
+
+		<security:intercept-url pattern="/api/auth"
+			access="hasRole('ROLE_USER')" />
+
 		<security:intercept-url pattern="/products/new"
 			access="hasRole('ROLE_USER')" />
 		<security:intercept-url pattern="/**"

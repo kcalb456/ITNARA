@@ -10,16 +10,18 @@ private Long productId;
 private Long userId;
 private String name;
 private String name2;
-private int productPrice;
+private int productPrice = 0;
 private String productName;
-private int productStock;
-private int views;
+private int productStock = 1;
+private long views;
 private int productStatus;
 @DateTimeFormat(pattern = "yyyy-MM-ddd")
 private Date productDate;
 private String productDetail;
 private List<ProductImage> images;
 private int soldCheck;
+private long likes = 0;
+private int deliveryPrice = 0;
 
 
 public Long getProductId() {
@@ -43,10 +45,10 @@ public int getProductStock() {
 public void setProductStock(int productStock) {
 	this.productStock = productStock;
 }
-public int getViews() {
+public long getViews() {
 	return views;
 }
-public void setViews(int views) {
+public void setViews(long views) {
 	this.views = views;
 }
 public int getProductStatus() {
@@ -110,5 +112,17 @@ public String toString() {
 			+ ", productPrice=" + productPrice + ", productName=" + productName + ", productStock=" + productStock
 			+ ", views=" + views + ", productStatus=" + productStatus + ", productDate=" + productDate
 			+ ", productDetail=" + productDetail + ", images=" + images + ", soldCheck=" + soldCheck + "]";
+}
+public long getLikes() {
+	return likes;
+}
+public void setLikes(long likes) {
+	this.likes = likes;
+}
+public int getDeliveryPrice() {
+	return deliveryPrice;
+}
+public void setDeliveryPrice(int deliveryPrice) {
+	this.deliveryPrice = deliveryPrice;
 }
 }

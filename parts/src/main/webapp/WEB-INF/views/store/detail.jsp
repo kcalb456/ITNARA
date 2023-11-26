@@ -19,101 +19,101 @@ prefix="sec"%>
     <div class="container animate__fadeIn animate__animated">
       <section>
         <div class="detail-title">
-          <div class="product-name">${product.productName}</div>
-          <div class="product-date">${product.productDate}</div>
+          <div class="product-name productName"></div>
+          <div class="product-date productDate"></div>
         </div>
         <div class="info">
-          <div class="first-image">
+          <div class="big-image">
             <a
               class="img-full"
-              href="/upload/${product.images[0].uuid}_${product.images[0].imageName}"
+              href=""
               data-fancybox="gallery"
               data-caption="${image.imageName}"
             >
               <img
                 class="img-full"
-                src="/upload/${product.images[0].uuid}_${product.images[0].imageName}"
+                src=""
                 alt="${image.imageName}"
                 onerror="handleImageError(this)"
               />
             </a>
           </div>
           <div class="main">
-            <div class="detail">
-              <div class="profile">
-                <div class="profile-img">
-                  <img
-                    class="img-full"
-                    src="/"
-                    alt="프로필 사진"
-                    onerror="handleImageError(this)"
-                  />
+            <div class="detail-form">
+              <div class="detail-header">
+                <div class="product-other-info">
+                  <i class="bi-eyeglasses"><div class="views"></div></i
+                  ><i class="bi-heart"><div class="likes"></div></i>
                 </div>
-                <div class="profile-name"></div>
+                <div class="profile">
+                  <div class="profile-img">
+                    <img
+                      class="img-full"
+                      src="/"
+                      alt="프로필 사진"
+                      onerror="handleImageError(this)"
+                    />
+                  </div>
+                  <div class="profile-name"></div>
+                </div>
+                <div>
+                  <button class=""><i class="bi-heart font32"></i></button>
+                </div>
               </div>
               <div class="detail-condition">
                 <label>상품상태</label>
+                <div class="productStatus"></div>
+              </div>
+              <div class="detail-stock">
+                <label>수량</label>
+                <div class="productStock"></div>
               </div>
               <div class="detail-delivery-price">
                 <label>배송비</label>
+                <div class="deliveryPrice"></div>
               </div>
               <div class="detail-address">
                 <label>거래지역</label>
+                <div class="productTradeAddress"></div>
               </div>
               <div class="detail-price">
-                <div class="price">${product.productPrice}</div>
+                <div class="price"></div>
                 <div>원</div>
               </div>
             </div>
             <div class="buttons">
               <sec:authentication property="principal" var="prc" />
               <sec:authorize access="isAuthenticated()">
-                <c:choose>
-                  <c:when test="${product.userId == prc.userId}">
-                    <a class="long-button c-orange" href="${productId}/update"
-                      >변경</a
-                    >
-                    <button
-                      class="long-button c-blue"
-                      onclick="deleteThisProduct()"
-                    >
-                      삭제
-                    </button>
-                  </c:when>
-                  <c:otherwise>
-                    <a
-                      href="${product.productId}/order"
-                      class="long-button c-blue"
-                      >안전결제</a
-                    >
-                  </c:otherwise>
-                </c:choose>
-              </sec:authorize>
-              <sec:authorize access="isAnonymous()">
-                <a href="${product.productId}/order" class="long-button c-blue"
-                  >안전결제</a
+                <a class="long-button c-orange" href="${productId}/update"
+                  >변경</a
                 >
+                <button
+                  class="long-button c-blue"
+                  onclick="deleteThisProduct()"
+                >
+                  삭제
+                </button>
               </sec:authorize>
             </div>
           </div>
         </div>
-        <!--
-        <c:forEach var="image" items="${product.images}">
-          <li>
-            <img
-              src="/upload/${image.uuid}_${image.imageName}"
-              alt="${image.imageName}"
-            />
-          </li>
-        </c:forEach> -->
       </section>
       <section class="detail-bottom">
         <div class="detail-info">
           <h1>상세 설명</h1>
-          <div>${product.productDetail}</div>
+          <div class="detail"></div>
         </div>
         <div class="store-more">
           <label class="detail-title">판매자의 다른 상품</label>
+          <a href="#">
+            <div class="preview-image">
+              <img
+                class="img-full"
+                src="/img"
+                onerror="handleImageError(this)"
+              />
+            </div>
+          </a>
         </div>
       </section>
     </div>
@@ -147,7 +147,7 @@ prefix="sec"%>
         if (productId) {
           try {
             const response = await fetch(
-              `/api/product/delete/` + userId + `?productId=${productId}`,
+              `/api/product/delete/` + userId + `?productId=` + productId,
               {
                 method: "DELETE",
                 headers: {
@@ -191,16 +191,111 @@ prefix="sec"%>
               return resp.json();
             })
             .then((result) => {
+              console.log(result);
+              document.querySelector(".views").textContent = result.views;
+              document.querySelector(".likes").textContent = result.likes;
+              document.querySelector(".price").textContent =
+                result.productPrice;
+              document.querySelector(".detail").textContent =
+                result.productDetail;
+
+              document.querySelector(".productName").textContent =
+                result.productName;
+              document.querySelector(".productDate").textContent =
+                result.productDate;
+
+              const bigImage = document.querySelector(".big-image");
+
+              result.images.forEach((item) => {
+                const a = document.createElement("a");
+
+                a.classList.add("img-full");
+                a.dataset.fancybox = "gallery";
+                a.dataset.caption = item.imageName;
+                a.href = "/upload/" + item.uuid + "_" + item.imageName;
+
+                const img = document.createElement("img");
+                bigImage.appendChild(a);
+                a.appendChild(img);
+              });
+
+              switch (result.productStatus) {
+                case 0:
+                  document.querySelector(".productStatus").textContent =
+                    "새 상품";
+                  break;
+                case 1:
+                  document.querySelector(".productStatus").textContent = "중고";
+                  break;
+
+                default:
+              }
+
+              document.querySelector(".productStock").textContent =
+                result.productStock;
+
+              if (result.deliveryPrice == 0) {
+                document.querySelector(".deliveryPrice").textContent =
+                  "무료배송";
+              } else {
+                document.querySelector(".deliveryPrice").textContent =
+                  result.deliveryPrice;
+              }
+
+              document.querySelector(".big-image a").href =
+                "/upload/" +
+                result.images[0].uuid +
+                "_" +
+                result.images[0].imageName;
+
+              document.querySelector(".big-image img").src =
+                "/upload/" +
+                result.images[0].uuid +
+                "_" +
+                result.images[0].imageName;
+              document.querySelector(".big-image img").dataset.caption =
+                result.images[0].imageName;
+
+              document.title = result.productName;
               productEditButton(result);
+              priceFomatter();
             })
             .catch((error) => {
               console.error("Error fetching /api/product:", error.message);
             });
         }
       }
+      function payButton() {
+        var path = window.location.pathname;
+
+        // 경로에서 userId와 productId 추출하기 (예: /store/123/456)
+        var matches = path.match(/\/store\/(\d+)\/(\d+)/);
+
+        // matches 배열에서 userId와 productId 추출
+        var userId = matches ? matches[1] : null;
+        var productId = matches ? matches[2] : null;
+
+        if (!sessionStorage.getItem("userId")) {
+          LoginModal();
+        } else {
+          window.location.href =
+            "/store/" + userId + "/" + productId + "/order";
+        }
+      }
 
       function productEditButton(result) {
         var buttonsContainer = document.querySelector(".buttons");
+        if (result.userId != sessionStorage.getItem("userId")) {
+          while (buttonsContainer.firstChild) {
+            buttonsContainer.removeChild(buttonsContainer.firstChild);
+          }
+          var button = document.createElement("button");
+          button.classList = "long-button c-blue";
+          button.textContent = "안전결제";
+          buttonsContainer.appendChild(button);
+          button.onclick = () => payButton();
+        }
+
         if (
           buttonsContainer &&
           result.soldCheck &&

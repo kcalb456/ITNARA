@@ -71,4 +71,9 @@ public class RootController {
 		}
 		return authentication.isAuthenticated();
 	}
+	
+	@GetMapping("/forum")
+	String forum() {
+		return "/forum/list";
+	}
 }

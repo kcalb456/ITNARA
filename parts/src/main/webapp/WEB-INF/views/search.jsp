@@ -135,13 +135,18 @@ prefix="sec"%>
       })
       .then((result) => {
         console.log(result);
-        document.querySelector(".like").textContent = result.countLike;
-        document.querySelector(".sale-count").textContent = result.countSell;
-        document.querySelector(".purchase-count").textContent =
-          result.countPurchase;
-      })
-      .catch((error) => {
-        console.error("Error fetching /api/product:", error.message);
+
+        if (result.userId) {
+          // 인증 성공 시
+          document.querySelector(".like").textContent = result.countLike;
+          document.querySelector(".sale-count").textContent = result.countSell;
+          document.querySelector(".purchase-count").textContent =
+            result.countPurchase;
+        } else {
+          // 인증 실패 시
+          console.error("Authentication failed.");
+          // 실패에 대한 추가적인 처리를 여기에 추가할 수 있습니다.
+        }
       });
   });
 </script>

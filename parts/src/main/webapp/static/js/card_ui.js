@@ -32,7 +32,7 @@ function listUI(result) {
     div4.classList.add("privew-title");
     div4.textContent = item.productName;
     const div5 = document.createElement("div");
-    div5.classList.add("privew-price");
+    div5.classList.add("preview-price");
     const div6 = document.createElement("div");
     div6.classList.add("price");
     div6.textContent = item.productPrice;

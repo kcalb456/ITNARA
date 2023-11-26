@@ -14,22 +14,13 @@ prefix="c"%>
   <body>
     <div class="container">
       <div>
-        <h3>상품 등록</h3>
+        <h3>기본 정보</h3>
       </div>
       <form class="add-form" method="post" enctype="multipart/form-data">
         <div class="mt-2">
           <label class="col-1">제품 이미지:</label>
-          <button type="button" class="btn btn-sm btn-primary" id="add">
-            파일 추가
-          </button>
-          <ul id="files" class="col">
-            <li class="mt-2 row">
-              <div class="col-1"></div>
-              <div class="col">
-                <input name="uploadFile" type="file" class="form-control" />
-              </div>
-            </li>
-          </ul>
+          <input id="myfiles" multiple type="file" name="uploadFile" />
+          <div id="output"></div>
         </div>
         <input
           type="hidden"
@@ -83,14 +74,14 @@ prefix="c"%>
         <div class="inputbar row">
           <label>상태:</label>
           <div>
-            <input type="radio" name="productStatus" value="0" checked /><label
-              >새상품</label
-            >
+            <label
+              >새상품<input type="radio" name="productStatus" value="0" checked
+            /></label>
           </div>
           <div>
-            <input type="radio" name="productStatus" value="1" /><label
-              >중고</label
-            >
+            <label
+              >중고<input type="radio" name="productStatus" value="1"
+            /></label>
           </div>
         </div>
 
@@ -157,6 +148,86 @@ prefix="c"%>
         label.style.top = "2px";
         label.style.fontSize = "12px";
         label.style.color = "#0080ff";
+      }
+    </script>
+    <script>
+      const output = document.getElementById("output");
+      const fileInput = document.getElementById("myfiles");
+
+      fileInput.addEventListener("change", () => {
+        const csrfHeader = document.querySelector(
+          'meta[name="_csrf_header"]'
+        ).content;
+        const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+
+        // userId와 productId가 존재하면 값을 추출
+        const userId = sessionStorage.getItem("userId");
+
+        const formData = new FormData();
+        for (let i = 0; i < fileInput.files.length; i++) {
+          formData.append("uploadFile", fileInput.files[i]);
+        }
+        formData.append("userId", userId);
+
+        fetch("/api/cache", {
+          method: "POST",
+          headers: {
+            [csrfHeader]: csrfToken,
+          },
+          body: formData,
+        })
+          .then((resp) => resp.json())
+          .then((result) => {
+            console.log(result);
+            displayFiles(result);
+          });
+      });
+
+      function displayFiles(image) {
+        for (let i = 0; i < fileInput.files.length; i++) {
+          const file = fileInput.files[i];
+          var divContainer = document.createElement("div");
+          var Fileimg = document.createElement("img");
+          divContainer.classList.add("product-image");
+
+          // 클로저 밖에서 변수로 선언
+          let currentDivContainer = divContainer;
+
+          divContainer.onclick = async () => {
+            await imageDelete(image[i].uuid + "_" + image[i].imageName);
+            currentDivContainer.remove();
+          };
+
+          Fileimg.classList.add("img-full");
+          Fileimg.src =
+            "/cachePath/" +
+            image[i].userId +
+            "/" +
+            image[i].uuid +
+            "_" +
+            image[i].imageName;
+
+          Fileimg.dataset.imagename = image[i].uuid + "_" + image[i].imageName;
+          divContainer.appendChild(Fileimg);
+          output.appendChild(divContainer);
+        }
+      }
+
+      function imageDelete(image, divContainer) {
+        console.log(image);
+        const csrfHeader = document.querySelector(
+          'meta[name="_csrf_header"]'
+        ).content;
+        const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+        fetch("/api/cache/delete?imageName=" + image, {
+          method: "DELETE",
+          headers: {
+            [csrfHeader]: csrfToken,
+            "Content-Type": "application/json",
+          },
+        })
+          .then((resp) => resp.text())
+          .then((result) => {});
       }
     </script>
   </body>

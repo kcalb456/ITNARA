@@ -29,15 +29,22 @@
 	</resultMap>
 
 	<select id="product" resultMap="ProductMap">
-		SELECT * FROM product LEFT JOIN
-		product_image ON product.product_id=product_image.product_id
-		WHERE
-		product.product_id=#{productId}
+		SELECT product.*, product_image.*, likes.likes_count
+		FROM product
+		LEFT JOIN product_image ON product.product_id = product_image.product_id
+		LEFT JOIN (
+		SELECT product_id, COUNT(*) AS likes_count
+		FROM likes
+		GROUP BY product_id
+		) AS likes ON product.product_id = likes.product_id
+		WHERE product.product_id = #{productId}
 	</select>
 
 	<insert id="order">
 		INSERT INTO
-		orders(product_id, user_id, user_id2, zip, address1, address2)
-		VALUES (#{productId},#{userId}, #{userId2}, #{zip}, #{address1}, #{address2})
+		orders(product_id, user_id, user_id2, zip,
+		address1, address2)
+		VALUES (#{productId},#{userId}, #{userId2}, #{zip},
+		#{address1}, #{address2})
 	</insert>
 </mapper>

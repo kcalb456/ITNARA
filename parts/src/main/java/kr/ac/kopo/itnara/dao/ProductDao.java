@@ -28,6 +28,7 @@ public interface ProductDao {
 
 	List<Product> soldOrderList(Long userId);
 
+	void addView(Long productId);
 
 
 }

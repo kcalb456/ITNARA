@@ -1,6 +1,11 @@
 package kr.ac.kopo.itnara.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -35,8 +40,6 @@ public class ProductController {
 	StoreService storeService;
 
 	private String path = "/products";
-	private String uploadPath = "d:/upload/";
-
 
 	@GetMapping("/list")
 	String list(Model model, Search search) {
@@ -44,52 +47,28 @@ public class ProductController {
 		model.addAttribute("list", list);
 		return path + "/list";
 	}
-	
-	
-	
+
 	@GetMapping("/new")
-	String newProduct(Model model) {
+	String newProduct(Model model, Authentication authentication) {
+		service.cacheImageDelete(authentication);
 		List<Category> categoryList = service.category();
-		model.addAttribute("category",categoryList);
+		model.addAttribute("category", categoryList);
 		return path + "/new";
 	}
 
 	@PostMapping("/new")
 	String add(Product item, List<MultipartFile> uploadFile, Authentication authentication) {
-		
-		
 
 		if (isAuthenticated()) {
-			List<ProductImage> images = new ArrayList<ProductImage>();
-			for (MultipartFile file : uploadFile) {
-				if (file.isEmpty()) {
-					continue;
-				}
-				String filename = file.getOriginalFilename();
-				String uuid = UUID.randomUUID().toString();
-
-				try {
-					file.transferTo(new File(uploadPath+uuid + "_" + filename));
-
-					ProductImage img = new ProductImage();
-					img.setImageName(filename);
-					img.setUuid(uuid);
-
-					images.add(img);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-			item.setUserId(userDetails.getUserId());
-			item.setImages(images);
-			service.add(item);
+			service.add(item, authentication);
 
 			return "redirect:/";
 		}
 		return "/auth/login";
 
 	}
+
+
 
 	private boolean isAuthenticated() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

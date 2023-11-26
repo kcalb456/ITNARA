@@ -113,10 +113,6 @@ public class StoreController {
 
 	@GetMapping("/{userId}/{productId}")
 	String Detail(@PathVariable Long productId, Model model) {
-
-		Product item = service.product(productId);
-		model.addAttribute("product", item);
-
 		return path + "detail";
 	}
 

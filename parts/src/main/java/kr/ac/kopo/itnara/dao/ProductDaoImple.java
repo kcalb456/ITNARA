@@ -77,6 +77,16 @@ public class ProductDaoImple implements ProductDao {
 	 return sql.selectList("product.soldOrderList",userId);
 	}
 
+	@Override
+	public void addView(Long productId) {
+		// TODO Auto-generated method stub
+		sql.update("product.addView", productId);
+	}
+
+
+
+
+
 
 
 }

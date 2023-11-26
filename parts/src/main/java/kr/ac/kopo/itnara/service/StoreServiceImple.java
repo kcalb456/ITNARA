@@ -17,17 +17,15 @@ import kr.ac.kopo.itnara.model.Store;
 public class StoreServiceImple implements StoreService {
 	@Autowired
 	StoreDao dao;
-	
+
 	@Autowired
 	ProductDao productDao;
-	
-	
+
 	@Override
 	public Store item(Long userId) {
 		// TODO Auto-generated method stub
 		return dao.item(userId);
 	}
-
 
 	@Override
 	public List<Product> list(Long userId) {
@@ -38,20 +36,19 @@ public class StoreServiceImple implements StoreService {
 
 	@Override
 	public Product product(Long productId) {
-		// TODO Auto-generated method stub
+		productDao.addView(productId);
 		return dao.product(productId);
 	}
-
 
 	@Override
 	public List<ProductImage> delete(Long productId) {
 		// TODO Auto-generated method stub
 		Product item = dao.product(productId);
+		System.out.println(item.getImages());
 		productDao.delete(productId);
 		return item.getImages();
-		
-	}
 
+	}
 
 	@Override
 	public void update(Product item) {
@@ -70,14 +67,9 @@ public class StoreServiceImple implements StoreService {
 		dao.order(order);
 	}
 
-
 	@Override
 	public List<Product> soldOrderList(Long userId) {
 		return productDao.soldOrderList(userId);
 	}
-
-
-
-
 
 }

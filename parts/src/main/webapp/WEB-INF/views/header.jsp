@@ -48,7 +48,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css
 <nav class="nav">
   <a href="/" class="logo">pArtS</a>
   <div class="header-menu">
-    <a href="/products/list">장터</a> <a href="/board">게시판</a>
+    <a href="/products/list">장터</a> <a href="/forum">게시판</a>
   </div>
 
   <div class="login-box">
@@ -65,6 +65,32 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css
   function logout() {
     sessionStorage.clear();
   }
+</script>
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    fetch("/api/auth", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((result) => {
+        Object.keys(result).forEach((key) => {
+          sessionStorage.setItem(key, JSON.stringify(result[key]));
+        });
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error.message);
+        sessionStorage.clear();
+      });
+  });
 </script>
 
 <jsp:include page="auth/login.jsp"></jsp:include>

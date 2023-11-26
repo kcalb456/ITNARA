@@ -16,6 +16,7 @@ public class Order {
     private String address2;
     private Date orderDate;
     private Long tracking;
+    private String trackingCode;
     private List<ProductImage> images;
 
     // Getter 및 Setter 메서드...
@@ -122,6 +123,14 @@ public class Order {
 
 	public void setProductDetail(String productDetail) {
 		this.productDetail = productDetail;
+	}
+
+	public String getTrackingCode() {
+		return trackingCode;
+	}
+
+	public void setTrackingCode(String trackingCode) {
+		this.trackingCode = trackingCode;
 	}
 
 
