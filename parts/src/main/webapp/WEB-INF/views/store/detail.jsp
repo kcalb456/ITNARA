@@ -164,6 +164,7 @@ prefix="sec"%>
             }
 
             await response.text(); // 응답 텍스트를 소비
+            location.href = "/";
           } catch (error) {
             Swal.fire({
               title: "삭제 불가",

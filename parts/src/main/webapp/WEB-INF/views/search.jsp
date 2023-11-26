@@ -146,7 +146,11 @@ prefix="sec"%>
           // 인증 실패 시
           console.error("Authentication failed.");
           // 실패에 대한 추가적인 처리를 여기에 추가할 수 있습니다.
+          sessionStorage.clear();
         }
+      })
+      .then((error) => {
+        sessionStorage.clear();
       });
   });
 </script>
