@@ -17,9 +17,9 @@ public class LikesServiceImple implements LikesService {
 	LikesDao dao;
 
 	@Override
-	public Likes thiPckd(Long productId) {
+	public Likes thiPckd(Likes like) {
 		// TODO Auto-generated method stub
-		return dao.thiPckd(productId);
+		return dao.thiPckd(like);
 	}
 
 	@Override

@@ -31,11 +31,9 @@ prefix="c"%>
                 />
               </div>
               <div class="product-info">
-                <div>
-                  <div class="product-name">${item.productName}</div>
-                  <div class="product-detail">${item.productDetail}</div>
-                </div>
-                <div class="preview-price">
+                <div class="product-title">${item.productName}</div>
+                <div class="product-detail">${item.productDetail}</div>
+                <div class="product-price">
                   <div class="price">
                     ${item.productPrice}
                     <div>원</div>

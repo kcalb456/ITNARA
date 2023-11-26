@@ -13,9 +13,9 @@ public class LikesDaoImple implements LikesDao {
 	SqlSession sql;
 
 	@Override
-	public Likes thiPckd(Long productId) {
+	public Likes thiPckd(Likes like) {
 		// TODO Auto-generated method stub
-		return sql.selectOne("likes.this",productId);
+		return sql.selectOne("likes.this",like);
 	}
 
 	@Override

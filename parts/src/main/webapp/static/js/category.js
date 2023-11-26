@@ -2,6 +2,10 @@
  *
  */
 
+window.addEventListener("DOMContentLoaded", () => {
+  getCategory();
+});
+
 function getCategory() {
   var selected = document.getElementById("category1");
   var value = selected.options[selected.selectedIndex].value;

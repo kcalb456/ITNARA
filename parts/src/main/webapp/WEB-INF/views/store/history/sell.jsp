@@ -58,11 +58,11 @@ prefix="c"%>
             // userId가 존재하면 값을 추출
             userId = userIdMatch ? userIdMatch[1] : null;
 
-            const orderList = orderInfo.find(
+            const orderList1 = orderInfo.find(
               (order) => order.productId == productId
             );
 
-            console.log(orderList);
+            console.log(orderList1);
 
             fetch("/api/store/order/tracking", {
               method: "PATCH",
@@ -71,7 +71,7 @@ prefix="c"%>
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                userId: orderList.userId,
+                userId: orderList1.userId,
                 productId: productId,
                 tracking: document.getElementById("tracking-number").value,
                 trackingCode: document.getElementById("delivery").value,
@@ -182,17 +182,6 @@ prefix="c"%>
         modalBody.querySelector("div .address-info").nextSibling
       );
 
-    if (orderList.userId != userId) {
-      select.disabled = true;
-    } else {
-      // 조건이 충족되었을 때의 로직
-      // DOM에 원하는 HTML 요소 추가
-      label.appendChild(document.createTextNode("송장번호 입력"));
-      input.onclick = function () {
-        unlock(this);
-      };
-    }
-
     document.querySelector(".order-form-confirm").id = id;
     document.getElementById("tracking-number").setAttribute("readonly", "true");
 
@@ -216,6 +205,127 @@ prefix="c"%>
     document.querySelector(".reference").textContent = orderList.reference;
 
     document.getElementById("tracking-number").value = orderList.tracking;
+    const deliveryInfo = document.querySelector(".delivery-info");
+
+    if (orderList.userId != userId) {
+      select.disabled = true;
+      deliveryInfo.querySelector("#tracking-number").remove();
+      deliveryInfo.querySelector(".input_label").remove();
+
+      var div = document.createElement("div");
+
+      deliveryInfo.insertBefore(div, select);
+
+      div.textContent = orderList.tracking;
+
+      if (orderList.tracking == null) {
+        div.textContent = "송장번호가 아직 입력되지 않았습니다";
+      } else {
+        const formData = new URLSearchParams();
+
+        formData.append("t_key", "btym3M1V7b4xVDCKRpixdw");
+        formData.append("t_invoice", orderList.tracking);
+        formData.append("t_code", orderList.trackingCode);
+
+        const url = new URL(
+          "http://info.sweettracker.co.kr/api/v1/trackingInfo"
+        );
+        url.search = formData.toString();
+
+        fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            console.log();
+            let statusCode = 0;
+            if (result.code) {
+              statusCode = result.code;
+            }
+            if (statusCode == "104") {
+              document.getElementById("tracking-number").focus;
+              butterup.toast({
+                title: "송장번호가 올바르지 않은것 같습니다.",
+                message: result.msg,
+                location: "bottom-center",
+                icon: true,
+                dismissable: false,
+                type: "error",
+                theme: "grass",
+              });
+            } else {
+              result.trackingDetails.forEach((item) => {
+                const div = document.createElement("div");
+                div.textContent = item.kind;
+
+                deliveryInfo.appendChild(div);
+
+                console.log(item);
+              });
+            }
+          });
+      }
+    } else {
+      // 조건이 충족되었을 때의 로직
+
+      if (orderList.tracking == null) {
+        div.textContent = "송장번호가 아직 입력되지 않았습니다";
+      } else {
+        const formData = new URLSearchParams();
+
+        formData.append("t_key", "btym3M1V7b4xVDCKRpixdw");
+        formData.append("t_invoice", orderList.tracking);
+        formData.append("t_code", orderList.trackingCode);
+
+        const url = new URL(
+          "http://info.sweettracker.co.kr/api/v1/trackingInfo"
+        );
+        url.search = formData.toString();
+
+        fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            console.log();
+            let statusCode = 0;
+            if (result.code) {
+              statusCode = result.code;
+            }
+            if (statusCode == "104") {
+              document.getElementById("tracking-number").focus;
+              butterup.toast({
+                title: "송장번호가 올바르지 않은것 같습니다.",
+                message: result.msg,
+                location: "bottom-center",
+                icon: true,
+                dismissable: false,
+                type: "error",
+                theme: "grass",
+              });
+            } else {
+              result.trackingDetails.forEach((item) => {
+                const div = document.createElement("div");
+                div.textContent = item.kind;
+
+                deliveryInfo.appendChild(div);
+
+                console.log(item);
+              });
+            }
+          });
+      }
+      label.appendChild(document.createTextNode("송장번호 입력"));
+      input.onclick = function () {
+        unlock(this);
+      };
+    }
 
     // 이벤트 전파 방지 함수
     function stopPropagation(e) {

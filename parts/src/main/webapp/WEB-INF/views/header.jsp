@@ -79,7 +79,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
         }
-        return res.json();
+        return res.text();
       })
       .then((result) => {
         Object.keys(result).forEach((key) => {

@@ -62,12 +62,11 @@ public class ApiController {
 
 	@Autowired
 	ForumService forumService;
-	
+
 	@Autowired
 	LikesService likesService;
 
 	private String uploadPath = "d:/upload/";
-	
 
 	@GetMapping("/category")
 	public ResponseEntity<List<Category>> getCategory() {
@@ -98,38 +97,43 @@ public class ApiController {
 	@GetMapping("/newlist")
 	public ResponseEntity<List<Product>> getProduct(Search search) {
 		List<Product> products = productService.list(search);
+		System.out.println(products.size());
 		return new ResponseEntity<>(products, HttpStatus.OK);
 	}
 
 	@GetMapping("/product")
-	public ResponseEntity<Map<String, Object>> getProduct(@RequestParam Long productId) {
+	public ResponseEntity<Map<String, Object>> getProduct(Authentication authentication, @RequestParam Long productId, Likes like) {
 		Map<String, Object> responseMap = new HashMap<>();
+		
+		if (isAuthenticated()) {
+			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();	
+			like.setUserId(userDetails.getUserId());
+			Likes likes = likesService.thiPckd(like);			
+			responseMap.put("likes", likes);
+		}
+
 		Product item = storeService.product(productId);
-		Likes likes = likesService.thiPckd(productId);
 		
 		responseMap.put("item", item);
-	    responseMap.put("likes", likes);
-	    
-	    return new ResponseEntity<>(responseMap, HttpStatus.OK);
+		
+
+		return new ResponseEntity<>(responseMap, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/product/like")
 	public ResponseEntity<?> likeSet(Authentication authentication, @RequestBody Map<String, Object> requestBody) {
 		// 권한 확인: 사용자가 인증되었으며, 제공된 userId에 대한 권한이 있는지 확인합니다.
-		
-		if (isAuthenticated()) {	
-			
+
+		if (isAuthenticated()) {
+
 			likesService.likeSet(requestBody, authentication);
-			
-			
+
 			return new ResponseEntity<>(HttpStatus.OK);
 		} else {
 			// 권한이 없는 경우: UNAUTHORIZED 상태로 응답합니다.
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 	}
-	
-	
 
 	@GetMapping("/store/order")
 	public ResponseEntity<List<Order>> getOrder(@RequestParam Long userId, Authentication authentication) {
@@ -203,6 +207,9 @@ public class ApiController {
 			@ModelAttribute Product product) {
 		// 권한 확인: 사용자가 인증되었으며, 제공된 userId에 대한 권한이 있는지 확인합니다.
 		if (isAuthenticated() && isAuthorized(authentication, product.getUserId())) {
+
+			storeService.update(product);
+
 			System.out.println(product.getProductId());
 			return ResponseEntity.ok("tracking number update successfully");
 		} else {
@@ -210,32 +217,26 @@ public class ApiController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
 		}
 	}
-	
-	
-	
+
 	@DeleteMapping("/cache/delete")
-	public ResponseEntity<?> cacheDelete(@RequestParam String imageName, Authentication authentication)
-	{
+	public ResponseEntity<?> cacheDelete(@RequestParam String imageName, Authentication authentication) {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		String cacheFolderPath = "d:/cachePath/" + userDetails.getUserId() + "/";
 		if (isAuthenticated()) {
-				File file = new File(cacheFolderPath + imageName);
-				if (file.exists()) {
-					file.delete();
-				}
+			File file = new File(cacheFolderPath + imageName);
+			if (file.exists()) {
+				file.delete();
+			}
 			return ResponseEntity.ok("이미지 삭제 성공");
 		}
 		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
-	
-	
+
 	@PostMapping("/cache")
 	public ResponseEntity<?> cache(Authentication authentication,
 			@RequestPart("uploadFile") List<MultipartFile> uploadFile, @RequestParam("userId") long userId) {
 		// 권한 확인: 사용자가 인증되었으며, 제공된 userId에 대한 권한이 있는지 확인합니다.
-		
-		
-		
+
 		if (isAuthenticated()) {
 			List<CacheImage> images = new ArrayList<CacheImage>();
 			for (MultipartFile file : uploadFile) {
@@ -246,9 +247,9 @@ public class ApiController {
 				String uuid = UUID.randomUUID().toString();
 
 				try {
-					
-					String cachePath = "d:/cachePath/"+userId+"/";
-					file.transferTo(new File(cachePath+uuid + "_" + filename));
+
+					String cachePath = "d:/cachePath/" + userId + "/";
+					file.transferTo(new File(cachePath + uuid + "_" + filename));
 
 					CacheImage img = new CacheImage();
 					img.setImageName(filename);

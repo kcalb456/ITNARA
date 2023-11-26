@@ -20,7 +20,7 @@ private Date productDate;
 private String productDetail;
 private List<ProductImage> images;
 private int soldCheck;
-private long likes = 0;
+private long likesCount = 0;
 private int deliveryPrice = 0;
 
 
@@ -113,16 +113,17 @@ public String toString() {
 			+ ", views=" + views + ", productStatus=" + productStatus + ", productDate=" + productDate
 			+ ", productDetail=" + productDetail + ", images=" + images + ", soldCheck=" + soldCheck + "]";
 }
-public long getLikes() {
-	return likes;
-}
-public void setLikes(long likes) {
-	this.likes = likes;
-}
+
 public int getDeliveryPrice() {
 	return deliveryPrice;
 }
 public void setDeliveryPrice(int deliveryPrice) {
 	this.deliveryPrice = deliveryPrice;
+}
+public long getLikesCount() {
+	return likesCount;
+}
+public void setLikesCount(long likesCount) {
+	this.likesCount = likesCount;
 }
 }

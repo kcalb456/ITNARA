@@ -198,7 +198,8 @@ prefix="sec"%>
               LikeStatus = result.likes;
               console.log(result);
               document.querySelector(".views").textContent = result.item.views;
-              document.querySelector(".likes").textContent = result.item.likes;
+              document.querySelector(".likes").textContent =
+                result.item.likesCount;
               document.querySelector(".price").textContent =
                 result.item.productPrice;
               document.querySelector(".detail").textContent =
@@ -228,7 +229,7 @@ prefix="sec"%>
                 );
                 const heartIcon = button.querySelector("i");
 
-                if (result.likes == null) {
+                if (result.likes == null || !sessionStorage.getItem("userId")) {
                   button.classList.replace("likes", "not-likes");
                   heartIcon.classList.replace("bi-heart-fill", "bi-heart");
                 } else {
@@ -396,16 +397,15 @@ prefix="sec"%>
               if (!response.ok) {
                 throw new Error(`HTTP error! Status: ` + response.status);
               }
-              return response.json();
+              return response.text();
             })
             .then((result) => {
-              // 성공적으로 처리된 경우의 로직
+              location.reload();
             })
             .catch((error) => {
               // 에러 발생 시의 로직
             });
         }
-        location.reload();
       }
     </script>
   </body>

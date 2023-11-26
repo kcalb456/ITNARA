@@ -20,6 +20,7 @@ public class ProductDaoImple implements ProductDao {
 
 	@Override
 	public List<Product> list(Search search) {
+		System.out.println(sql.selectList("product.list", search));
 		return sql.selectList("product.list", search);
 	}
 

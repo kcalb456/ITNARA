@@ -18,6 +18,7 @@ public class Order {
     private Long tracking;
     private String trackingCode;
     private List<ProductImage> images;
+    private String reference;
 
     // Getter 및 Setter 메서드...
 
@@ -131,6 +132,14 @@ public class Order {
 
 	public void setTrackingCode(String trackingCode) {
 		this.trackingCode = trackingCode;
+	}
+
+	public String getReference() {
+		return reference;
+	}
+
+	public void setReference(String reference) {
+		this.reference = reference;
 	}
 
 

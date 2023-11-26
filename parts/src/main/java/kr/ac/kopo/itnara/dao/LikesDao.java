@@ -4,7 +4,7 @@ import kr.ac.kopo.itnara.model.Likes;
 
 public interface LikesDao {
 
-	Likes thiPckd(Long productId);
+	Likes thiPckd(Likes like);
 
 	void like(Likes likes);
 

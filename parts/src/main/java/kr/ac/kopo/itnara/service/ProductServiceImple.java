@@ -31,6 +31,7 @@ public class ProductServiceImple implements ProductService {
 
 	@Override
 	public List<Product> list(Search search) {
+		System.out.println(dao.list(search).size());
 		return dao.list(search);
 	}
 

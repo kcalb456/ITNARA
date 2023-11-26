@@ -103,7 +103,7 @@ prefix="c"%>
         <div>
           <div class="inputbar">
             <textarea class="input_inner" name="productDetail">
-${item.productPrice}</textarea
+${item.productDetail}</textarea
             >
             <label class="input_label">상세 설명:</label>
           </div>
@@ -155,9 +155,9 @@ ${item.productPrice}</textarea
         },
         body: formData,
       })
-        .then((resp) => resp.json())
+        .then((resp) => resp.text())
         .then((result) => {
-          console.log("123");
+          history.back();
         });
     }
   </script>

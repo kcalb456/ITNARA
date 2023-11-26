@@ -10,7 +10,7 @@ import kr.ac.kopo.itnara.model.Likes;
 
 public interface LikesService {
 
-	Likes thiPckd(Long productId);
+	Likes thiPckd(Likes like);
 
 	void likeSet(Map<String, Object> requestBody, Authentication authentication);
 

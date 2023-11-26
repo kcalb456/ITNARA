@@ -4,7 +4,7 @@
 <mapper namespace="likes">
 
 <select id="this" resultType="Likes">
-select * from likes where product_id = #{productId}
+select * from likes where product_id = #{productId} and user_id = #{userId}
 </select>
 
 <insert id="add">
