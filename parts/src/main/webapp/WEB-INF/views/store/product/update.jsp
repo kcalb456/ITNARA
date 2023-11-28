@@ -6,8 +6,6 @@ prefix="c"%>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="/js/add_files.js"></script>
-    <script src="/js/category.js"></script>
     <meta name="_csrf" content="${_csrf.token}" />
     <meta name="_csrf_header" content="${_csrf.headerName}" />
     <title>Document</title>
@@ -56,7 +54,16 @@ prefix="c"%>
               onchange="getCategory()"
             >
               <c:forEach var="category" items="${category}">
-                <option value="${category.name}">${category.name}</option>
+                <c:choose>
+                  <c:when test="${category.name eq item.name}">
+                    <option value="${category.name}" selected="selected">
+                      ${category.name}
+                    </option>
+                  </c:when>
+                  <c:otherwise>
+                    <option value="${category.name}">${category.name}</option>
+                  </c:otherwise>
+                </c:choose>
               </c:forEach>
             </select>
           </div>
@@ -159,6 +166,62 @@ ${item.productDetail}</textarea
         .then((result) => {
           history.back();
         });
+    }
+  </script>
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      getCategory().then(() => {
+        const category2 = document.getElementById("category2");
+
+        for (const option of category2.options) {
+          if (option.value == "${item.name2}") {
+            option.selected = true;
+            console.log(option.value);
+          }
+        }
+      });
+    });
+
+    function getCategory() {
+      return new Promise((resolve, reject) => {
+        var selected = document.getElementById("category1");
+        var value = selected.options[selected.selectedIndex].value;
+        console.log(value);
+
+        fetch("/api/category", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((resp) => {
+            if (!resp.ok) {
+              throw new Error(`HTTP error! Status: ${resp.status}`);
+            }
+            return resp.json();
+          })
+          .then((result) => {
+            category2Change(result);
+            resolve(); // fetch 성공 후 resolve 호출
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            reject(error); // 에러가 발생하면 reject 호출
+          });
+
+        function category2Change(result) {
+          var selectElement = document.getElementById("category2");
+          selectElement.innerHTML = "";
+          for (var i = 0; i < result.length; i++) {
+            var option = document.createElement("option");
+            if (value == result[i].name) {
+              option.value = result[i].name2;
+              option.text = result[i].name2;
+              selectElement.add(option);
+            }
+          }
+        }
+      });
     }
   </script>
 </html>

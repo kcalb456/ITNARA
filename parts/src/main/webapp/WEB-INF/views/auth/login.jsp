@@ -73,11 +73,8 @@ prefix="c"%>
             return res.json();
           })
           .then((result) => {
-            Object.keys(result).forEach((key) => {
-              sessionStorage.setItem(key, JSON.stringify(result[key]));
-              console.log("로그인 성공:", data);
-              location.reload();
-            });
+            console.log("로그인 성공:", data);
+            location.reload();
           });
       });
   });

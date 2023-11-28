@@ -154,15 +154,21 @@ public class ApiController {
 	}
 
 	@GetMapping("/auth")
-	public ResponseEntity<UserInfo> getAuthentication(Authentication authentication, UserInfo userInfo) {
+	public ResponseEntity<?> getAuthentication(Authentication authentication, UserInfo userInfo) {
 
 		if (isAuthenticated()) {
 			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
 			userInfo = userService.getInfo(userDetails.getUserId());
 			userInfo.setUserId(userDetails.getUserId());
+			return new ResponseEntity<>(userInfo, HttpStatus.OK);
 		}
-		return new ResponseEntity<>(userInfo, HttpStatus.OK);
+		else
+		{
+			Map<String, Object> errorResponse = new HashMap<>();
+	        errorResponse.put("error", "로그인에 실패하였습니다.");
+	        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);	
+		}
 	}
 
 	@DeleteMapping("/product/delete/{userId}")

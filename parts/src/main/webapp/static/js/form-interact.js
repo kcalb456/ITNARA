@@ -2,6 +2,10 @@
  *
  */
 
+window.addEventListener("DOMContentLoaded", () => {
+  inputNullCheck();
+});
+
 document.addEventListener("input", function () {
   inputNullCheck();
 });

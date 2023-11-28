@@ -45,6 +45,9 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
 />
+<sec:authorize access="isAuthenticated()">
+  <sec:authentication property="principal" var="principal" />
+</sec:authorize>
 <nav class="nav">
   <a href="/" class="logo">pArtS</a>
   <div class="header-menu">
@@ -81,15 +84,8 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css
         }
         return res.json();
       })
-      .then((result) => {
-        Object.keys(result).forEach((key) => {
-          sessionStorage.setItem(key, JSON.stringify(result[key]));
-        });
-      })
-      .catch((error) => {
-        console.error("Fetch error:", error.message);
-        sessionStorage.clear();
-      });
+      .then((result) => {})
+      .catch((error) => {});
   });
 </script>
 

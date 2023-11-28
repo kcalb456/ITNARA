@@ -15,6 +15,9 @@ prefix="sec"%>
     />
   </head>
   <body>
+    <sec:authorize access="isAuthenticated()">
+      <sec:authentication property="principal" var="principal" />
+    </sec:authorize>
     <jsp:include page="../header.jsp"></jsp:include>
     <div class="container animate__fadeIn animate__animated">
       <section>
@@ -125,6 +128,8 @@ prefix="sec"%>
       });
     </script>
     <script>
+      const principalUserId = `${principal.userId}`;
+
       window.addEventListener("DOMContentLoaded", function () {
         var path = window.location.pathname;
 
@@ -230,7 +235,7 @@ prefix="sec"%>
                 );
                 const heartIcon = button.querySelector("i");
 
-                if (result.likes == null || !sessionStorage.getItem("userId")) {
+                if (result.likes == null || !principalUserId) {
                   button.classList.replace("likes", "not-likes");
                   heartIcon.classList.replace("bi-heart-fill", "bi-heart");
                 } else {
@@ -295,7 +300,7 @@ prefix="sec"%>
         var userId = matches ? matches[1] : null;
         var productId = matches ? matches[2] : null;
 
-        if (!sessionStorage.getItem("userId")) {
+        if (!principalUserId) {
           LoginModal();
         } else {
           window.location.href =
@@ -305,7 +310,7 @@ prefix="sec"%>
 
       function productEditButton(result) {
         var buttonsContainer = document.querySelector(".buttons");
-        if (result.item.userId != sessionStorage.getItem("userId")) {
+        if (result.item.userId != principalUserId) {
           while (buttonsContainer.firstChild) {
             buttonsContainer.removeChild(buttonsContainer.firstChild);
           }
@@ -319,7 +324,7 @@ prefix="sec"%>
         if (
           buttonsContainer &&
           result.item.soldCheck &&
-          result.item.userId != sessionStorage.getItem("userId")
+          result.item.userId != principalUserId
         ) {
           // buttons 클래스 안에 있는 모든 자식 요소 삭제
           while (buttonsContainer.firstChild) {
@@ -374,7 +379,9 @@ prefix="sec"%>
         productId = productIdMatch ? productIdMatch[1] : null;
 
         console.log(LikeStatus);
-        if (!sessionStorage.getItem("userId")) {
+
+        console.log(principalUserId);
+        if (!principalUserId) {
           LoginModal();
         } else {
           const csrfHeader = document.querySelector(
