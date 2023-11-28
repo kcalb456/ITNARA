@@ -30,5 +30,7 @@ public interface ProductDao {
 
 	void addView(Long productId);
 
+	void uploadedImageDelete(String imageUuid);
+
 
 }

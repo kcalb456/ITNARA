@@ -67,6 +67,7 @@ public class ApiController {
 	LikesService likesService;
 
 	private String uploadPath = "d:/upload/";
+	private String cachePath = "d:/cache/";
 
 	@GetMapping("/category")
 	public ResponseEntity<List<Category>> getCategory() {
@@ -97,25 +98,24 @@ public class ApiController {
 	@GetMapping("/newlist")
 	public ResponseEntity<List<Product>> getProduct(Search search) {
 		List<Product> products = productService.list(search);
-		System.out.println(products.size());
 		return new ResponseEntity<>(products, HttpStatus.OK);
 	}
 
 	@GetMapping("/product")
-	public ResponseEntity<Map<String, Object>> getProduct(Authentication authentication, @RequestParam Long productId, Likes like) {
+	public ResponseEntity<Map<String, Object>> getProduct(Authentication authentication, @RequestParam Long productId,
+			Likes like) {
 		Map<String, Object> responseMap = new HashMap<>();
-		
+
 		if (isAuthenticated()) {
-			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();	
+			CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 			like.setUserId(userDetails.getUserId());
-			Likes likes = likesService.thiPckd(like);			
+			Likes likes = likesService.thiPckd(like);
 			responseMap.put("likes", likes);
 		}
 
 		Product item = storeService.product(productId);
-		
+
 		responseMap.put("item", item);
-		
 
 		return new ResponseEntity<>(responseMap, HttpStatus.OK);
 	}
@@ -162,12 +162,10 @@ public class ApiController {
 			userInfo = userService.getInfo(userDetails.getUserId());
 			userInfo.setUserId(userDetails.getUserId());
 			return new ResponseEntity<>(userInfo, HttpStatus.OK);
-		}
-		else
-		{
+		} else {
 			Map<String, Object> errorResponse = new HashMap<>();
-	        errorResponse.put("error", "로그인에 실패하였습니다.");
-	        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);	
+			errorResponse.put("error", "로그인에 실패하였습니다.");
+			return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
 		}
 	}
 
@@ -216,7 +214,6 @@ public class ApiController {
 
 			storeService.update(product);
 
-			System.out.println(product.getProductId());
 			return ResponseEntity.ok("tracking number update successfully");
 		} else {
 			// 권한이 없는 경우: UNAUTHORIZED 상태로 응답합니다.
@@ -227,7 +224,7 @@ public class ApiController {
 	@DeleteMapping("/cache/delete")
 	public ResponseEntity<?> cacheDelete(@RequestParam String imageName, Authentication authentication) {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		String cacheFolderPath = "d:/cachePath/" + userDetails.getUserId() + "/";
+		String cacheFolderPath = cachePath + userDetails.getUserId() + "/";
 		if (isAuthenticated()) {
 			File file = new File(cacheFolderPath + imageName);
 			if (file.exists()) {
@@ -241,6 +238,7 @@ public class ApiController {
 	@PostMapping("/cache")
 	public ResponseEntity<?> cache(Authentication authentication,
 			@RequestPart("uploadFile") List<MultipartFile> uploadFile, @RequestParam("userId") long userId) {
+
 		// 권한 확인: 사용자가 인증되었으며, 제공된 userId에 대한 권한이 있는지 확인합니다.
 
 		if (isAuthenticated()) {
@@ -254,19 +252,46 @@ public class ApiController {
 
 				try {
 
-					String cachePath = "d:/cachePath/" + userId + "/";
-					file.transferTo(new File(cachePath + uuid + "_" + filename));
+					String cachePathFolder = cachePath + userId + "/";
+					file.transferTo(new File(cachePathFolder + uuid + "_" + filename));
 
-					CacheImage img = new CacheImage();
-					img.setImageName(filename);
-					img.setUuid(uuid);
-					img.setUserId(userId);
-					images.add(img);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
+
+			File cacheFolder = new File(cachePath + userId + "/");
+
+			if (cacheFolder.exists() && cacheFolder.isDirectory()) {
+				File[] files = cacheFolder.listFiles();
+				if (files != null) {
+					for (File file : files) {
+						if (file.isFile()) {
+							String fileName = file.getName();
+							int separatorIndex = fileName.indexOf("_");
+							if (separatorIndex != -1) {
+								String uuid = fileName.substring(0, separatorIndex);
+								String actualFileName = fileName.substring(separatorIndex + 1);
+								System.out.println(uuid);
+								System.out.println(actualFileName);
+
+								CacheImage img = new CacheImage();
+								img.setImageName(actualFileName);
+								img.setUuid(uuid);
+								img.setUserId(userId);
+								images.add(img);
+
+							}
+						}
+					}
+				}
+			}
+			
+			for (CacheImage image : images) {
+			    System.out.println(image.getUuid());
+			}
 			return new ResponseEntity<>(images, HttpStatus.OK);
+
 		} else {
 			// 권한이 없는 경우: UNAUTHORIZED 상태로 응답합니다.
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

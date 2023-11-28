@@ -1,17 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
-prefix="c"%>
+prefix="c"%><%@ taglib uri="http://www.springframework.org/security/tags"
+prefix="sec"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <jsp:include page="../header.jsp"></jsp:include>
-    <script src="/js/add_files.js"></script>
     <script src="/js/category.js"></script>
     <title>Document</title>
   </head>
   <body>
+    <sec:authorize access="isAuthenticated()">
+      <sec:authentication property="principal" var="principal" />
+    </sec:authorize>
     <div class="container">
       <div>
         <h3>기본 정보</h3>
@@ -98,61 +101,9 @@ prefix="c"%>
       </form>
     </div>
     <script>
-      var myInput;
-      var inputLabels;
-      var inputs;
-
-      document.addEventListener("input", function () {
-        inputLabels = document.querySelectorAll("form .input_label");
-        inputs = document.querySelectorAll("form .input_inner");
-
-        inputs.forEach(function (input, index) {
-          var inputLabel = inputLabels[index];
-
-          if (input.value !== "") {
-            inputAnime(inputLabel);
-          } else {
-            inputLabel.style.top = "18px";
-            inputLabel.style.fontSize = "16px";
-            inputLabel.style.color = "black";
-          }
-        });
-      });
-
-      document.addEventListener(
-        "focus",
-        function (event) {
-          myInput = document.activeElement;
-          if (myInput.tagName === "INPUT") {
-            var inputLabel =
-              myInput.parentElement.querySelector(".input_label");
-            inputAnime(inputLabel);
-            myInput.addEventListener("blur", function () {
-              // 포커스가 해제되었을 때 애니메이션을 되돌림
-              if (myInput.value === "") {
-                inputLabel.style.top = "18px";
-                inputLabel.style.fontSize = "16px";
-                inputLabel.style.color = "black";
-              }
-            });
-          }
-        },
-        true
-      );
-
-      function inputAnime(label) {
-        label.style.transitionProperty = "top, font-size, color";
-        label.style.transitionDuration = "0.2s";
-        label.style.transitionTimingFunction = "ease-in-out";
-
-        label.style.top = "2px";
-        label.style.fontSize = "12px";
-        label.style.color = "#0080ff";
-      }
-    </script>
-    <script>
       const output = document.getElementById("output");
       const fileInput = document.getElementById("myfiles");
+      const principalUserId = `${principal.userId}`;
 
       fileInput.addEventListener("change", () => {
         const csrfHeader = document.querySelector(
@@ -160,14 +111,11 @@ prefix="c"%>
         ).content;
         const csrfToken = document.querySelector('meta[name="_csrf"]').content;
 
-        // userId와 productId가 존재하면 값을 추출
-        const userId = sessionStorage.getItem("userId");
-
         const formData = new FormData();
         for (let i = 0; i < fileInput.files.length; i++) {
           formData.append("uploadFile", fileInput.files[i]);
         }
-        formData.append("userId", userId);
+        formData.append("userId", principalUserId);
 
         fetch("/api/cache", {
           method: "POST",
@@ -184,8 +132,8 @@ prefix="c"%>
       });
 
       function displayFiles(image) {
-        for (let i = 0; i < fileInput.files.length; i++) {
-          const file = fileInput.files[i];
+        output.innerHTML = "";
+        for (let i = 0; i < image.length; i++) {
           var divContainer = document.createElement("div");
           var Fileimg = document.createElement("img");
           divContainer.classList.add("product-image");
@@ -200,8 +148,8 @@ prefix="c"%>
 
           Fileimg.classList.add("img-full");
           Fileimg.src =
-            "/cachePath/" +
-            image[i].userId +
+            "/cache/" +
+            principalUserId +
             "/" +
             image[i].uuid +
             "_" +

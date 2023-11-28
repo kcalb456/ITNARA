@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,7 @@ import kr.ac.kopo.itnara.security.CustomUserDetails;
 public class ProductServiceImple implements ProductService {
 
 	private String uploadPath = "d:/upload/";
+	private String cachePath = "d:/cache/";
 
 	@Autowired
 	ProductDao dao;
@@ -41,8 +44,8 @@ public class ProductServiceImple implements ProductService {
 	public void add(Product item, Authentication authentication) {
 
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		String cacheFolderPath = "d:/cachePath/" + userDetails.getUserId() + "/";
-		System.out.println(item.getProductName());
+		String cacheFolderPath = cachePath + userDetails.getUserId() + "/";
+
 		// 특정 폴더에서 파일 목록 가져와서 UUID 와 파일명 분리
 		File cacheFolder = new File(cacheFolderPath);
 		File[] files = cacheFolder.listFiles();
@@ -93,7 +96,7 @@ public class ProductServiceImple implements ProductService {
 	public void cacheImageDelete(Authentication authentication) {
 		// TODO Auto-generated method stub
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-		String cacheFolderPath = "d:/cachePath/" + userDetails.getUserId() + "/";
+		String cacheFolderPath = cachePath + userDetails.getUserId() + "/";
 		File cacheFolder = new File(cacheFolderPath);
 		deleteFolder(cacheFolder);
 	}
@@ -123,4 +126,99 @@ public class ProductServiceImple implements ProductService {
 		return dao.category2();
 	}
 
+	@Override
+	public void uploadedDupleToCache(List<ProductImage> list, Authentication authentication) {
+			// TODO Auto-generated method stub
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+			for (ProductImage image : list) {
+	            try {
+	                String sourceFileUuid = image.getUuid();
+	                String sourceFileName = image.getImageName();// assuming UUID is the filename
+	                String destinationFileName = sourceFileUuid + "_" + sourceFileName;
+	                
+	                System.out.println(destinationFileName);
+
+	                Path sourcePath = Paths.get(uploadPath, destinationFileName);
+	                Path destinationPath = Paths.get(cachePath + userDetails.getUserId() + "/", destinationFileName);
+
+	                Files.createDirectories(destinationPath.getParent());
+	                // Copy the file
+	                Files.copy(sourcePath, destinationPath);
+
+	                // You can optionally delete the file from the original uploadPath
+	                // Files.delete(sourcePath);
+	            } catch (IOException e) {
+	                e.printStackTrace(); // Handle the exception based on your requirements
+	            }
+	        }
+			
+		
+		
+	}
+
+	@Override
+	public void update(Product item, Authentication authentication) {
+		// TODO Auto-generated method stub
+		
+		
+		System.out.println(item.getImages().isEmpty());
+		System.out.println(item.toString());
+		
+		/*CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		String cacheFolderPath = cachePath + userDetails.getUserId() + "/";
+
+		// 특정 폴더에서 파일 목록 가져와서 UUID 와 파일명 분리
+		File cacheFolder = new File(cacheFolderPath);
+		File[] files = cacheFolder.listFiles();
+		List<ProductImage> images = new ArrayList<ProductImage>();
+		if (files != null) {
+			for (File file : files) {
+				if (file.isFile()) {
+					String fileName = file.getName();
+					int separatorIndex = fileName.indexOf("_");
+					if (separatorIndex != -1) {
+						String uuid = fileName.substring(0, separatorIndex);
+						String actualFileName = fileName.substring(separatorIndex + 1);
+						try {
+							// 파일 이동
+							Path destinationPath = Paths.get(uploadPath, uuid + "_" + actualFileName);
+							Files.move(file.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
+
+							// ProductImage 객체 생성
+							ProductImage img = new ProductImage();
+							img.setImageName(actualFileName);
+							img.setUuid(uuid);
+
+							images.add(img);
+						} catch (IOException e) {
+							e.printStackTrace();
+							// 파일 이동 실패 처리
+						}
+						System.out.println("UUID: " + uuid + ", FileName: " + actualFileName);
+					}
+				}
+			}
+		}
+		deleteFolder(cacheFolder);
+
+		item.setUserId(userDetails.getUserId());
+		item.setImages(images);
+		
+
+		List<ProductImage> imageses = item.getImages();
+		for (ProductImage image : imageses) {
+			File file = new File(uploadPath + image.getUuid() + "_" + image.getImageName());
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+		
+		
+		for (ProductImage image : item.getImages()) {
+			image.setProductId(item.getProductId());
+			dao.add(image);
+		}*/
+		
+		dao.update(item);
+	}
 }

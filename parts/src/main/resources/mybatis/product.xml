@@ -90,6 +90,10 @@
 	<delete id="delete">
 		DELETE FROM product WHERE product_id = #{productId}
 	</delete>
+	
+		<delete id="deleteImage">
+		DELETE FROM product_image WHERE uuid = #{imageUuid}
+	</delete>
 
 
 	<select id="soldOrderList" resultMap="ProductMap">

@@ -26,7 +26,7 @@
 	<resources location="/resources/image/" mapping="/image/**"></resources>
 
 	<resources location="file:///d:/upload/" mapping="/upload/**"></resources>
-	<resources location="file:///d:/cachePath/" mapping="/cachePath/**/**"></resources>
+	<resources location="file:///d:/cache/" mapping="/cache/**/**"></resources>
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->

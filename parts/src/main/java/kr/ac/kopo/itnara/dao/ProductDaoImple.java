@@ -20,14 +20,12 @@ public class ProductDaoImple implements ProductDao {
 
 	@Override
 	public List<Product> list(Search search) {
-		System.out.println(sql.selectList("product.list", search));
 		return sql.selectList("product.list", search);
 	}
 
 	@Override
 	public void add(Product item) {
 		// TODO Auto-generated method stub
-		System.out.println(item.toString());
 		sql.insert("product.add", item);
 	}
 
@@ -82,6 +80,12 @@ public class ProductDaoImple implements ProductDao {
 	public void addView(Long productId) {
 		// TODO Auto-generated method stub
 		sql.update("product.addView", productId);
+	}
+
+	@Override
+	public void uploadedImageDelete(String imageUuid) {
+		// TODO Auto-generated method stub
+		sql.delete("product.deleteImage", imageUuid);
 	}
 
 

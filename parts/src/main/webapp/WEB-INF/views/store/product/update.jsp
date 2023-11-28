@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
-prefix="c"%>
+prefix="c"%><%@ taglib uri="http://www.springframework.org/security/tags"
+prefix="sec"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,28 +9,22 @@ prefix="c"%>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="_csrf" content="${_csrf.token}" />
     <meta name="_csrf_header" content="${_csrf.headerName}" />
+    <jsp:include page="/WEB-INF/views/header.jsp"></jsp:include>
     <title>Document</title>
   </head>
   <body>
-    <jsp:include page="/WEB-INF/views/header.jsp"></jsp:include>
+    <sec:authorize access="isAuthenticated()">
+      <sec:authentication property="principal" var="principal" />
+    </sec:authorize>
     <div class="container">
-      <div>
-        <h3>기본 정보</h3>
-      </div>
       <form class="add-form" method="post" enctype="multipart/form-data">
+        <div>
+          <h3>기본 정보</h3>
+        </div>
         <div class="mt-2">
           <label class="col-1">제품 이미지:</label>
-          <button type="button" class="btn btn-sm btn-primary" id="add">
-            파일 추가
-          </button>
-          <ul id="files" class="col">
-            <li class="mt-2 row">
-              <div class="col-1"></div>
-              <div class="col">
-                <input name="uploadFile" type="file" class="form-control" />
-              </div>
-            </li>
-          </ul>
+          <input id="myfiles" multiple type="file" name="uploadFile" />
+          <div id="output"></div>
         </div>
         <input
           type="hidden"
@@ -222,6 +217,84 @@ ${item.productDetail}</textarea
           }
         }
       });
+    }
+  </script>
+  <script>
+    const output = document.getElementById("output");
+    const fileInput = document.getElementById("myfiles");
+    const principalUserId = `${principal.userId}`;
+
+    fileInput.addEventListener("change", () => {
+      const csrfHeader = document.querySelector(
+        'meta[name="_csrf_header"]'
+      ).content;
+      const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+
+      const formData = new FormData();
+      for (let i = 0; i < fileInput.files.length; i++) {
+        formData.append("uploadFile", fileInput.files[i]);
+      }
+      formData.append("userId", principalUserId);
+
+      fetch("/api/cache", {
+        method: "POST",
+        headers: {
+          [csrfHeader]: csrfToken,
+        },
+        body: formData,
+      })
+        .then((resp) => resp.json())
+        .then((result) => {
+          console.log(result);
+          displayFiles(result);
+        });
+    });
+
+    function displayFiles(image) {
+      output.innerHTML = "";
+      for (let i = 0; i < image.length; i++) {
+        var divContainer = document.createElement("div");
+        var Fileimg = document.createElement("img");
+        divContainer.classList.add("product-image");
+
+        // 클로저 밖에서 변수로 선언
+        let currentDivContainer = divContainer;
+
+        divContainer.onclick = async () => {
+          await imageDelete(image[i].uuid + "_" + image[i].imageName);
+          currentDivContainer.remove();
+        };
+
+        Fileimg.classList.add("img-full");
+        Fileimg.src =
+          "/cache/" +
+          principalUserId +
+          "/" +
+          image[i].uuid +
+          "_" +
+          image[i].imageName;
+
+        Fileimg.dataset.imagename = image[i].uuid + "_" + image[i].imageName;
+        divContainer.appendChild(Fileimg);
+        output.appendChild(divContainer);
+      }
+    }
+
+    function imageDelete(image, divContainer) {
+      console.log(image);
+      const csrfHeader = document.querySelector(
+        'meta[name="_csrf_header"]'
+      ).content;
+      const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+      fetch("/api/cache/delete?imageName=" + image, {
+        method: "DELETE",
+        headers: {
+          [csrfHeader]: csrfToken,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((resp) => resp.text())
+        .then((result) => {});
     }
   </script>
 </html>
