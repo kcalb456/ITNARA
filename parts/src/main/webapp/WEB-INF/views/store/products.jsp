@@ -14,7 +14,7 @@ prefix="c"%>
   </head>
   <body>
     <div class="container">
-      <section>
+      <section class="section-profile">
         <div class="profile">
           <div class="profile-img">
             <img
@@ -26,6 +26,14 @@ prefix="c"%>
           </div>
           <div class="profile-name"></div>
         </div>
+        <div class="section-profile-info">
+          <h2>소개</h2>
+          <p>
+            - 이러쿵 저러쿵 하지 않는 쿨거래 선호합니다. - 입금, 결제 후 1~5시간
+            이내 택배 접수해드립니다. - 사기, 허위 매물 혐오합니다. 그래서
+            하지도 않습니다.
+          </p>
+        </div>
       </section>
       <section>
         <div class="row center">
@@ -34,8 +42,6 @@ prefix="c"%>
           <button onclick="orderList()">주문확인</button>
           <button onclick="purchaseList()">구매내역</button>
         </div>
-      </section>
-      <section>
         <div class="store-product-list"></div>
       </section>
     </div>

@@ -27,6 +27,7 @@ body {
   padding: 0;
   margin: 0;
   background: white;
+  letter-spacing: -1px;
 }
 
 .detail-header {
@@ -158,16 +159,17 @@ a {
 }
 
 .container {
+  margin-top: 80px;
   height: calc(100vh - 72px);
   display: flex;
   flex-direction: column;
   width: 1200px;
+  gap: 80px;
 }
 
 section {
   display: flex;
   flex-direction: column;
-  margin-top: 82px;
 }
 
 .inputbar {
@@ -635,6 +637,9 @@ textarea {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: #fafafa;
+  border-radius: 10px;
+  gap: 10px;
 }
 
 .profile-img {
@@ -643,6 +648,19 @@ textarea {
   height: 100px;
   overflow: hidden;
   border-radius: 100px;
+}
+
+.section-profile {
+  display: grid;
+  grid-template-columns: 300px auto;
+  height: 300px;
+  gap: 20px;
+}
+
+.section-profile-info {
+  border: 1px solid #fafafa;
+  border-radius: 10px;
+  padding: 20px;
 }
 
 .modal {
