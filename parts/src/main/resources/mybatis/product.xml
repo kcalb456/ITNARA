@@ -47,10 +47,10 @@
 	<insert id="add" useGeneratedKeys="true" keyProperty="productId"
 		parameterType="Product">
 		INSERT INTO
-		product(user_id,name,name2,product_name,product_price,product_stock,product_status,product_detail)
+		product(user_id,name,name2,product_name,product_price,product_stock,product_status,product_detail,delivery_price)
 		VALUES (#{userId},#{name}, #{name2}, #{productName},
 		#{productPrice},
-		#{productStock},#{productStatus},#{productDetail})
+		#{productStock},#{productStatus},#{productDetail},#{deliveryPrice})
 	</insert>
 
 	<insert id="add_image">
@@ -92,7 +92,8 @@
 	<select id="category" resultMap="CategoryMap">
 		SELECT category1.*, category2.*
 		FROM category1 LEFT JOIN category2 ON
-		category1.name = category2.name Order by category1.order ASC;
+		category1.name = category2.name
+		Order by category1.order ASC;
 	</select>
 
 	<delete id="delete">
@@ -100,7 +101,11 @@
 	</delete>
 
 	<delete id="deleteImage">
-		DELETE FROM product_image WHERE uuid = #{imageUuid}
+		DELETE FROM product_image WHERE uuid =
+		<foreach collection="list" item="item" open="(" close=")"
+			separator=",">
+			#{item.uuid}
+		</foreach>
 	</delete>
 
 
@@ -114,6 +119,12 @@
 		product_image.product_id WHERE
 		o.user_id =
 		#{userId};
+	</select>
+
+	<select id="getImage" resultType="ProductImage">
+		SELECT *
+		FROM product_image
+		WHERE product_id = #{productId}
 	</select>
 
 

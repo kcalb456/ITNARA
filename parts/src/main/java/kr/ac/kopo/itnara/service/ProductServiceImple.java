@@ -154,16 +154,27 @@ public class ProductServiceImple implements ProductService {
 		// TODO Auto-generated method stub
 		
 		
-		System.out.println(item.getImages().isEmpty());
-		System.out.println(item.toString());
+		List <ProductImage> images = dao.getImage(item.getProductId()); 
 		
-		/*CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+		if(!images.isEmpty())
+		{
+			dao.deleteImage(images);	
+		}
+
+		for (ProductImage image : images) {
+			File file = new File(uploadPath + image.getUuid() + "_" + image.getImageName());
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+		
+		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		String cacheFolderPath = cachePath + userDetails.getUserId() + "/";
 
 		// 특정 폴더에서 파일 목록 가져와서 UUID 와 파일명 분리
 		File cacheFolder = new File(cacheFolderPath);
 		File[] files = cacheFolder.listFiles();
-		List<ProductImage> images = new ArrayList<ProductImage>();
+		images = new ArrayList<ProductImage>();
 		if (files != null) {
 			for (File file : files) {
 				if (file.isFile()) {
@@ -198,19 +209,13 @@ public class ProductServiceImple implements ProductService {
 		item.setImages(images);
 		
 
-		List<ProductImage> imageses = item.getImages();
-		for (ProductImage image : imageses) {
-			File file = new File(uploadPath + image.getUuid() + "_" + image.getImageName());
-			if (file.exists()) {
-				file.delete();
-			}
-		}
+
 		
 		
 		for (ProductImage image : item.getImages()) {
 			image.setProductId(item.getProductId());
 			dao.add(image);
-		}*/
+		}
 		
 		dao.update(item);
 	}

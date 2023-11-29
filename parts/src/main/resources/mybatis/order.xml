@@ -22,7 +22,7 @@
 		p.product_id =
 		product_image.product_id WHERE
 		o.user_id =
-		#{userId};
+		#{userId}
 	</select>
 
 
@@ -32,10 +32,9 @@
 		FROM product p
 		JOIN orders o ON
 		p.product_id = o.product_id LEFT JOIN product_image ON
-		p.product_id =
-		product_image.product_id WHERE p.product_id = product_image.product_id and
-		o.user_id2 =
-		#{userId};
+		o.product_id =
+		product_image.product_id WHERE
+		o.user_id2 = #{userId}
 	</select>
 	<update id="updateTracking">
 		UPDATE orders

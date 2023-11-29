@@ -78,10 +78,18 @@ public class ProductDaoImple implements ProductDao {
 		sql.update("product.addView", productId);
 	}
 
+
 	@Override
-	public void uploadedImageDelete(String imageUuid) {
+	public List<ProductImage> getImage(Long productId) {
 		// TODO Auto-generated method stub
-		sql.delete("product.deleteImage", imageUuid);
+		return sql.selectList("product.getImage", productId);
+	}
+
+	@Override
+	public void deleteImage(List<ProductImage> images) {
+		// TODO Auto-generated method stub
+		sql.delete("product.deleteImage", images);
+		
 	}
 
 

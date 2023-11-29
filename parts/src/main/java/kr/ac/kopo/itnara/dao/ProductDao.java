@@ -28,7 +28,10 @@ public interface ProductDao {
 
 	void addView(Long productId);
 
-	void uploadedImageDelete(String imageUuid);
+	List<ProductImage> getImage(Long productId);
+
+	void deleteImage(List<ProductImage> images);
+
 
 
 }

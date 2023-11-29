@@ -150,6 +150,7 @@ public class ApiController {
 		List<Order> list = new ArrayList<>();
 		if (isAuthenticated() && isAuthorized(authentication, userId)) {
 			list = orderService.purchaseList(userId);
+			System.out.println(list);
 		}
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
@@ -213,7 +214,7 @@ public class ApiController {
 		// 권한 확인: 사용자가 인증되었으며, 제공된 userId에 대한 권한이 있는지 확인합니다.
 		if (isAuthenticated() && isAuthorized(authentication, product.getUserId())) {
 
-			storeService.update(product);
+			productService.update(product,authentication);
 
 			return ResponseEntity.ok("tracking number update successfully");
 		} else {
