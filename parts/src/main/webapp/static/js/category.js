@@ -2,10 +2,6 @@
  *
  */
 
-window.addEventListener("DOMContentLoaded", () => {
-  category1Changed();
-});
-
 function category1Changed() {
   getCategory().then((result) => {
     category2Change(result);

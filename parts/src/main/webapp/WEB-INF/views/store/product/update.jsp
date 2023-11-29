@@ -124,7 +124,6 @@ ${item.productDetail}</textarea
       </form>
     </div>
   </body>
-
   <script>
     function formUpload() {
       var path = window.location.pathname;
@@ -166,7 +165,7 @@ ${item.productDetail}</textarea
   </script>
   <script>
     window.addEventListener("DOMContentLoaded", () => {
-      getCategory().then(() => {
+      category1Changed().then(() => {
         const category2 = document.getElementById("category2");
 
         for (const option of category2.options) {

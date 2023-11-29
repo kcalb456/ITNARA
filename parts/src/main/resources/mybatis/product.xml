@@ -92,7 +92,7 @@
 	<select id="category" resultMap="CategoryMap">
 		SELECT category1.*, category2.*
 		FROM category1 LEFT JOIN category2 ON
-		category1.name = category2.name
+		category1.name = category2.name Order by category1.order ASC;
 	</select>
 
 	<delete id="delete">

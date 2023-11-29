@@ -8,6 +8,7 @@ prefix="c"%>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/style.css" type="text/css" />
     <script src="/js/price_format.js"></script>
+    <script src="/js/category.js"></script>
     <title>Document</title>
   </head>
   <body>
@@ -16,67 +17,7 @@ prefix="c"%>
       <jsp:include page="../search.jsp"></jsp:include>
       <section class="section-board row">
         <div class="filter">
-          <ul class="accordion">
-            <li class="item">
-              <h2 class="accordionTitle">
-                London <span class="accIcon"></span>
-              </h2>
-              <div class="text">
-                London is the capital and largest city of England, the United
-                Kingdom, and the European Union. Standing on the River Thames in
-                southeastern England, at the head of its 50-mile (80 km) estuary
-                leading to the North Sea, London has been a major settlement for
-                two millennia.
-              </div>
-            </li>
-            <li class="item">
-              <h2 class="accordionTitle">
-                Madrid <span class="accIcon"></span>
-              </h2>
-              <div class="text">
-                Madrid is the capital of Spain and the largest municipality in
-                both the Community of Madrid and Spain as a whole. The city has
-                almost 3.2 million inhabitants and a metropolitan area
-                population of approximately 6.5 million.
-              </div>
-            </li>
-            <li class="item">
-              <h2 class="accordionTitle">
-                Paris <span class="accIcon"></span>
-              </h2>
-              <div class="text">
-                Paris is the capital and most populous city of France, with an
-                area of 105 square kilometres (41 square miles) and a population
-                of 2,206,488. Since the 17th century, Paris has been one of
-                Europe's major centres of finance, commerce, fashion, science,
-                and the arts.
-              </div>
-            </li>
-            <li class="item">
-              <h2 class="accordionTitle">
-                Barcelona <span class="accIcon"></span>
-              </h2>
-              <div class="text">
-                Barcelona is a city in Spain. It is the capital and largest city
-                of Catalonia, as well as the second most populous municipality
-                of Spain. With a population of 1.6 million within city limits,
-                its urban area extends to numerous neighbouring municipalities
-                within the Province of Barcelona and is home to around 4.8
-                million people.
-              </div>
-            </li>
-            <li class="item">
-              <h2 class="accordionTitle">
-                Milan <span class="accIcon"></span>
-              </h2>
-              <div class="text">
-                Milan is a city in northern Italy, capital of Lombardy, and the
-                second-most populous city in Italy after Rome, with the city
-                proper having a population of 1,372,810 while its metropolitan
-                area has a population of 3,242,820.
-              </div>
-            </li>
-          </ul>
+          <ul class="accordion"></ul>
         </div>
         <div class="product-board">
           <c:forEach var="item" items="${list}">
@@ -108,38 +49,62 @@ prefix="c"%>
       </section>
     </div>
     <script>
-      fetch("/api/");
+      getCategory().then((result) => {
+        // variables
 
-      // variables
-      var accordionBtn = document.querySelectorAll(".accordionTitle");
-      var allTexts = document.querySelectorAll(".text");
+        const categoryList = document.querySelector(".accordion");
 
-      // event listener
-      accordionBtn.forEach(function (el) {
-        el.addEventListener("click", toggleAccordion);
-      });
+        result.forEach((element) => {
+          const li = document.createElement("li");
+          li.classList.add("item");
+          const h2 = document.createElement("h2");
+          h2.classList.add("accordionTitle");
+          const a = document.createElement("a");
+          a.textContent = element.name;
 
-      // function
-      function toggleAccordion(el) {
-        var targetText = el.currentTarget.nextElementSibling.classList;
-        var target = el.currentTarget;
+          categoryList.appendChild(li);
+          li.appendChild(h2);
+          h2.appendChild(a);
 
-        if (targetText.contains("show")) {
-          targetText.remove("show");
-          target.classList.remove("accordionTitleActive");
-        } else {
-          accordionBtn.forEach(function (el) {
-            el.classList.remove("accordionTitleActive");
+          element.category2.forEach((category) => {
+            const a2 = document.createElement("div");
+            a2.textContent = category.name2;
+            a2.classList.add("text");
+            li.appendChild(a2);
+          });
+        });
+        var accordionBtn = document.querySelectorAll(".accordionTitle");
+        var allTexts = document.querySelectorAll(".text");
+        // event listener
+        accordionBtn.forEach(function (el) {
+          el.addEventListener("click", toggleAccordion);
+        });
 
-            allTexts.forEach(function (el) {
-              el.classList.remove("show");
-            });
+        // function
+        function toggleAccordion(el) {
+          var targetTexts =
+            el.currentTarget.parentNode.querySelectorAll(".text");
+          var target = el.currentTarget;
+
+          console.log(targetTexts);
+
+          accordionBtn.forEach(function (btn) {
+            if (btn != target) {
+              btn.classList.remove("accordionTitleActive");
+            }
           });
 
-          targetText.add("show");
-          target.classList.add("accordionTitleActive");
+          targetTexts.forEach(function (text) {
+            if (text.classList.contains("show")) {
+              text.classList.remove("show");
+              target.classList.remove("accordionTitleActive");
+            } else {
+              text.classList.add("show");
+              target.classList.add("accordionTitleActive");
+            }
+          });
         }
-      }
+      });
     </script>
   </body>
 </html>

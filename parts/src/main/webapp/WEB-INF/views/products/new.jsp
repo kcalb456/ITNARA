@@ -36,25 +36,6 @@ prefix="sec"%>
             >상품명:</label
           >
         </div>
-        <div class="selector-box">
-          <div>
-            <label>카테고리1:</label>
-            <select
-              class="selector"
-              id="category1"
-              name="name"
-              onchange="category1Changed()"
-            >
-              <c:forEach var="category" items="${category}">
-                <option value="${category.name}">${category.name}</option>
-              </c:forEach>
-            </select>
-          </div>
-          <div>
-            <label>카테고리2:</label>
-            <select class="selector" id="category2" name="name2"></select>
-          </div>
-        </div>
 
         <div class="inputbar">
           <input
@@ -66,8 +47,43 @@ prefix="sec"%>
         </div>
 
         <div class="inputbar">
+          <input
+            class="input_inner"
+            type="number"
+            name="deliveryPrice"
+            min="0"
+          /><label class="input_label">배송비:</label>
+        </div>
+
+        <div class="inputbar">
           <input class="input_inner" type="number" name="productStock" />
           <label class="input_label">수량:</label>
+        </div>
+
+        <div class="selector-box">
+          <div>
+            <label>카테고리1:</label>
+            <select
+              class="selector"
+              id="category1"
+              name="name"
+              size="5"
+              onchange="category1Changed()"
+            >
+              <c:forEach var="category" items="${category}">
+                <option value="${category.name}">${category.name}</option>
+              </c:forEach>
+            </select>
+          </div>
+          <div>
+            <label>카테고리2:</label>
+            <select
+              class="selector"
+              id="category2"
+              name="name2"
+              size="5"
+            ></select>
+          </div>
         </div>
 
         <div class="inputbar row">
@@ -96,6 +112,9 @@ prefix="sec"%>
         </div>
       </form>
     </div>
+    <script>
+      category1Changed();
+    </script>
     <script>
       const output = document.getElementById("output");
       const fileInput = document.getElementById("myfiles");
