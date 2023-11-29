@@ -7,7 +7,7 @@ prefix="sec"%>
   <head>
     <meta charset="UTF-8" />
     <title>Insert title here</title>
-    <script src="/js/price_format.js"></script>
+    <script defer src="/js/price_format.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <link
       rel="stylesheet"
@@ -244,17 +244,8 @@ prefix="sec"%>
                 }
               });
 
-              switch (result.item.productStatus) {
-                case 0:
-                  document.querySelector(".productStatus").textContent =
-                    "새 상품";
-                  break;
-                case 1:
-                  document.querySelector(".productStatus").textContent = "중고";
-                  break;
-
-                default:
-              }
+              document.querySelector(".productStatus").textContent =
+                result.item.productStatus;
 
               document.querySelector(".productStock").textContent =
                 result.item.productStock;

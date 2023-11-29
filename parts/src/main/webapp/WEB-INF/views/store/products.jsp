@@ -7,7 +7,7 @@ prefix="c"%>
     <jsp:include page="../header.jsp"></jsp:include>
     <meta charset="UTF-8" />
     <title>상점</title>
-    <script src="/js/price_format.js"></script>
+    <script defer src="/js/price_format.js"></script>
     <script src="/js/card_ui.js"></script>
     <link rel="stylesheet" href="/css/butterup.min.css" />
     <script src="/js/butterup.min.js"></script>

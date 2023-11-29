@@ -76,6 +76,7 @@ body {
 }
 
 .c-white {
+  border: 2px solid #f7f7f7;
   background: white;
   color: black;
 }
@@ -110,14 +111,12 @@ article {
 
 .long-button {
   font-size: 16px;
-  border: none;
   user-select: none;
   border-radius: 10px;
   line-height: 58px;
   width: 100%;
   text-align: center;
   height: 58px;
-  border: none;
 }
 
 input,
@@ -558,7 +557,8 @@ textarea {
   display: grid;
 }
 
-.add-form {
+.add-form,
+.pay-form {
   display: grid;
   background: #fafafa;
   padding: 50px;

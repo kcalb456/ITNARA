@@ -165,6 +165,7 @@ ${item.productDetail}</textarea
   </script>
   <script>
     window.addEventListener("DOMContentLoaded", () => {
+    	getFile();
       category1Changed().then(() => {
         const category2 = document.getElementById("category2");
 
@@ -183,30 +184,35 @@ ${item.productDetail}</textarea
     const principalUserId = `${principal.userId}`;
 
     fileInput.addEventListener("change", () => {
-      const csrfHeader = document.querySelector(
-        'meta[name="_csrf_header"]'
-      ).content;
-      const csrfToken = document.querySelector('meta[name="_csrf"]').content;
-
-      const formData = new FormData();
-      for (let i = 0; i < fileInput.files.length; i++) {
-        formData.append("uploadFile", fileInput.files[i]);
-      }
-      formData.append("userId", principalUserId);
-
-      fetch("/api/cache", {
-        method: "POST",
-        headers: {
-          [csrfHeader]: csrfToken,
-        },
-        body: formData,
-      })
-        .then((resp) => resp.json())
-        .then((result) => {
-          console.log(result);
-          displayFiles(result);
-        });
+    	getFile();
     });
+    
+    function getFile() {
+    	const csrfHeader = document.querySelector(
+    	        'meta[name="_csrf_header"]'
+    	      ).content;
+    	      const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+
+    	      const formData = new FormData();
+    	      for (let i = 0; i < fileInput.files.length; i++) {
+    	        formData.append("uploadFile", fileInput.files[i]);
+    	      }
+    	      formData.append("userId", principalUserId);
+
+    	      fetch("/api/cache", {
+    	        method: "POST",
+    	        headers: {
+    	          [csrfHeader]: csrfToken,
+    	        },
+    	        body: formData,
+    	      })
+    	        .then((resp) => resp.json())
+    	        .then((result) => {
+    	          console.log(result);
+    	          displayFiles(result);
+    	        });
+		
+	}
 
     function displayFiles(image) {
       output.innerHTML = "";

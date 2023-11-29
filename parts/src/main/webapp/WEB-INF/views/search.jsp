@@ -120,6 +120,42 @@ prefix="sec"%>
 </script>
 
 <script>
+  window.addEventListener("DOMContentLoaded", function () {
+    urlSearch = new URLSearchParams(location.search);
+    searchText = urlSearch.get("name");
+
+    switch (urlSearch.get("name")) {
+      case "데스크탑":
+        searchText = 0;
+        break;
+      case "노트북":
+        searchText = 1;
+        break;
+      case "모바일":
+        searchText = 2;
+        break;
+      case "가전제품":
+        searchText = 3;
+        break;
+      case "기타":
+        searchText = 4;
+        break;
+    }
+
+    const sels = document.querySelectorAll(".category-button a");
+
+    sels.forEach(function (sel, index) {
+      if (index == searchText) {
+        sel.style.color = "white";
+        sel.style.backgroundColor = "#0080ff";
+        sel.style.top = "10px";
+        sel.style.boxShadow = "0px 5px 10px rgba(0, 0, 0, 0.1)";
+      }
+    });
+  });
+</script>
+
+<script>
   document.addEventListener("DOMContentLoaded", function () {
     fetch("/api/auth", {
       method: "GET",

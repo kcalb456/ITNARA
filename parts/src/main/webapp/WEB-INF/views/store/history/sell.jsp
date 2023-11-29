@@ -272,7 +272,6 @@ prefix="c"%>
       // 조건이 충족되었을 때의 로직
 
       if (orderList.tracking == null) {
-        div.textContent = "송장번호가 아직 입력되지 않았습니다";
       } else {
         const formData = new URLSearchParams();
 

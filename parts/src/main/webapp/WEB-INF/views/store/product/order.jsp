@@ -9,6 +9,7 @@ prefix="c"%>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="/js/add_files.js"></script>
     <script src="/js/category.js"></script>
+    <script src="/js/price_format.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <meta name="_csrf" content="${_csrf.token}" />
     <meta name="_csrf_header" content="${_csrf.headerName}" />
@@ -17,86 +18,82 @@ prefix="c"%>
   <body>
     <jsp:include page="/WEB-INF/views/header.jsp"></jsp:include>
     <div class="container">
-      <div>
-        <h3>결제</h3>
-      </div>
-      <form method="post" enctype="multipart/form-data">
+      <form class="pay-form" method="post" enctype="multipart/form-data">
         <div>
-          <div class="form-group mt-2">
-            <label>상품명:</label>
-            <input
-              type="text"
-              name="productName"
-              value="${item.productName}"
-              readonly
-            />
-          </div>
+          <h2>결제</h2>
+        </div>
+        <input
+          type="hidden"
+          name="${_csrf.parameterName}"
+          value="${_csrf.token}"
+        />
+        <div class="form-group">
+          <label>상품명:</label>
+          <div>${item.productName}</div>
+        </div>
 
-          <div>
-            <label>가격:</label>
-            <input
-              type="number"
-              name="productPrice"
-              value="${item.productPrice}"
-              readonly
-            />
-          </div>
+        <div class="form-group">
+          <label>가격:</label>
+          <div class="price">${item.productPrice}</div>
+          <div>원</div>
+        </div>
 
-          <div>
-            <label>수량:</label>
-            <input
-              type="number"
-              name="productStock"
-              value="${item.productStock}"
-              readonly
-            />
-          </div>
+        <div class="form-group">
+          <label>배송비:</label>
+          <div>${item.deliveryPrice}</div>
+          <div>원</div>
+        </div>
 
-          <div>
-            <label>상태:</label>
-          </div>
+        <div class="form-group">
+          <label class="input_label">수량:</label>
+          <div>${item.productStock}</div>
+          <div>개</div>
+        </div>
 
+        <div class="form-group">
+          <label>상태:</label>
+          <div class="productStatus">${item.productStatus}</div>
+        </div>
+
+        <div class="form-group">
+          <label>수량:</label>
+          <div>${item.productStock}</div>
+        </div>
+
+        <div>
           <input
-            type="hidden"
-            name="${_csrf.parameterName}"
-            value="${_csrf.token}"
+            type="text"
+            id="sample6_postcode"
+            placeholder="우편번호"
+            name="zip"
           />
+          <input
+            type="button"
+            onclick="sample6_execDaumPostcode()"
+            value="우편번호 찾기"
+          /><br />
+          <input
+            type="text"
+            id="sample6_address"
+            placeholder="주소"
+            name="address1"
+          /><br />
+          <input
+            type="text"
+            id="sample6_detailAddress"
+            placeholder="상세주소"
+            name="address2"
+          />
+          <input
+            type="text"
+            id="sample6_extraAddress"
+            placeholder="참고항목"
+            name="reference"
+          />
+        </div>
 
-          <div>
-            <input
-              type="text"
-              id="sample6_postcode"
-              placeholder="우편번호"
-              name="zip"
-            />
-            <input
-              type="button"
-              onclick="sample6_execDaumPostcode()"
-              value="우편번호 찾기"
-            /><br />
-            <input
-              type="text"
-              id="sample6_address"
-              placeholder="주소"
-              name="address1"
-            /><br />
-            <input
-              type="text"
-              id="sample6_detailAddress"
-              placeholder="상세주소"
-              name="address2"
-            />
-            <input
-              type="text"
-              id="sample6_extraAddress"
-              placeholder="참고항목"
-              name="reference"
-            />
-          </div>
-          <div>
-            <button type="button" onclick="">우편 찾기</button>
-            <button>결제 하기</button>
-          </div>
+        <div>
+          <button>결제 하기</button>
         </div>
       </form>
     </div>
