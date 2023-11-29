@@ -10,6 +10,7 @@ prefix="sec"%>
     <meta name="_csrf" content="${_csrf.token}" />
     <meta name="_csrf_header" content="${_csrf.headerName}" />
     <jsp:include page="/WEB-INF/views/header.jsp"></jsp:include>
+    <script src="/js/category.js"></script>
     <title>Document</title>
   </head>
   <body>
@@ -19,7 +20,7 @@ prefix="sec"%>
     <div class="container">
       <form class="add-form" method="post" enctype="multipart/form-data">
         <div>
-          <h3>기본 정보</h3>
+          <h2>기본 정보</h2>
         </div>
         <div class="mt-2">
           <label class="col-1">제품 이미지:</label>
@@ -46,7 +47,7 @@ prefix="sec"%>
               class="selector"
               id="category1"
               name="name"
-              onchange="getCategory()"
+              onchange="category1Changed()"
             >
               <c:forEach var="category" items="${category}">
                 <c:choose>
@@ -176,48 +177,6 @@ ${item.productDetail}</textarea
         }
       });
     });
-
-    function getCategory() {
-      return new Promise((resolve, reject) => {
-        var selected = document.getElementById("category1");
-        var value = selected.options[selected.selectedIndex].value;
-        console.log(value);
-
-        fetch("/api/category", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((resp) => {
-            if (!resp.ok) {
-              throw new Error(`HTTP error! Status: ${resp.status}`);
-            }
-            return resp.json();
-          })
-          .then((result) => {
-            category2Change(result);
-            resolve(); // fetch 성공 후 resolve 호출
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            reject(error); // 에러가 발생하면 reject 호출
-          });
-
-        function category2Change(result) {
-          var selectElement = document.getElementById("category2");
-          selectElement.innerHTML = "";
-          for (var i = 0; i < result.length; i++) {
-            var option = document.createElement("option");
-            if (value == result[i].name) {
-              option.value = result[i].name2;
-              option.text = result[i].name2;
-              selectElement.add(option);
-            }
-          }
-        }
-      });
-    }
   </script>
   <script>
     const output = document.getElementById("output");

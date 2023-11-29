@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.ac.kopo.itnara.model.Product;
 import kr.ac.kopo.itnara.model.ProductImage;
 import kr.ac.kopo.itnara.model.Search;
-import kr.ac.kopo.itnara.model.Category;
+import kr.ac.kopo.itnara.model.Category1;
 import kr.ac.kopo.itnara.security.CustomUserDetails;
 import kr.ac.kopo.itnara.service.ProductService;
 import kr.ac.kopo.itnara.service.StoreService;
@@ -51,7 +51,7 @@ public class ProductController {
 	@GetMapping("/new")
 	String newProduct(Model model, Authentication authentication) {
 		service.cacheImageDelete(authentication);
-		List<Category> categoryList = service.category();
+		List<Category1> categoryList = service.category();
 		model.addAttribute("category", categoryList);
 		return path + "/new";
 	}

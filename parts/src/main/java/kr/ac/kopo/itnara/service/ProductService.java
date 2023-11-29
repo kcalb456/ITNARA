@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 
-import kr.ac.kopo.itnara.model.Category;
+import kr.ac.kopo.itnara.model.Category1;
 import kr.ac.kopo.itnara.model.Product;
 import kr.ac.kopo.itnara.model.ProductImage;
 import kr.ac.kopo.itnara.model.Search;
@@ -15,9 +15,7 @@ public interface ProductService {
 	List<Product> list(Search search);
 
 
-	List<Category> category();
-
-	List<Category> category2();
+	List<Category1> category();
 
 	void add(Product item, Authentication authentication);
 

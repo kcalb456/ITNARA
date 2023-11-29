@@ -16,10 +16,10 @@ prefix="sec"%>
       <sec:authentication property="principal" var="principal" />
     </sec:authorize>
     <div class="container">
-      <div>
-        <h3>기본 정보</h3>
-      </div>
       <form class="add-form" method="post" enctype="multipart/form-data">
+        <div>
+          <h2>기본 정보</h2>
+        </div>
         <div class="mt-2">
           <label class="col-1">제품 이미지:</label>
           <input id="myfiles" multiple type="file" name="uploadFile" />
@@ -43,7 +43,7 @@ prefix="sec"%>
               class="selector"
               id="category1"
               name="name"
-              onchange="getCategory()"
+              onchange="category1Changed()"
             >
               <c:forEach var="category" items="${category}">
                 <option value="${category.name}">${category.name}</option>
@@ -52,11 +52,7 @@ prefix="sec"%>
           </div>
           <div>
             <label>카테고리2:</label>
-            <select class="selector" id="category2" name="name2">
-              <c:forEach var="category2" items="${category}">
-                <option value="${category2.name2}">${category2.name2}</option>
-              </c:forEach>
-            </select>
+            <select class="selector" id="category2" name="name2"></select>
           </div>
         </div>
 

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.kopo.itnara.dao.ProductDao;
-import kr.ac.kopo.itnara.model.Category;
+import kr.ac.kopo.itnara.model.Category1;
 import kr.ac.kopo.itnara.model.Product;
 import kr.ac.kopo.itnara.model.ProductImage;
 import kr.ac.kopo.itnara.model.Search;
@@ -34,7 +34,6 @@ public class ProductServiceImple implements ProductService {
 
 	@Override
 	public List<Product> list(Search search) {
-		System.out.println(dao.list(search).size());
 		return dao.list(search);
 	}
 
@@ -115,15 +114,9 @@ public class ProductServiceImple implements ProductService {
 	}
 
 	@Override
-	public List<Category> category() {
+	public List<Category1> category() {
 		// TODO Auto-generated method stub
 		return dao.category();
-	}
-
-	@Override
-	public List<Category> category2() {
-		// TODO Auto-generated method stub
-		return dao.category2();
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package kr.ac.kopo.itnara.dao;
 
 import java.util.List;
 
-import kr.ac.kopo.itnara.model.Category;
+import kr.ac.kopo.itnara.model.Category1;
 import kr.ac.kopo.itnara.model.Product;
 import kr.ac.kopo.itnara.model.ProductImage;
 import kr.ac.kopo.itnara.model.Search;
@@ -15,11 +15,9 @@ public interface ProductDao {
 
 	void add(ProductImage image);
 
-	List<Category> category();
+	List<Category1> category();
 
 	void delete(Long productId);
-
-	List<Category> category2();
 
 	void update(Product item);
 

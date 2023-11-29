@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.kopo.itnara.model.CacheImage;
-import kr.ac.kopo.itnara.model.Category;
+import kr.ac.kopo.itnara.model.Category1;
 import kr.ac.kopo.itnara.model.Likes;
 import kr.ac.kopo.itnara.model.Order;
 import kr.ac.kopo.itnara.model.Post;
@@ -70,8 +70,8 @@ public class ApiController {
 	private String cachePath = "d:/cache/";
 
 	@GetMapping("/category")
-	public ResponseEntity<List<Category>> getCategory() {
-		List<Category> categories = productService.category2();
+	public ResponseEntity<List<Category1>> getCategory() {
+		List<Category1> categories = productService.category();
 		return new ResponseEntity<>(categories, HttpStatus.OK);
 	}
 
@@ -98,6 +98,7 @@ public class ApiController {
 	@GetMapping("/newlist")
 	public ResponseEntity<List<Product>> getProduct(Search search) {
 		List<Product> products = productService.list(search);
+		System.out.println(products.size());
 		return new ResponseEntity<>(products, HttpStatus.OK);
 	}
 

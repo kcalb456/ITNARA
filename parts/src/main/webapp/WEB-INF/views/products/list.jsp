@@ -15,7 +15,69 @@ prefix="c"%>
     <div class="container">
       <jsp:include page="../search.jsp"></jsp:include>
       <section class="section-board row">
-        <div class="filter">testtest</div>
+        <div class="filter">
+          <ul class="accordion">
+            <li class="item">
+              <h2 class="accordionTitle">
+                London <span class="accIcon"></span>
+              </h2>
+              <div class="text">
+                London is the capital and largest city of England, the United
+                Kingdom, and the European Union. Standing on the River Thames in
+                southeastern England, at the head of its 50-mile (80 km) estuary
+                leading to the North Sea, London has been a major settlement for
+                two millennia.
+              </div>
+            </li>
+            <li class="item">
+              <h2 class="accordionTitle">
+                Madrid <span class="accIcon"></span>
+              </h2>
+              <div class="text">
+                Madrid is the capital of Spain and the largest municipality in
+                both the Community of Madrid and Spain as a whole. The city has
+                almost 3.2 million inhabitants and a metropolitan area
+                population of approximately 6.5 million.
+              </div>
+            </li>
+            <li class="item">
+              <h2 class="accordionTitle">
+                Paris <span class="accIcon"></span>
+              </h2>
+              <div class="text">
+                Paris is the capital and most populous city of France, with an
+                area of 105 square kilometres (41 square miles) and a population
+                of 2,206,488. Since the 17th century, Paris has been one of
+                Europe's major centres of finance, commerce, fashion, science,
+                and the arts.
+              </div>
+            </li>
+            <li class="item">
+              <h2 class="accordionTitle">
+                Barcelona <span class="accIcon"></span>
+              </h2>
+              <div class="text">
+                Barcelona is a city in Spain. It is the capital and largest city
+                of Catalonia, as well as the second most populous municipality
+                of Spain. With a population of 1.6 million within city limits,
+                its urban area extends to numerous neighbouring municipalities
+                within the Province of Barcelona and is home to around 4.8
+                million people.
+              </div>
+            </li>
+            <li class="item">
+              <h2 class="accordionTitle">
+                Milan <span class="accIcon"></span>
+              </h2>
+              <div class="text">
+                Milan is a city in northern Italy, capital of Lombardy, and the
+                second-most populous city in Italy after Rome, with the city
+                proper having a population of 1,372,810 while its metropolitan
+                area has a population of 3,242,820.
+              </div>
+            </li>
+          </ul>
+        </div>
         <div class="product-board">
           <c:forEach var="item" items="${list}">
             <a
@@ -45,5 +107,39 @@ prefix="c"%>
         </div>
       </section>
     </div>
+    <script>
+      fetch("/api/");
+
+      // variables
+      var accordionBtn = document.querySelectorAll(".accordionTitle");
+      var allTexts = document.querySelectorAll(".text");
+
+      // event listener
+      accordionBtn.forEach(function (el) {
+        el.addEventListener("click", toggleAccordion);
+      });
+
+      // function
+      function toggleAccordion(el) {
+        var targetText = el.currentTarget.nextElementSibling.classList;
+        var target = el.currentTarget;
+
+        if (targetText.contains("show")) {
+          targetText.remove("show");
+          target.classList.remove("accordionTitleActive");
+        } else {
+          accordionBtn.forEach(function (el) {
+            el.classList.remove("accordionTitleActive");
+
+            allTexts.forEach(function (el) {
+              el.classList.remove("show");
+            });
+          });
+
+          targetText.add("show");
+          target.classList.add("accordionTitleActive");
+        }
+      }
+    </script>
   </body>
 </html>

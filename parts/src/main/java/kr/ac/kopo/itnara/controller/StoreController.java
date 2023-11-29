@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import kr.ac.kopo.itnara.model.Category;
+import kr.ac.kopo.itnara.model.Category1;
 import kr.ac.kopo.itnara.model.Order;
 import kr.ac.kopo.itnara.model.Product;
 import kr.ac.kopo.itnara.security.CustomUserDetails;
@@ -45,7 +45,7 @@ public class StoreController {
 		CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 		if (isAuthenticated() && userId == userDetails.getUserId()) {
 
-			List<Category> categoryList = productService.category();
+			List<Category1> categoryList = productService.category();
 			model.addAttribute("category", categoryList);
 			item = service.product(productId);
 			model.addAttribute("item", item);

@@ -7,7 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import kr.ac.kopo.itnara.model.Category;
+import kr.ac.kopo.itnara.model.Category1;
 import kr.ac.kopo.itnara.model.Product;
 import kr.ac.kopo.itnara.model.ProductImage;
 import kr.ac.kopo.itnara.model.Search;
@@ -20,6 +20,7 @@ public class ProductDaoImple implements ProductDao {
 
 	@Override
 	public List<Product> list(Search search) {
+
 		return sql.selectList("product.list", search);
 	}
 
@@ -36,7 +37,7 @@ public class ProductDaoImple implements ProductDao {
 	}
 
 	@Override
-	public List<Category> category() {
+	public List<Category1> category() {
 		// TODO Auto-generated method stub
 		return sql.selectList("product.category");
 	}
@@ -50,11 +51,6 @@ public class ProductDaoImple implements ProductDao {
 		
 	}
 
-	@Override
-	public List<Category> category2() {
-		// TODO Auto-generated method stub
-		return sql.selectList("product.category2");
-	}
 
 	@Override
 	public void update(Product item) {

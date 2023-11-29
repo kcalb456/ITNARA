@@ -25,7 +25,7 @@ prefix="c"%>
       });
 
       function getNewList() {
-        fetch("/api/newlist?row=9", {
+        fetch("/api/newlist?row=8", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
