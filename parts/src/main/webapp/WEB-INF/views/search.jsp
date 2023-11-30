@@ -140,6 +140,9 @@ prefix="sec"%>
       case "기타":
         searchText = 4;
         break;
+      default:
+        searchText = 99;
+        break;
     }
 
     const sels = document.querySelectorAll(".category-button a");
