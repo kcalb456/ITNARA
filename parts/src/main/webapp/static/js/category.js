@@ -3,8 +3,11 @@
  */
 
 function category1Changed() {
-  getCategory().then((result) => {
-    category2Change(result);
+  return new Promise((resolve, reject) => {
+    getCategory().then((result) => {
+      category2Change(result);
+      resolve();
+    });
   });
 }
 

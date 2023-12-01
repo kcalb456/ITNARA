@@ -5,17 +5,20 @@
 	<resultMap type="Product" id="ProductMap" autoMapping="true">
 		<id column="product_id" property="productId" />
 
-		<collection property="images" column="product_id"
-			javaType="ArrayList" ofType="ProductImage" autoMapping="true">
+		<collection property="images" javaType="ArrayList"
+			ofType="ProductImage" autoMapping="true">
 			<id column="image_id" property="imageId" />
+			<result column="uuid" property="uuid" />
+			<result column="image_name" property="imageName" />
+			<!-- 다른 필요한 ProductImage에 대한 매핑을 추가 -->
 		</collection>
 	</resultMap>
 
 	<select id="list" resultMap="ProductMap">
     <![CDATA[
-    SELECT product.*, product_image.* FROM product
+    SELECT  product.*, product_image.* FROM product
     LEFT JOIN product_image ON
-    product.product_id = product_image.product_id
+    product.product_id = product_image.product_id GROUP BY product.product_id
     ]]>
 		<where>
 			<if test="soldCheck != 99">
@@ -44,6 +47,7 @@
 		</if>
 		LIMIT #{row}
 	</select>
+
 	<insert id="add" useGeneratedKeys="true" keyProperty="productId"
 		parameterType="Product">
 		INSERT INTO
@@ -101,7 +105,7 @@
 	</delete>
 
 	<delete id="deleteImage">
-		DELETE FROM product_image WHERE uuid =
+		DELETE FROM product_image WHERE uuid IN
 		<foreach collection="list" item="item" open="(" close=")"
 			separator=",">
 			#{item.uuid}

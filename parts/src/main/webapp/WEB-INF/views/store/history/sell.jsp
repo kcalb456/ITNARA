@@ -219,6 +219,7 @@ prefix="c"%>
       div.textContent = orderList.tracking;
 
       if (orderList.tracking == null) {
+        div.id = "tracking-number";
         div.textContent = "송장번호가 아직 입력되지 않았습니다";
       } else {
         const formData = new URLSearchParams();

@@ -37,29 +37,6 @@ prefix="sec"%>
           >
         </div>
 
-        <div class="inputbar">
-          <input
-            class="input_inner"
-            type="number"
-            name="productPrice"
-            min="0"
-          /><label class="input_label">가격:</label>
-        </div>
-
-        <div class="inputbar">
-          <input
-            class="input_inner"
-            type="number"
-            name="deliveryPrice"
-            min="0"
-          /><label class="input_label">배송비:</label>
-        </div>
-
-        <div class="inputbar">
-          <input class="input_inner" type="number" name="productStock" />
-          <label class="input_label">수량:</label>
-        </div>
-
         <div class="selector-box">
           <div>
             <label>카테고리1:</label>
@@ -84,6 +61,29 @@ prefix="sec"%>
               size="5"
             ></select>
           </div>
+        </div>
+
+        <div class="inputbar">
+          <input
+            class="input_inner"
+            type="number"
+            name="productPrice"
+            min="0"
+          /><label class="input_label">가격:</label>
+        </div>
+
+        <div class="inputbar">
+          <input
+            class="input_inner"
+            type="number"
+            name="deliveryPrice"
+            min="0"
+          /><label class="input_label">배송비:</label>
+        </div>
+
+        <div class="inputbar">
+          <input class="input_inner" type="number" name="productStock" />
+          <label class="input_label">수량:</label>
         </div>
 
         <div class="inputbar row">

@@ -47,6 +47,7 @@ prefix="sec"%>
               class="selector"
               id="category1"
               name="name"
+              size="5"
               onchange="category1Changed()"
             >
               <c:forEach var="category" items="${category}">
@@ -65,7 +66,12 @@ prefix="sec"%>
           </div>
           <div>
             <label>카테고리2:</label>
-            <select class="selector" id="category2" name="name2"></select>
+            <select
+              class="selector"
+              id="category2"
+              name="name2"
+              size="5"
+            ></select>
           </div>
         </div>
 
@@ -77,6 +83,16 @@ prefix="sec"%>
             min="0"
             value="${item.productPrice}"
           /><label class="input_label">가격:</label>
+        </div>
+
+        <div class="inputbar">
+          <input
+            class="input_inner"
+            type="number"
+            name="deliveryPrice"
+            min="0"
+            value="${item.deliveryPrice}"
+          /><label class="input_label">배송비:</label>
         </div>
 
         <div class="inputbar productStock">
@@ -165,9 +181,10 @@ ${item.productDetail}</textarea
   </script>
   <script>
     window.addEventListener("DOMContentLoaded", () => {
-    	getFile();
+      getFile();
       category1Changed().then(() => {
         const category2 = document.getElementById("category2");
+        console.log(category2.options);
 
         for (const option of category2.options) {
           if (option.value == "${item.name2}") {
@@ -184,35 +201,34 @@ ${item.productDetail}</textarea
     const principalUserId = `${principal.userId}`;
 
     fileInput.addEventListener("change", () => {
-    	getFile();
+      getFile();
     });
-    
+
     function getFile() {
-    	const csrfHeader = document.querySelector(
-    	        'meta[name="_csrf_header"]'
-    	      ).content;
-    	      const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+      const csrfHeader = document.querySelector(
+        'meta[name="_csrf_header"]'
+      ).content;
+      const csrfToken = document.querySelector('meta[name="_csrf"]').content;
 
-    	      const formData = new FormData();
-    	      for (let i = 0; i < fileInput.files.length; i++) {
-    	        formData.append("uploadFile", fileInput.files[i]);
-    	      }
-    	      formData.append("userId", principalUserId);
+      const formData = new FormData();
+      for (let i = 0; i < fileInput.files.length; i++) {
+        formData.append("uploadFile", fileInput.files[i]);
+      }
+      formData.append("userId", principalUserId);
 
-    	      fetch("/api/cache", {
-    	        method: "POST",
-    	        headers: {
-    	          [csrfHeader]: csrfToken,
-    	        },
-    	        body: formData,
-    	      })
-    	        .then((resp) => resp.json())
-    	        .then((result) => {
-    	          console.log(result);
-    	          displayFiles(result);
-    	        });
-		
-	}
+      fetch("/api/cache", {
+        method: "POST",
+        headers: {
+          [csrfHeader]: csrfToken,
+        },
+        body: formData,
+      })
+        .then((resp) => resp.json())
+        .then((result) => {
+          console.log(result);
+          displayFiles(result);
+        });
+    }
 
     function displayFiles(image) {
       output.innerHTML = "";
